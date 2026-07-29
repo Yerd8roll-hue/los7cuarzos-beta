@@ -1,5 +1,9 @@
 
-     class WorldScene extends Phaser.Scene {
+
+       
+
+
+    class WorldScene extends Phaser.Scene {
 
     constructor() {
         super("WorldScene");
@@ -40,7 +44,6 @@
         // PERSONAJE
         // =====================
 
-
         this.player = this.add.rectangle(
             400,
             300,
@@ -54,19 +57,8 @@
 
 
 
-        // Aura del personaje apagada
-
-        this.auraJugador = this.add.circle(
-            400,
-            300,
-            55,
-            0xff00ff,
-            0
-        );
-
-
-        this.auraJugador.setDepth(1);
-        this.player.setDepth(2);
+        // Aquí NO creamos aura todavía
+        this.auraJugador = null;
 
 
 
@@ -76,7 +68,6 @@
 
 
         this.cuarzoEncontrado = false;
-
 
         this.alturaCuarzo = 300;
 
@@ -105,7 +96,7 @@
 
 
 
-        // Pulso del cuarzo
+        // Animación del cuarzo
 
         this.tweens.add({
 
@@ -124,6 +115,8 @@
         });
 
 
+
+        // Animación aura del cuarzo
 
         this.tweens.add({
 
@@ -195,6 +188,7 @@
 
 
 
+
     update(){
 
 
@@ -225,10 +219,17 @@
 
 
 
-        // Aura sigue al jugador
+        // Si ya despertó el poder,
+        // el aura sigue al jugador
 
-        this.auraJugador.x = this.player.x;
-        this.auraJugador.y = this.player.y;
+        if(this.auraJugador){
+
+            this.auraJugador.x = this.player.x;
+            this.auraJugador.y = this.player.y;
+
+        }
+
+
 
 
 
@@ -264,10 +265,10 @@
                 this.cuarzo.y +
                 Math.sin(angulo) * 75;
 
+
             });
 
         }
-
 
 
 
@@ -303,8 +304,6 @@
 
 
 
-                // Actualizar contador
-
                 this.cuarzos = 1;
 
 
@@ -315,14 +314,21 @@
 
 
                 // =====================
-                // DESPERTAR DEL PODER
+                // DESPERTAR DEL CUARZO
                 // =====================
 
 
-                this.auraJugador.setFillStyle(
+                this.auraJugador = this.add.circle(
+                    this.player.x,
+                    this.player.y,
+                    55,
                     0xff00ff,
                     0.5
                 );
+
+
+                this.auraJugador.setDepth(1);
+                this.player.setDepth(2);
 
 
 
@@ -332,7 +338,7 @@
 
                     scale:1.7,
 
-                    alpha:0.2,
+                    alpha:0.3,
 
                     duration:700,
 
@@ -376,8 +382,6 @@
 
 
 
-                // Mensaje
-
                 this.historia.setText(
 
                     "💎 CUARZO DEL ALMA DESPERTADO\n\n"+
@@ -396,13 +400,5 @@
     }
 
 }
-
-
-
-
-       
-
-
-    
     
         

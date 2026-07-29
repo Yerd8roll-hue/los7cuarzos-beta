@@ -323,10 +323,28 @@ this.player.setDepth(2);
 
                 // Activar energía violeta
 
-                this.auraJugador.setFillStyle(
-                    0xff00ff,
-                    0.35
-                );
+               // Activar aura del Cuarzo del Alma
+
+this.auraJugador.setFillStyle(
+    0xff00ff,
+    0.5
+);
+
+this.tweens.add({
+
+    targets: this.auraJugador,
+
+    scale: 1.6,
+
+    alpha: 0.2,
+
+    duration: 700,
+
+    yoyo: true,
+
+    repeat: -1
+
+});
 
 
 

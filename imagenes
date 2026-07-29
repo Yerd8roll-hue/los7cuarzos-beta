@@ -1,20 +1,20 @@
-imagenes/
+📁 imagenes
 
-kael/
-    idle.png
-    caminar.png
-    correr.png
-    saltar.png
+📂 personajes
+   ├── kael_idle.png
+   ├── kael_caminar.png
+   ├── kael_correr.png
+   ├── kael_saltar.png
 
-cuarzos/
-    cronos.png
+📂 fondos
+   ├── sector09.png
 
-fondos/
-    neo_terra_sector09.png
+📂 objetos
+   ├── cuarzo_cronos.png
 
-enemigos/
-    drone01.png
+📂 enemigos
+   ├── drone_centinela.png
 
-ui/
-    vida.png
-    energia.png
+📂 ui
+   ├── barra_vida.png
+   ├── barra_energia.png

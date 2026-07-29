@@ -1,16 +1,44 @@
-Los7Cuarzos/
+<!DOCTYPE html>
+<html lang="es">
 
-index.html
-style.css
+<head>
 
-/game/
-    main.js
-    preload.js
-    sceneMenu.js
-    sceneSector09.js
-    player.js
-    enemy.js
-    ui.js
+<meta charset="UTF-8">
 
-/imagenes/
-/sonidos/
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Los 7 Cuarzos</title>
+
+<style>
+
+body{
+
+margin:0;
+
+background:#000;
+
+overflow:hidden;
+
+}
+
+canvas{
+
+display:block;
+
+margin:auto;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
+
+<script src="game/main.js"></script>
+
+</body>
+
+</html>

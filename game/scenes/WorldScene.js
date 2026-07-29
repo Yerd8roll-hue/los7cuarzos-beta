@@ -54,14 +54,17 @@ class WorldScene extends Phaser.Scene {
 
         // Aura del personaje (apagada al inicio)
 
+        // Aura del personaje
         this.auraJugador = this.add.circle(
             400,
             300,
-            50,
+            55,
             0xff00ff,
-            0
+            0.35
         );
 
+this.auraJugador.setDepth(1);
+this.player.setDepth(2);
 
 
         this.tweens.add({

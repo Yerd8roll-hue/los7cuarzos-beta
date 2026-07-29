@@ -4,6 +4,7 @@ class WorldScene extends Phaser.Scene {
         super("WorldScene");
     }
 
+
     create() {
 
         // Fondo del mundo
@@ -14,6 +15,15 @@ class WorldScene extends Phaser.Scene {
         this.add.text(150, 40, "VALLE DEL PRIMER CUARZO", {
             fontSize: "40px",
             color: "#00ffff"
+        });
+
+
+        // Contador de cuarzos
+        this.cuarzos = 0;
+
+        this.textoCuarzos = this.add.text(20, 20, "💎 Cuarzos: 0/7", {
+            fontSize: "25px",
+            color: "#ffffff"
         });
 
 
@@ -54,10 +64,11 @@ class WorldScene extends Phaser.Scene {
         });
 
 
-        // Variable para saber si ya fue recogido
+        // Control para saber si fue recogido
         this.cuarzoEncontrado = false;
 
     }
+
 
 
     update() {
@@ -71,22 +82,27 @@ class WorldScene extends Phaser.Scene {
             this.player.x -= speed;
         }
 
+
         if (this.keys.right.isDown) {
             this.player.x += speed;
         }
 
+
         if (this.keys.up.isDown) {
             this.player.y -= speed;
         }
+
 
         if (this.keys.down.isDown) {
             this.player.y += speed;
         }
 
 
-        // Detectar contacto con el cuarzo
+
+        // Recoger cuarzo
 
         if (!this.cuarzoEncontrado) {
+
 
             let distancia = Phaser.Math.Distance.Between(
                 this.player.x,
@@ -98,15 +114,26 @@ class WorldScene extends Phaser.Scene {
 
             if (distancia < 50) {
 
+
                 this.cuarzoEncontrado = true;
 
+
                 this.cuarzo.destroy();
+
+
+                this.cuarzos = 1;
+
+
+                this.textoCuarzos.setText(
+                    "💎 Cuarzos: " + this.cuarzos + "/7"
+                );
 
 
                 this.add.text(150, 150, "¡HAS ENCONTRADO EL PRIMER CUARZO!", {
                     fontSize: "30px",
                     color: "#ffff00"
                 });
+
 
             }
 
@@ -115,3 +142,6 @@ class WorldScene extends Phaser.Scene {
     }
 
 }
+      
+          
+

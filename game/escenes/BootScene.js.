@@ -19,3 +19,5 @@ class BootScene extends Phaser.Scene {
         });
     }
 }
+
+window.BootScene = BootScene;

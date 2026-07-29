@@ -4,7 +4,7 @@ class BootScene extends Phaser.Scene {
     }
 
     preload() {
-        // Aquí cargaremos imágenes, sonidos y mapas.
+
     }
 
     create() {

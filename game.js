@@ -1,41 +1,64 @@
-// LOS 7 CUARZOS - Beta 1.0
-// sSitema inicial de juego
-
+// LOS 7 CUARZOS - Beta 1.1
 
 let cuarzosEncontrados = 0;
 
 
 function iniciarJuego(){
 
-    alert(
-    "🌆 Neo-Terra Sector 09\n\n" +
-    "Kael Vortex ha despertado.\n" +
-    "La búsqueda de los 7 Cuarzos comienza..."
-    );
+document.getElementById("mensaje").innerHTML =
+
+`
+<h2>🌆 NEO-TERRA SECTOR 09</h2>
+
+🧑‍🚀 Kael Vortex ONLINE<br><br>
+
+🤖 Nox K-01 activado<br><br>
+
+🎯 Misión actual:<br>
+
+Encontrar el primer fragmento del
+💎 Cuarzo Cronos
+`;
 
 }
+
 
 
 function mostrarHistoria(){
 
-    alert(
-    "Año 2475...\n\n" +
-    "La humanidad lucha por sobrevivir " +
-    "mientras Nexarion busca reunir los 7 Cuarzos Primordiales."
-    );
+document.getElementById("mensaje").innerHTML =
+
+`
+<h2>🌌 HISTORIA</h2>
+
+Año 2475...<br><br>
+
+La humanidad vive entre ciudades
+futuristas y máquinas inteligentes.<br><br>
+
+Los 7 Cuarzos Primordiales contienen
+un poder capaz de cambiar el destino
+de la humanidad.
+`;
 
 }
 
 
 
-function encontrarCuarzo(){
+function mostrarCuarzos(){
 
-    cuarzosEncontrados++;
+document.getElementById("mensaje").innerHTML =
 
-    alert(
-    "💎 RESONANCIA DETECTADA\n\n" +
-    "Cuarzo Cronos encontrado.\n" +
-    "Cuarzos: " + cuarzosEncontrados + "/7"
-    );
+`
+<h2>💎 LOS 7 CUARZOS</h2>
+
+🔵 Cronos<br>
+🔴 Furia<br>
+🟣 Mental<br>
+🟢 Génesis<br>
+🟠 Solar<br>
+⚫ Abismo<br>
+⚪ Supremo
+`;
 
 }

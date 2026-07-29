@@ -1,3 +1,20 @@
-kael.png
-cuarzo_cronos.png
-fondo_neo_terra.png
+imagenes/
+
+kael/
+    idle.png
+    caminar.png
+    correr.png
+    saltar.png
+
+cuarzos/
+    cronos.png
+
+fondos/
+    neo_terra_sector09.png
+
+enemigos/
+    drone01.png
+
+ui/
+    vida.png
+    energia.png

@@ -5,13 +5,16 @@ class BootScene extends Phaser.Scene {
     }
 
     create() {
-        console.log("BOOTSCENE FUNCIONA");
 
-        this.add.text(100, 100, "LOS 7 CUARZOS", {
+        this.add.text(150, 150, "LOS 7 CUARZOS", {
             fontSize: "50px",
-            fill: "#00ffff"
+            color: "#00ffff"
         });
+
+        this.add.text(150, 230, "ESCENA INICIADA", {
+            fontSize: "30px",
+            color: "#ffffff"
+        });
+
     }
 }
-
-window.BootScene = BootScene;

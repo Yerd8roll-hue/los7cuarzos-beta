@@ -41,20 +41,53 @@ class WorldScene extends Phaser.Scene {
         this.keys = this.input.keyboard.createCursorKeys();
 
 
-        // Primer Cuarzo
-        this.cuarzo = this.add.rectangle(
+
+        // =========================
+        // PRIMER CUARZO MÁGICO
+        // =========================
+
+        this.cuarzo = this.add.circle(
             600,
             300,
-            35,
-            35,
+            25,
             0xff00ff
         );
+
+
+        // Brillo del cuarzo
+        this.add.circle(
+            600,
+            300,
+            40,
+            0xff00ff,
+            0.2
+        );
+
+
+        // Animación de crecimiento
+        this.tweens.add({
+
+            targets: this.cuarzo,
+
+            scale: 1.5,
+
+            duration: 1000,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
 
 
         this.add.text(540, 350, "💎 Cuarzo", {
             fontSize: "20px",
             color: "#ffffff"
         });
+
 
 
         // Mensaje de misión
@@ -64,8 +97,13 @@ class WorldScene extends Phaser.Scene {
         });
 
 
-        // Control para saber si fue recogido
+
+        // Estado del cuarzo
         this.cuarzoEncontrado = false;
+
+
+        // Posición inicial para flotación
+        this.alturaInicialCuarzo = 300;
 
     }
 
@@ -73,43 +111,71 @@ class WorldScene extends Phaser.Scene {
 
     update() {
 
+
         let speed = 4;
+
 
 
         // Movimiento del jugador
 
         if (this.keys.left.isDown) {
+
             this.player.x -= speed;
+
         }
 
 
         if (this.keys.right.isDown) {
+
             this.player.x += speed;
+
         }
 
 
         if (this.keys.up.isDown) {
+
             this.player.y -= speed;
+
         }
 
 
         if (this.keys.down.isDown) {
+
             this.player.y += speed;
+
         }
 
 
 
-        // Recoger cuarzo
+        // Movimiento flotante del cuarzo
+
+        if (this.cuarzo && !this.cuarzoEncontrado) {
+
+            this.cuarzo.y =
+            this.alturaInicialCuarzo +
+            Math.sin(this.time.now / 300) * 10;
+
+        }
+
+
+
+        // Detectar recogida del cuarzo
 
         if (!this.cuarzoEncontrado) {
 
 
             let distancia = Phaser.Math.Distance.Between(
+
                 this.player.x,
+
                 this.player.y,
+
                 this.cuarzo.x,
+
                 this.cuarzo.y
+
             );
+
 
 
             if (distancia < 50) {
@@ -129,9 +195,13 @@ class WorldScene extends Phaser.Scene {
                 );
 
 
+
                 this.add.text(150, 150, "¡HAS ENCONTRADO EL PRIMER CUARZO!", {
+
                     fontSize: "30px",
+
                     color: "#ffff00"
+
                 });
 
 
@@ -139,9 +209,10 @@ class WorldScene extends Phaser.Scene {
 
         }
 
+
     }
 
 }
-      
+  
           
 

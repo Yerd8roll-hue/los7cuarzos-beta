@@ -3,93 +3,40 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Los 7 Cuarzos</title>
+    <title>Los 7 Cuarzos</title>
 
-<link rel="stylesheet" href="style.css">
+    <style>
+
+        body{
+
+            margin:0;
+            background:#000;
+            overflow:hidden;
+
+        }
+
+        canvas{
+
+            display:block;
+            margin:0 auto;
+
+        }
+
+    </style>
 
 </head>
 
-
 <body>
 
+    <!-- Phaser -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
 
-<h1>💎 LOS 7 CUARZOS 💎</h1>
-
-<h2>El despertar de Neo-Terra</h2>
-
-
-<p>
-El futuro está roto... pero el poder antiguo ha despertado.
-</p>
-
-
-<hr>
-
-
-<h2>🧑‍🚀 Kael Vortex</h2>
-
-
-<p>
-Explorador de Neo-Terra.
-Busca los 7 Cuarzos Primordiales antes que la inteligencia artificial Nexarion.
-</p>
-
-
-
-<button onclick="iniciarJuego()">
-▶ JUGAR BETA
-</button>
-
-
-<button onclick="mostrarHistoria()">
-🌌 HISTORIA
-</button>
-
-
-<button onclick="mostrarCuarzos()">
-💎 CUARZOS
-</button>
-
-
-
-<div id="mensaje">
-
-Bienvenido a Neo-Terra Sector 09...
-
-</div>
-
-<canvas id="gameCanvas" width="800" height="500"></canvas>
-
-<h3>💎 Los 7 Cuarzos</h3>
-
-
-<ul>
-
-<li>🔵 Cuarzo Cronos</li>
-
-<li>🔴 Cuarzo Furia</li>
-
-<li>🟣 Cuarzo Mental</li>
-
-<li>🟢 Cuarzo Génesis</li>
-
-<li>🟠 Cuarzo Solar</li>
-
-<li>⚫ Cuarzo Abismo</li>
-
-<li>⚪ Cuarzo Supremo</li>
-
-</ul>
-
-
-
-<script src="game.js"></script>
-
+    <!-- Nuestro juego -->
+    <script src="game/main.js"></script>
 
 </body>
 
 </html>
-

@@ -31,11 +31,31 @@ class WorldScene extends Phaser.Scene {
         this.keys = this.input.keyboard.createCursorKeys();
 
 
-        // Información
+        // Primer Cuarzo
+        this.cuarzo = this.add.rectangle(
+            600,
+            300,
+            35,
+            35,
+            0xff00ff
+        );
+
+
+        this.add.text(540, 350, "💎 Cuarzo", {
+            fontSize: "20px",
+            color: "#ffffff"
+        });
+
+
+        // Mensaje de misión
         this.add.text(180, 520, "Explora el valle y encuentra el primer cuarzo 💎", {
             fontSize: "25px",
             color: "#ffff00"
         });
+
+
+        // Variable para saber si ya fue recogido
+        this.cuarzoEncontrado = false;
 
     }
 
@@ -44,6 +64,8 @@ class WorldScene extends Phaser.Scene {
 
         let speed = 4;
 
+
+        // Movimiento del jugador
 
         if (this.keys.left.isDown) {
             this.player.x -= speed;
@@ -59,6 +81,35 @@ class WorldScene extends Phaser.Scene {
 
         if (this.keys.down.isDown) {
             this.player.y += speed;
+        }
+
+
+        // Detectar contacto con el cuarzo
+
+        if (!this.cuarzoEncontrado) {
+
+            let distancia = Phaser.Math.Distance.Between(
+                this.player.x,
+                this.player.y,
+                this.cuarzo.x,
+                this.cuarzo.y
+            );
+
+
+            if (distancia < 50) {
+
+                this.cuarzoEncontrado = true;
+
+                this.cuarzo.destroy();
+
+
+                this.add.text(150, 150, "¡HAS ENCONTRADO EL PRIMER CUARZO!", {
+                    fontSize: "30px",
+                    color: "#ffff00"
+                });
+
+            }
+
         }
 
     }

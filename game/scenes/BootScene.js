@@ -30,19 +30,17 @@ class BootScene extends Phaser.Scene {
             color: "#ffffff"
         });
 
-        start.setInteractive();
+       start.on("pointerover", () => {
+       start.setColor("#00ffff");
+       });
 
-        start.on("pointerover", () => {
-            start.setColor("#00ffff");
-        });
+       start.on("pointerout", () => {
+       start.setColor("#ffffff");
+       });
 
-        start.on("pointerout", () => {
-            start.setColor("#ffffff");
-        });
-
-        start.on("pointerdown", () => {
-    this.scene.start("WorldScene");
-});
+       start.on("pointerdown", () => {
+       this.scene.start("WorldScene");
+       });
 
 
         // Historia

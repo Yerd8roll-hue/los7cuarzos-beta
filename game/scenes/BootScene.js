@@ -40,6 +40,10 @@ class BootScene extends Phaser.Scene {
             start.setColor("#ffffff");
         });
 
+        start.on("pointerdown", () => {
+    this.scene.start("WorldScene");
+});
+
 
         // Historia
         let historia = this.add.text(310, 300, "HISTORIA", {

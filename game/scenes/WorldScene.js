@@ -46,6 +46,20 @@ class WorldScene extends Phaser.Scene {
         // PRIMER CUARZO MÁGICO
         // =========================
 
+        this.alturaInicialCuarzo = 300;
+
+
+        // Aura del cuarzo
+        this.cuarzoBrillo = this.add.circle(
+            600,
+            300,
+            45,
+            0xff00ff,
+            0.25
+        );
+
+
+        // Cristal principal
         this.cuarzo = this.add.circle(
             600,
             300,
@@ -54,22 +68,32 @@ class WorldScene extends Phaser.Scene {
         );
 
 
-        // Brillo del cuarzo
-        this.add.circle(
-            600,
-            300,
-            40,
-            0xff00ff,
-            0.2
-        );
-
-
-        // Animación de crecimiento
+        // Animación del cristal
         this.tweens.add({
 
             targets: this.cuarzo,
 
             scale: 1.5,
+
+            duration: 1000,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // Animación del aura
+        this.tweens.add({
+
+            targets: this.cuarzoBrillo,
+
+            scale: 1.8,
+
+            alpha: 0.1,
 
             duration: 1000,
 
@@ -100,10 +124,6 @@ class WorldScene extends Phaser.Scene {
 
         // Estado del cuarzo
         this.cuarzoEncontrado = false;
-
-
-        // Posición inicial para flotación
-        this.alturaInicialCuarzo = 300;
 
     }
 
@@ -151,15 +171,22 @@ class WorldScene extends Phaser.Scene {
 
         if (this.cuarzo && !this.cuarzoEncontrado) {
 
-            this.cuarzo.y =
-            this.alturaInicialCuarzo +
+            let movimiento =
             Math.sin(this.time.now / 300) * 10;
+
+
+            this.cuarzo.y =
+            this.alturaInicialCuarzo + movimiento;
+
+
+            this.cuarzoBrillo.y =
+            this.alturaInicialCuarzo + movimiento;
 
         }
 
 
 
-        // Detectar recogida del cuarzo
+        // Detectar recogida
 
         if (!this.cuarzoEncontrado) {
 
@@ -186,6 +213,9 @@ class WorldScene extends Phaser.Scene {
 
                 this.cuarzo.destroy();
 
+                this.cuarzoBrillo.destroy();
+
+
 
                 this.cuarzos = 1;
 
@@ -196,13 +226,13 @@ class WorldScene extends Phaser.Scene {
 
 
 
-                this.add.text(150, 150, "¡HAS ENCONTRADO EL PRIMER CUARZO!", {
-
-                    fontSize: "30px",
-
-                    color: "#ffff00"
-
-                });
+                this.add.text(150, 150,
+                    "¡HAS ENCONTRADO EL PRIMER CUARZO!",
+                    {
+                        fontSize: "30px",
+                        color: "#ffff00"
+                    }
+                );
 
 
             }
@@ -213,6 +243,3 @@ class WorldScene extends Phaser.Scene {
     }
 
 }
-
-  
-

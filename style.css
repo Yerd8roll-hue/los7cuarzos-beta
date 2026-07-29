@@ -1,25 +1,30 @@
 body {
 
     background: #050510;
-    color: #00eaff;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 40px;
 
-    background:
-    linear-gradient(
-    rgba(0,0,0,0.8),
-    rgba(0,0,0,0.95)
-    );
+    color: #00eaff;
+
+    font-family: Arial, sans-serif;
+
+    text-align: center;
+
+    margin: 0;
+
+    padding: 40px;
 
 }
 
 
+/* TITULO PRINCIPAL */
+
 h1 {
 
     font-size: 55px;
+
     letter-spacing: 5px;
+
+    color: #00eaff;
+
     text-shadow:
     0 0 10px cyan,
     0 0 30px blue;
@@ -27,27 +32,51 @@ h1 {
 }
 
 
+
+/* SUBTITULOS */
+
 h2 {
 
     color: #b56cff;
-    text-shadow: 0 0 15px purple;
+
+    text-shadow:
+    0 0 10px purple;
 
 }
 
+
+h3 {
+
+    color: cyan;
+
+    text-shadow:
+    0 0 10px cyan;
+
+}
+
+
+
+/* TEXTOS */
 
 p {
 
     font-size: 20px;
 
+    line-height: 1.5;
+
 }
 
 
+
+/* BOTONES */
+
 button {
 
-    background: transparent;
-    color: cyan;
+    background: rgba(0,0,0,0.7);
 
-    border: 2px solid cyan;
+    color: #00eaff;
+
+    border: 2px solid #00eaff;
 
     padding: 15px 35px;
 
@@ -60,38 +89,145 @@ button {
     box-shadow:
     0 0 15px cyan;
 
+    transition: 0.3s;
+
 }
+
 
 
 button:hover {
 
-    background: cyan;
+    background: #00eaff;
+
     color: black;
+
+    box-shadow:
+    0 0 30px cyan;
 
 }
 
+
+
+/* PANEL DE MISION */
+
+#mensaje {
+
+    margin: 40px auto;
+
+    max-width: 650px;
+
+    padding: 30px;
+
+    background:
+    rgba(0,0,20,0.85);
+
+
+    border: 2px solid #00eaff;
+
+
+    color: #00eaff;
+
+
+    font-size: 22px;
+
+
+    line-height: 1.6;
+
+
+    text-align: center;
+
+
+    box-shadow:
+
+    0 0 10px #00eaff,
+
+    0 0 30px #0066ff;
+
+
+
+    animation: aparecer 1s ease;
+
+}
+
+
+
+/* TITULOS DENTRO DEL PANEL */
+
+#mensaje h2 {
+
+    color: #b56cff;
+
+    text-shadow:
+
+    0 0 15px purple;
+
+}
+
+
+
+/* ANIMACION HOLOGRAMA */
+
+@keyframes aparecer {
+
+
+    from {
+
+        opacity:0;
+
+        transform: translateY(20px);
+
+    }
+
+
+    to {
+
+        opacity:1;
+
+        transform: translateY(0);
+
+    }
+
+
+}
+
+
+
+/* LISTA DE CUARZOS */
 
 ul {
 
-    list-style: none;
-    padding: 0;
+    list-style:none;
+
+    padding:0;
 
 }
+
 
 
 li {
 
-    margin: 15px;
+    margin:15px;
 
-    font-size: 22px;
+    font-size:22px;
+
+    text-shadow:
+
+    0 0 10px cyan;
 
 }
 
 
+
+/* SEPARADOR */
+
 hr {
 
-    border-color: cyan;
+    border:1px solid cyan;
 
-    margin: 40px;
+    box-shadow:
+
+    0 0 10px cyan;
+
+    margin:40px;
 
 }

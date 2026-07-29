@@ -1,1 +1,21 @@
-game/scenesDime si ya creaste game/scenes/BootScene.js.
+class BootScene extends Phaser.Scene {
+    constructor() {
+        super("BootScene");
+    }
+
+    preload() {
+        // Aquí cargaremos imágenes, sonidos y mapas.
+    }
+
+    create() {
+        this.add.text(220, 180, "LOS 7 CUARZOS", {
+            fontSize: "40px",
+            color: "#00ffff"
+        });
+
+        this.add.text(220, 240, "BootScene cargada correctamente", {
+            fontSize: "22px",
+            color: "#ffffff"
+        });
+    }
+}

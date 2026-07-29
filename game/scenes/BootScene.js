@@ -1,4 +1,5 @@
 console.log("ESTE ES EL BOOTSCENE NUEVO");
+
 class BootScene extends Phaser.Scene {
 
     constructor() {
@@ -24,23 +25,25 @@ class BootScene extends Phaser.Scene {
             .setStrokeStyle(3, 0x00ffff);
 
 
-        // Botón Nueva partida
+        // Botón Nueva Partida
         let start = this.add.text(270, 220, "▶ NUEVA PARTIDA", {
             fontSize: "32px",
             color: "#ffffff"
         });
 
-       start.on("pointerover", () => {
-       start.setColor("#00ffff");
-       });
+        start.setInteractive();
 
-       start.on("pointerout", () => {
-       start.setColor("#ffffff");
-       });
+        start.on("pointerover", () => {
+            start.setColor("#00ffff");
+        });
 
-       start.on("pointerdown", () => {
-       this.scene.start("WorldScene");
-       });
+        start.on("pointerout", () => {
+            start.setColor("#ffffff");
+        });
+
+        start.on("pointerdown", () => {
+            this.scene.start("WorldScene");
+        });
 
 
         // Historia
@@ -51,6 +54,10 @@ class BootScene extends Phaser.Scene {
 
         historia.setInteractive();
 
+        historia.on("pointerdown", () => {
+            console.log("Historia");
+        });
+
 
         // Opciones
         let opciones = this.add.text(310, 380, "OPCIONES", {
@@ -59,6 +66,10 @@ class BootScene extends Phaser.Scene {
         });
 
         opciones.setInteractive();
+
+        opciones.on("pointerdown", () => {
+            console.log("Opciones");
+        });
 
     }
 }

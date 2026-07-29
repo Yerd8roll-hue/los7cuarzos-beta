@@ -1,3 +1,4 @@
+console.log("ESTE ES EL BOOTSCENE NUEVO");
 class BootScene extends Phaser.Scene {
 
     constructor() {

@@ -1,5 +1,5 @@
 // LOS 7 CUARZOS - Beta 1.0
-// Sistema inicial de juego
+// sSitema inicial de juego
 
 
 let cuarzosEncontrados = 0;

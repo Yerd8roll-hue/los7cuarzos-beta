@@ -1,4 +1,5 @@
-class WorldScene extends Phaser.Scene {
+
+     class WorldScene extends Phaser.Scene {
 
     constructor() {
         super("WorldScene");
@@ -7,11 +8,11 @@ class WorldScene extends Phaser.Scene {
 
     create() {
 
-        // Fondo
         this.cameras.main.setBackgroundColor("#080818");
 
 
         // Título
+
         this.add.text(120, 40, "VALLE DEL CUARZO DEL ALMA", {
             fontSize: "38px",
             color: "#00ffff"
@@ -39,6 +40,7 @@ class WorldScene extends Phaser.Scene {
         // PERSONAJE
         // =====================
 
+
         this.player = this.add.rectangle(
             400,
             300,
@@ -52,36 +54,19 @@ class WorldScene extends Phaser.Scene {
 
 
 
-        // Aura del personaje (apagada al inicio)
+        // Aura del personaje apagada
 
-        // Aura del personaje
         this.auraJugador = this.add.circle(
             400,
             300,
             55,
             0xff00ff,
-            0.35
+            0
         );
 
-this.auraJugador.setDepth(1);
-this.player.setDepth(2);
 
-
-        this.tweens.add({
-
-            targets:this.auraJugador,
-
-            scale:1.4,
-
-            alpha:0.2,
-
-            duration:900,
-
-            yoyo:true,
-
-            repeat:-1
-
-        });
+        this.auraJugador.setDepth(1);
+        this.player.setDepth(2);
 
 
 
@@ -120,7 +105,7 @@ this.player.setDepth(2);
 
 
 
-        // Brillo del cuarzo
+        // Pulso del cuarzo
 
         this.tweens.add({
 
@@ -158,12 +143,12 @@ this.player.setDepth(2);
 
 
 
-        // Partículas
+        // Partículas del cuarzo
 
         this.particulas = [];
 
 
-        for(let i=0;i<20;i++){
+        for(let i = 0; i < 20; i++){
 
             let energia = this.add.circle(
                 600,
@@ -191,7 +176,7 @@ this.player.setDepth(2);
 
 
 
-        // Mensaje historia
+        // Historia
 
         this.historia = this.add.text(
             100,
@@ -209,6 +194,7 @@ this.player.setDepth(2);
 
 
 
+
     update(){
 
 
@@ -218,20 +204,24 @@ this.player.setDepth(2);
 
         // Movimiento jugador
 
-        if(this.keys.left.isDown)
+        if(this.keys.left.isDown){
             this.player.x -= speed;
+        }
 
 
-        if(this.keys.right.isDown)
+        if(this.keys.right.isDown){
             this.player.x += speed;
+        }
 
 
-        if(this.keys.up.isDown)
+        if(this.keys.up.isDown){
             this.player.y -= speed;
+        }
 
 
-        if(this.keys.down.isDown)
+        if(this.keys.down.isDown){
             this.player.y += speed;
+        }
 
 
 
@@ -248,7 +238,7 @@ this.player.setDepth(2);
 
 
             let movimiento =
-            Math.sin(this.time.now/300)*10;
+            Math.sin(this.time.now / 300) * 10;
 
 
             this.cuarzo.y =
@@ -262,23 +252,23 @@ this.player.setDepth(2);
 
             this.particulas.forEach((p,i)=>{
 
-
                 let angulo =
-                this.time.now/500+i;
+                this.time.now / 500 + i;
 
 
                 p.x =
-                600 + Math.cos(angulo)*75;
+                600 + Math.cos(angulo) * 75;
 
 
                 p.y =
                 this.cuarzo.y +
-                Math.sin(angulo)*75;
-
+                Math.sin(angulo) * 75;
 
             });
 
         }
+
+
 
 
 
@@ -306,11 +296,14 @@ this.player.setDepth(2);
                 this.cuarzoEncontrado = true;
 
 
+
                 this.cuarzo.destroy();
 
                 this.cuarzoAura.destroy();
 
 
+
+                // Actualizar contador
 
                 this.cuarzos = 1;
 
@@ -321,38 +314,77 @@ this.player.setDepth(2);
 
 
 
-                // Activar energía violeta
-
-               // Activar aura del Cuarzo del Alma
-
-this.auraJugador.setFillStyle(
-    0xff00ff,
-    0.5
-);
-
-this.tweens.add({
-
-    targets: this.auraJugador,
-
-    scale: 1.6,
-
-    alpha: 0.2,
-
-    duration: 700,
-
-    yoyo: true,
-
-    repeat: -1
-
-});
+                // =====================
+                // DESPERTAR DEL PODER
+                // =====================
 
 
+                this.auraJugador.setFillStyle(
+                    0xff00ff,
+                    0.5
+                );
+
+
+
+                this.tweens.add({
+
+                    targets:this.auraJugador,
+
+                    scale:1.7,
+
+                    alpha:0.2,
+
+                    duration:700,
+
+                    yoyo:true,
+
+                    repeat:-1
+
+                });
+
+
+
+                // Explosión de energía
+
+                let energia = this.add.circle(
+                    this.player.x,
+                    this.player.y,
+                    20,
+                    0xff00ff,
+                    0.8
+                );
+
+
+
+                this.tweens.add({
+
+                    targets:energia,
+
+                    scale:5,
+
+                    alpha:0,
+
+                    duration:800,
+
+                    onComplete:()=>{
+
+                        energia.destroy();
+
+                    }
+
+                });
+
+
+
+                // Mensaje
 
                 this.historia.setText(
+
                     "💎 CUARZO DEL ALMA DESPERTADO\n\n"+
-                    "El cristal ha elegido a su portador.\n\n"+
+                    "El cristal ha elegido al portador.\n\n"+
                     "Poder obtenido:\n"+
                     "🟣 Energía espiritual"
+
                 );
 
 
@@ -364,6 +396,8 @@ this.tweens.add({
     }
 
 }
+
+
 
 
        

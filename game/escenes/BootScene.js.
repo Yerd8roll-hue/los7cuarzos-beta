@@ -11,10 +11,7 @@ class BootScene extends Phaser.Scene {
             color: "#00ffff"
         });
 
-        this.add.text(150, 230, "ESCENA INICIADA", {
-            fontSize: "30px",
-            color: "#ffffff"
-        });
-
     }
 }
+
+console.log("BootScene cargada");

@@ -1,0 +1,16 @@
+Los7Cuarzos/
+
+index.html
+style.css
+
+/game/
+    main.js
+    preload.js
+    sceneMenu.js
+    sceneSector09.js
+    player.js
+    enemy.js
+    ui.js
+
+/imagenes/
+/sonidos/

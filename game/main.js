@@ -8,6 +8,6 @@ const game = new Phaser.Game({
 
     backgroundColor: "#111111",
 
-    scene: BootScene
+    scene: [BootScene, WorldScene]
 
 });

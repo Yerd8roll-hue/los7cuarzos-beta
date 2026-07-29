@@ -6,28 +6,51 @@ class WorldScene extends Phaser.Scene {
 
     create() {
 
-        // Fondo del mundo
         this.cameras.main.setBackgroundColor("#1b263b");
 
-        // Título de la zona
-        this.add.text(180, 80, "VALLE DEL PRIMER CUARZO", {
+        this.add.text(150, 50, "VALLE DEL PRIMER CUARZO", {
             fontSize: "40px",
             color: "#00ffff"
         });
 
-        // Personaje temporal
-        this.add.rectangle(400, 300, 50, 70, 0x00ff00);
+        // Jugador
+        this.player = this.add.rectangle(
+            400,
+            300,
+            50,
+            70,
+            0x00ff00
+        );
 
-        this.add.text(320, 400, "HÉROE INICIAL", {
-            fontSize: "25px",
-            color: "#ffffff"
-        });
+        // Teclas
+        this.keys = this.input.keyboard.createCursorKeys();
 
-        // Misión
-        this.add.text(150, 500, "Encuentra el primer cuarzo...", {
+        this.add.text(250, 500, "Busca el primer cuarzo 💎", {
             fontSize: "25px",
             color: "#ffff00"
         });
+
+    }
+
+    update() {
+
+        let speed = 3;
+
+        if (this.keys.left.isDown) {
+            this.player.x -= speed;
+        }
+
+        if (this.keys.right.isDown) {
+            this.player.x += speed;
+        }
+
+        if (this.keys.up.isDown) {
+            this.player.y -= speed;
+        }
+
+        if (this.keys.down.isDown) {
+            this.player.y += speed;
+        }
 
     }
 }

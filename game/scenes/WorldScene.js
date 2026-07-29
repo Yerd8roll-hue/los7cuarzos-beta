@@ -6,7 +6,7 @@ class WorldScene extends Phaser.Scene {
 
     create() {
 
-        // Fondo
+        // Fondo del mundo
         this.cameras.main.setBackgroundColor("#1b263b");
 
 
@@ -17,7 +17,7 @@ class WorldScene extends Phaser.Scene {
         });
 
 
-        // Jugador
+        // Jugador temporal
         this.player = this.add.rectangle(
             400,
             300,
@@ -31,8 +31,8 @@ class WorldScene extends Phaser.Scene {
         this.keys = this.input.keyboard.createCursorKeys();
 
 
-        // Texto de misión
-        this.add.text(180, 520, "Explora el valle y encuentra el cuarzo 💎", {
+        // Información
+        this.add.text(180, 520, "Explora el valle y encuentra el primer cuarzo 💎", {
             fontSize: "25px",
             color: "#ffff00"
         });

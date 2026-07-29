@@ -1,21 +1,16 @@
-class BootScene extends Phaser.Scene {
-    constructor() {
-        super("BootScene");
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    backgroundColor: "#111111",
+    scene: {
+        create: function () {
+            this.add.text(200, 200, "LOS 7 CUARZOS FUNCIONA", {
+                fontSize: "40px",
+                color: "#00ffff"
+            });
+        }
     }
+};
 
-    preload() {
-
-    }
-
-    create() {
-        this.add.text(220, 180, "LOS 7 CUARZOS", {
-            fontSize: "40px",
-            color: "#00ffff"
-        });
-
-        this.add.text(220, 240, "BootScene cargada correctamente", {
-            fontSize: "22px",
-            color: "#ffffff"
-        });
-    }
-}
+const game = new Phaser.Game(config);

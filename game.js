@@ -76,19 +76,70 @@ const ctx = canvas.getContext("2d");
 
 // ---------- JUGADOR ----------
 
-const jugador={
+// Imagen de Kael
 
-x:80,
+const imagenKael = new Image();
 
-y:80,
+imagenKael.src = "imagenes/kael.png";
 
-ancho:40,
 
-alto:40,
+// ---------- DIBUJAR ----------
 
-velocidad:5
+function dibujar(){
 
-};
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+
+// Fondo
+
+ctx.fillStyle="#111122";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+
+// Kael
+
+if(imagenKael.complete){
+
+    ctx.drawImage(
+        imagenKael,
+        jugador.x,
+        jugador.y,
+        jugador.ancho,
+        jugador.alto
+    );
+
+}else{
+
+    // Si la imagen aún no existe, dibuja un cuadrado azul
+
+    ctx.fillStyle="cyan";
+
+    ctx.fillRect(
+        jugador.x,
+        jugador.y,
+        jugador.ancho,
+        jugador.alto
+    );
+
+}
+
+
+// Cuarzo
+
+if(!cuarzo.encontrado){
+
+    ctx.fillStyle="yellow";
+
+    ctx.fillRect(
+        cuarzo.x,
+        cuarzo.y,
+        cuarzo.ancho,
+        cuarzo.alto
+    );
+
+}
+
+}
 
 
 

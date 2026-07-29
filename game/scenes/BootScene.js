@@ -1,5 +1,3 @@
-console.log("BOOTSCENE LEIDA");
-
 class BootScene extends Phaser.Scene {
 
     constructor() {
@@ -7,11 +5,9 @@ class BootScene extends Phaser.Scene {
     }
 
     create() {
-
-        this.add.text(150, 150, "LOS 7 CUARZOS", {
-            fontSize: "50px",
+        this.add.text(200, 200, "LOS 7 CUARZOS", {
+            fontSize: "40px",
             color: "#00ffff"
         });
-
     }
 }

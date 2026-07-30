@@ -26,19 +26,15 @@
 
         // Contador
 
-        this.cuarzos = 0;
+this.player = this.add.image(
+    400,
+    300,
+    "kael"
+);
 
-        this.textoCuarzos = this.add.text(
-            20,
-            20,
-            "💎 Cuarzos: 0/7",
-            {
-                fontSize: "25px",
-                color:"#ffffff"
-            }
-        );
-
-
+this.player.setScale(0.35);
+this.player.setDepth(2);
+       
 
         // =====================
         // PERSONAJE

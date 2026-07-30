@@ -44,13 +44,14 @@
         // PERSONAJE
         // =====================
 
-        this.player = this.add.rectangle(
-            400,
-            300,
-            50,
-            70,
-            0x00ff00
-        );
+        this.player = this.add.image(
+    400,
+    300,
+    "kael"
+);
+
+this.player.setScale(0.35);
+this.player.setDepth(2);
 
 
         this.keys = this.input.keyboard.createCursorKeys();

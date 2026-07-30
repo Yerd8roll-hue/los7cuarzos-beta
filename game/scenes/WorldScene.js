@@ -12,9 +12,14 @@
 
     create() {
 
-        this.cameras.main.setBackgroundColor("#080818");
+this.player = this.add.image(
+    400,
+    300,
+    "kael"
+);
 
-
+this.player.setScale(0.35);
+this.player.setDepth(2);
         // Título
 
         this.add.text(120, 40, "VALLE DEL CUARZO DEL ALMA", {

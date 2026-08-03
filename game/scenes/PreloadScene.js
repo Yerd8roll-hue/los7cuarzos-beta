@@ -5,11 +5,15 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
     preload() {
-        ...
+
+        // aquí van tus cargas
+
     }
 
     create() {
-        ...
+
+        this.scene.start("MenuScene");
+
     }
 
 }

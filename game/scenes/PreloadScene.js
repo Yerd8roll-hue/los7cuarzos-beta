@@ -1,22 +1,23 @@
 export default class PreloadScene extends Phaser.Scene {
+
     constructor() {
         super("PreloadScene");
     }
 
     preload() {
 
-        this.load.spritesheet(
+        // Cargar Kael como imagen normal (prueba)
+        this.load.image(
             "kael",
-            "assets/personajes/Kael/spritesheet.png",
-            {
-                frameWidth: 128,
-                frameHeight: 128
-            }
+            "game/assets/personajes/Kael/spritesheet.png"
         );
 
     }
 
     create() {
+
         this.scene.start("MenuScene");
+
     }
+
 }

@@ -1,5 +1,7 @@
 // game/scenes/WorldScene.js
 
+import { createKaelAnimations } from "../animations/KaelAnimations.js";
+
 export default class WorldScene extends Phaser.Scene {
 
     constructor() {
@@ -17,14 +19,16 @@ export default class WorldScene extends Phaser.Scene {
             color: "#00ffff"
         }).setOrigin(0.5);
 
+        // Crear animaciones
+        createKaelAnimations(this);
+
         // Kael
         this.kael = this.physics.add.sprite(300, 500, "kael");
 
-        this.kael.setFrame(0);
-
-        this.kael.setScale(1);
-
         this.kael.setCollideWorldBounds(true);
+
+        // Animación inicial
+        this.kael.play("kael-idle");
 
     }
 
@@ -32,4 +36,4 @@ export default class WorldScene extends Phaser.Scene {
 
     }
 
-} 
+}

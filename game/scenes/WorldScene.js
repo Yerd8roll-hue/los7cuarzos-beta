@@ -1,3 +1,5 @@
+import { createKaelAnimations } from "../animations/KaelAnimations.js";
+
 export default class WorldScene extends Phaser.Scene {
 
     constructor() {
@@ -13,11 +15,13 @@ export default class WorldScene extends Phaser.Scene {
             color: "#00ffff"
         }).setOrigin(0.5);
 
-        console.log("¿Existe kael?", this.textures.exists("kael"));
+        createKaelAnimations(this);
 
-        const imagen = this.add.image(640, 360, "kael");
+        this.kael = this.physics.add.sprite(300, 500, "kael");
 
-        imagen.setScale(0.35);
+        this.kael.setScale(2);
+
+        this.kael.play("kael-idle");
 
     }
 

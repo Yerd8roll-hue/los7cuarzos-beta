@@ -22,7 +22,7 @@ export default class WorldScene extends Phaser.Scene {
         // Crear animaciones
         createKaelAnimations(this);
 
-        // Kael
+        // Crear Kael
         this.kael = this.physics.add.sprite(300, 500, "kael");
 
         this.kael.setCollideWorldBounds(true);
@@ -30,9 +30,20 @@ export default class WorldScene extends Phaser.Scene {
         // Animación inicial
         this.kael.play("kael-idle");
 
+        // Controles
+        this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.keys = this.input.keyboard.addKeys({
+            A: Phaser.Input.Keyboard.KeyCodes.A,
+            D: Phaser.Input.Keyboard.KeyCodes.D,
+            SPACE: Phaser.Input.Keyboard.KeyCodes.SPACE
+        });
+
     }
 
     update() {
+
+        // El movimiento lo agregaremos en el siguiente paso.
 
     }
 

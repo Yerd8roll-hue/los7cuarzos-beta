@@ -4,7 +4,7 @@ export function createKaelAnimations(scene) {
         key: "kael-idle",
         frames: scene.anims.generateFrameNumbers("kael", {
             start: 0,
-            end: 7
+            end: 5
         }),
         frameRate: 8,
         repeat: -1
@@ -13,8 +13,8 @@ export function createKaelAnimations(scene) {
     scene.anims.create({
         key: "kael-walk",
         frames: scene.anims.generateFrameNumbers("kael", {
-            start: 8,
-            end: 15
+            start: 6,
+            end: 13
         }),
         frameRate: 10,
         repeat: -1
@@ -23,8 +23,8 @@ export function createKaelAnimations(scene) {
     scene.anims.create({
         key: "kael-run",
         frames: scene.anims.generateFrameNumbers("kael", {
-            start: 16,
-            end: 25
+            start: 14,
+            end: 21
         }),
         frameRate: 14,
         repeat: -1
@@ -33,31 +33,21 @@ export function createKaelAnimations(scene) {
     scene.anims.create({
         key: "kael-jump",
         frames: scene.anims.generateFrameNumbers("kael", {
-            start: 26,
-            end: 30
+            start: 22,
+            end: 25
         }),
-        frameRate: 12,
+        frameRate: 10,
         repeat: 0
     });
 
     scene.anims.create({
         key: "kael-fall",
         frames: scene.anims.generateFrameNumbers("kael", {
-            start: 31,
-            end: 34
+            start: 26,
+            end: 29
         }),
         frameRate: 10,
         repeat: -1
-    });
-
-    scene.anims.create({
-        key: "kael-land",
-        frames: scene.anims.generateFrameNumbers("kael", {
-            start: 35,
-            end: 38
-        }),
-        frameRate: 12,
-        repeat: 0
     });
 
 }

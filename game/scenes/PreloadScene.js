@@ -6,10 +6,13 @@ export default class PreloadScene extends Phaser.Scene {
 
     preload() {
 
-        // Cargar Kael como imagen normal (prueba)
-        this.load.image(
+        this.load.spritesheet(
             "kael",
-            "game/assets/personajes/Kael/spritesheet.png"
+            "game/assets/personajes/Kael/spritesheet.png",
+            {
+                frameWidth: 64,
+                frameHeight: 64
+            }
         );
 
     }

@@ -5,16 +5,9 @@ export default class BootScene extends Phaser.Scene {
     }
 
 
-    preload() {
-
-        console.log("Iniciando juego...");
-
-    }
-
-
     create() {
 
-        this.scene.start("MenuScene");
+        this.scene.start("PreloadScene");
 
     }
 

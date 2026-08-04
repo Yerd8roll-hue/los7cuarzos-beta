@@ -5,16 +5,9 @@ export default class BootScene extends Phaser.Scene {
     }
 
 
-    preload() {
-
-        console.log("Cargando BootScene");
-
-    }
-
-
     create() {
 
-        console.log("Entrando al MenuScene");
+        console.log("BOOT OK");
 
         this.scene.start("MenuScene");
 

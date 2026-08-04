@@ -22,6 +22,7 @@ export default class PreloadScene extends Phaser.Scene {
         );
 
 
+
         //=========================================
         // CUARZO ALMA
         //=========================================
@@ -32,31 +33,32 @@ export default class PreloadScene extends Phaser.Scene {
         );
 
 
+
         //=========================================
         // VALLE DEL CUARZO DEL ALMA
         //=========================================
 
         this.load.image(
             "sky",
-            "assets/valle_del_alma/sky.png"
+            "assets/valle del_alma/sky.png"
         );
 
 
         this.load.image(
             "cityBack",
-            "assets/valle_del_alma/city_back.png"
+            "assets/valle del_alma/city_back.png"
         );
 
 
         this.load.image(
             "cityFront",
-            "assets/valle_del_alma/city_front.png"
+            "assets/valle del_alma/city_front.png"
         );
 
 
         this.load.image(
             "cables",
-            "assets/valle_del_alma/cables.png"
+            "assets/valle del_alma/cables.png"
         );
 
 
@@ -72,4 +74,4 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
 }
-         
+  

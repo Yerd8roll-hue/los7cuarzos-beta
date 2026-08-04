@@ -1,12 +1,19 @@
 import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
+
 export default class WorldScene extends Phaser.Scene {
 
+
     constructor() {
+
         super("WorldScene");
+
     }
 
+
+
     create() {
+
 
         //=========================================
         // COLOR DE FONDO
@@ -14,15 +21,25 @@ export default class WorldScene extends Phaser.Scene {
 
         this.cameras.main.setBackgroundColor("#05070d");
 
+
+
         //=========================================
         // MUNDO
         //=========================================
 
-        this.physics.world.setBounds(0, 0, 3000, 720);
+        this.physics.world.setBounds(
+            0,
+            0,
+            3000,
+            720
+        );
+
+
 
         //=========================================
         // FONDO PARALLAX
         //=========================================
+
 
         this.sky = this.add.tileSprite(
             0,
@@ -34,6 +51,8 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0)
         .setScrollFactor(0);
 
+
+
         this.cityBack = this.add.tileSprite(
             0,
             0,
@@ -43,6 +62,8 @@ export default class WorldScene extends Phaser.Scene {
         )
         .setOrigin(0)
         .setScrollFactor(0);
+
+
 
         this.cityFront = this.add.tileSprite(
             0,
@@ -54,6 +75,8 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0)
         .setScrollFactor(0);
 
+
+
         this.cables = this.add.tileSprite(
             0,
             0,
@@ -64,22 +87,29 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0)
         .setScrollFactor(0);
 
+
+
         //=========================================
-        // TITULO
+        // TITULO DEL NIVEL
         //=========================================
 
         this.add.text(
             640,
-            40,
-            "VALLE DEL CUARZO DEL ALMA",
+            50,
+            "VALLE DEL CUARZO\nDEL ALMA",
             {
+
                 fontSize: "32px",
                 color: "#00ffff",
-                fontStyle: "bold"
+                fontStyle: "bold",
+                align: "center"
+
             }
         )
         .setOrigin(0.5)
         .setScrollFactor(0);
+
+
 
         //=========================================
         // SUELO
@@ -93,16 +123,21 @@ export default class WorldScene extends Phaser.Scene {
             0x353535
         );
 
+
         this.physics.add.existing(
             this.ground,
             true
         );
 
+
+
         //=========================================
-        // ANIMACIONES
+        // ANIMACIONES KAEL
         //=========================================
 
         createKaelAnimations(this);
+
+
 
         //=========================================
         // KAEL
@@ -114,13 +149,19 @@ export default class WorldScene extends Phaser.Scene {
             "kael"
         );
 
+
         this.kael.setBounce(0);
+
         this.kael.setCollideWorldBounds(true);
+
+
 
         this.physics.add.collider(
             this.kael,
             this.ground
         );
+
+
 
         //=========================================
         // CAMARA
@@ -131,12 +172,15 @@ export default class WorldScene extends Phaser.Scene {
             true
         );
 
+
         this.cameras.main.setBounds(
             0,
             0,
             3000,
             720
         );
+
+
 
         //=========================================
         // CONTROLES
@@ -145,85 +189,134 @@ export default class WorldScene extends Phaser.Scene {
         this.cursors =
             this.input.keyboard.createCursorKeys();
 
+
+
         this.keys =
             this.input.keyboard.addKeys({
 
                 A:
                 Phaser.Input.Keyboard.KeyCodes.A,
 
+
                 D:
                 Phaser.Input.Keyboard.KeyCodes.D,
+
 
                 SPACE:
                 Phaser.Input.Keyboard.KeyCodes.SPACE
 
             });
 
+
     }
 
+
+
+
     update() {
+
+
 
         //=========================================
         // PARALLAX
         //=========================================
 
+
         this.sky.tilePositionX =
             this.cameras.main.scrollX * 0.05;
+
+
 
         this.cityBack.tilePositionX =
             this.cameras.main.scrollX * 0.15;
 
+
+
         this.cityFront.tilePositionX =
             this.cameras.main.scrollX * 0.30;
+
+
 
         this.cables.tilePositionX =
             this.cameras.main.scrollX * 0.45;
 
+
+
+
         //=========================================
-        // MOVIMIENTO
+        // MOVIMIENTO KAEL
         //=========================================
+
 
         if (
+
             this.keys.A.isDown ||
             this.cursors.left.isDown
+
         ) {
+
 
             this.kael.setVelocityX(-180);
+
             this.kael.setFlipX(true);
 
+
         }
+
         else if (
+
             this.keys.D.isDown ||
             this.cursors.right.isDown
+
         ) {
 
+
             this.kael.setVelocityX(180);
+
             this.kael.setFlipX(false);
 
+
         }
+
         else {
+
 
             this.kael.setVelocityX(0);
 
+
         }
+
+
+
 
         //=========================================
         // SALTO
         //=========================================
 
+
         if (
+
             (
                 this.keys.SPACE.isDown ||
                 this.cursors.up.isDown
             )
+
             &&
+
             this.kael.body.blocked.down
+
         ) {
+
 
             this.kael.setVelocityY(-500);
 
+
         }
+
 
     }
 
+
 }
+    
+

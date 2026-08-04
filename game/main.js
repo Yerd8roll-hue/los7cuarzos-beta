@@ -1,7 +1,4 @@
-// game/main.js
+import config from "./config/GameConfig.js";
 
-import GameConfig from "./config/GameConfig.js";
 
-window.addEventListener("load", () => {
-    new Phaser.Game(GameConfig);
-});
+new Phaser.Game(config);

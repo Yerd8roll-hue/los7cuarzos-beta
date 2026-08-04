@@ -1,28 +1,47 @@
-//=========================
-// VALLE DEL ALMA
-//=========================
+export default class PreloadScene extends Phaser.Scene {
 
-this.load.image(
-    "sky",
-    "assets/valle del_alma/sky.png"
-);
+    constructor() {
+        super("PreloadScene");
+    }
 
-this.load.image(
-    "cityBack",
-    "assets/valle del_alma/city_back.png"
-);
 
-this.load.image(
-    "cityFront",
-    "assets/valle del_alma/city_front.png"
-);
+    preload() {
 
-this.load.image(
-    "cables",
-    "assets/valle del_alma/cables.png"
-);
+        // Fondo
+        this.load.image(
+            "fondo",
+            "assets/fondos/neo_terra.png"
+        );
 
-this.load.image(
-    "floor",
-    "assets/valle del_alma/floor.png"
-);
+
+        // Spritesheet de Kael
+        this.load.spritesheet(
+            "kael",
+            "assets/personajes/kael/spritesheet.png",
+            {
+                frameWidth: 64,
+                frameHeight: 64
+            }
+        );
+
+
+        // Cuarzo Alma
+        this.load.image(
+            "cuarzo-alma",
+            "assets/cuarzos/alma.png"
+        );
+
+    }
+
+
+    create() {
+
+        console.log("Recursos cargados correctamente");
+
+
+        // Pasar al mundo
+        this.scene.start("WorldScene");
+
+    }
+
+}

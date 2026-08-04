@@ -1,14 +1,34 @@
-export default class BootScene extends Phaser.Scene {
+import BootScene from "../scenes/BootScene.js";
+import MenuScene from "../scenes/MenuScene.js";
+import PreloadScene from "../scenes/PreloadScene.js";
+import WorldScene from "../scenes/WorldScene.js";
 
-    constructor() {
-        super("BootScene");
-    }
+
+const config = {
+
+    type: Phaser.AUTO,
+
+    width: 800,
+    height: 600,
+
+    physics: {
+        default: "arcade",
+        arcade: {
+            gravity: {
+                y: 1000
+            },
+            debug: false
+        }
+    },
+
+    scene: [
+        BootScene,
+        MenuScene,
+        PreloadScene,
+        WorldScene
+    ]
+
+};
 
 
-    create() {
-
-        this.scene.start("PreloadScene");
-
-    }
-
-}
+export default config;

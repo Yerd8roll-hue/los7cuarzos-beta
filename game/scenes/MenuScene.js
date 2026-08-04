@@ -1,36 +1,92 @@
-// game/scenes/MenuScene.js
-
 export default class MenuScene extends Phaser.Scene {
 
     constructor() {
         super("MenuScene");
     }
 
+
     create() {
 
-        this.add.text(640, 180, "LOS 7 CUARZOS", {
-            fontSize: "48px",
-            color: "#00ffff",
-            fontStyle: "bold"
-        }).setOrigin(0.5);
+        console.log("MenuScene funcionando");
 
-        this.add.text(640, 260, "Beta 2.0", {
-            fontSize: "24px",
-            color: "#ffffff"
-        }).setOrigin(0.5);
 
-        const startButton = this.add.text(640, 420, "INICIAR", {
-            fontSize: "32px",
-            backgroundColor: "#00aaff",
-            color: "#000000",
-            padding: { x: 20, y: 10 }
-        })
+        // Fondo del menú
+        this.cameras.main.setBackgroundColor("#050505");
+
+
+        // Título
+
+        this.add.text(
+            400,
+            180,
+            "LOS 7 CUARZOS",
+            {
+                fontSize: "48px",
+                fontFamily: "Arial",
+                color: "#00ffff"
+            }
+        )
+        .setOrigin(0.5);
+
+
+
+        // Botón INICIO
+
+        const boton = this.add.text(
+            400,
+            330,
+            "INICIO",
+            {
+                fontSize: "35px",
+                fontFamily: "Arial",
+                color: "#ffffff",
+                backgroundColor: "#111111",
+                padding: {
+                    x: 30,
+                    y: 15
+                }
+            }
+        )
         .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true });
+        .setInteractive();
 
-        startButton.on("pointerdown", () => {
-            this.scene.start("WorldScene");
-        });
+
+
+        boton.on(
+            "pointerover",
+            () => {
+
+                boton.setStyle({
+                    color: "#00ffff"
+                });
+
+            }
+        );
+
+
+        boton.on(
+            "pointerout",
+            () => {
+
+                boton.setStyle({
+                    color: "#ffffff"
+                });
+
+            }
+        );
+
+
+        boton.on(
+            "pointerdown",
+            () => {
+
+                console.log("Iniciando juego");
+
+                this.scene.start("PreloadScene");
+
+            }
+        );
+
 
     }
 

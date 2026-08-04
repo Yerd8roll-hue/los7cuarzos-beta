@@ -7,14 +7,45 @@ export default class PreloadScene extends Phaser.Scene {
 
     preload() {
 
-        // Fondo
+
+        // =========================
+        // FONDO VALLE DEL ALMA
+        // =========================
+
         this.load.image(
-            "fondo",
-            "assets/fondos/neo_terra.png"
+            "sky",
+            "assets/valle del_alma/sky.png"
         );
 
 
-        // Spritesheet de Kael
+        this.load.image(
+            "city_back",
+            "assets/valle del_alma/city_back.png"
+        );
+
+
+        this.load.image(
+            "city_front",
+            "assets/valle del_alma/city_front.png"
+        );
+
+
+        this.load.image(
+            "cables",
+            "assets/valle del_alma/cables.png"
+        );
+
+
+        this.load.image(
+            "floor",
+            "assets/valle del_alma/floor.png"
+        );
+
+
+        // =========================
+        // PERSONAJE KAEL
+        // =========================
+
         this.load.spritesheet(
             "kael",
             "assets/personajes/kael/spritesheet.png",
@@ -25,7 +56,10 @@ export default class PreloadScene extends Phaser.Scene {
         );
 
 
-        // Cuarzo Alma
+        // =========================
+        // CUARZO ALMA
+        // =========================
+
         this.load.image(
             "cuarzo-alma",
             "assets/cuarzos/alma.png"
@@ -36,12 +70,12 @@ export default class PreloadScene extends Phaser.Scene {
 
     create() {
 
-        console.log("Recursos cargados correctamente");
+        console.log("Todos los recursos cargados");
 
 
-        // Pasar al mundo
         this.scene.start("WorldScene");
 
     }
 
 }
+

@@ -1,34 +1,23 @@
-import BootScene from "../scenes/BootScene.js";
-import MenuScene from "../scenes/MenuScene.js";
-import PreloadScene from "../scenes/PreloadScene.js";
-import WorldScene from "../scenes/WorldScene.js";
+export default class BootScene extends Phaser.Scene {
+
+    constructor() {
+        super("BootScene");
+    }
 
 
-const config = {
+    preload() {
 
-    type: Phaser.AUTO,
+        console.log("Cargando BootScene");
 
-    width: 800,
-    height: 600,
-
-    physics: {
-        default: "arcade",
-        arcade: {
-            gravity: {
-                y: 1000
-            },
-            debug: false
-        }
-    },
-
-    scene: [
-        BootScene,
-        MenuScene,
-        PreloadScene,
-        WorldScene
-    ]
-
-};
+    }
 
 
-export default config;
+    create() {
+
+        console.log("Entrando al MenuScene");
+
+        this.scene.start("MenuScene");
+
+    }
+
+}

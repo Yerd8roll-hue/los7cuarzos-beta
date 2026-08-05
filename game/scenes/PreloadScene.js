@@ -14,13 +14,12 @@ export default class PreloadScene extends Phaser.Scene {
 
         this.load.spritesheet(
             "kael",
-            "assets/personajes/kael/spritesheet.png",
+            "game/assets/personajes/Kael/spritesheet.png",
             {
                 frameWidth: 64,
                 frameHeight: 64
             }
         );
-
 
 
         //=========================================
@@ -29,9 +28,8 @@ export default class PreloadScene extends Phaser.Scene {
 
         this.load.image(
             "cuarzo-alma",
-            "assets/cuarzos/alma.png"
+            "game/assets/cuarzos/alma.png"
         );
-
 
 
         //=========================================
@@ -40,27 +38,32 @@ export default class PreloadScene extends Phaser.Scene {
 
         this.load.image(
             "sky",
-            "assets/valle del_alma/sky.png"
+            "game/assets/valle del_alma/sky.png"
         );
 
 
         this.load.image(
             "cityBack",
-            "assets/valle del_alma/city_back.png"
+            "game/assets/valle del_alma/city_back.png"
         );
 
 
         this.load.image(
             "cityFront",
-            "assets/valle del_alma/city_front.png"
+            "game/assets/valle del_alma/city_front.png"
         );
 
 
         this.load.image(
             "cables",
-            "assets/valle del_alma/cables.png"
+            "game/assets/valle del_alma/cables.png"
         );
 
+
+        this.load.image(
+            "floor",
+            "game/assets/valle del_alma/floor.png"
+        );
 
     }
 
@@ -74,4 +77,5 @@ export default class PreloadScene extends Phaser.Scene {
     }
 
 }
-  
+
+

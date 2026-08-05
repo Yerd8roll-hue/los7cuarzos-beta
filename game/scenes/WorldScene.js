@@ -5,15 +5,12 @@ export default class WorldScene extends Phaser.Scene {
 
 
     constructor() {
-
         super("WorldScene");
-
     }
 
 
 
     create() {
-
 
 
         //=========================================
@@ -38,10 +35,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
         //=========================================
-        // VALLE DEL ALMA
-        // FONDO PANORÁMICO
+        // CAPAS DEL VALLE DEL ALMA
         //=========================================
 
+
+        // CIELO
 
         this.sky = this.add.image(
             0,
@@ -49,10 +47,12 @@ export default class WorldScene extends Phaser.Scene {
             "sky"
         )
         .setOrigin(0)
-        .setScrollFactor(0)
-        .setDisplaySize(3000,720);
+        .setDepth(0)
+        .setScrollFactor(0);
 
 
+
+        // CIUDAD LEJANA
 
         this.cityBack = this.add.image(
             0,
@@ -60,10 +60,12 @@ export default class WorldScene extends Phaser.Scene {
             "cityBack"
         )
         .setOrigin(0)
-        .setScrollFactor(0)
-        .setDisplaySize(3000,720);
+        .setDepth(1)
+        .setScrollFactor(0);
 
 
+
+        // CIUDAD CERCANA
 
         this.cityFront = this.add.image(
             0,
@@ -71,10 +73,12 @@ export default class WorldScene extends Phaser.Scene {
             "cityFront"
         )
         .setOrigin(0)
-        .setScrollFactor(0)
-        .setDisplaySize(3000,720);
+        .setDepth(2)
+        .setScrollFactor(0);
 
 
+
+        // CABLES SUPERIORES
 
         this.cables = this.add.image(
             0,
@@ -82,9 +86,8 @@ export default class WorldScene extends Phaser.Scene {
             "cables"
         )
         .setOrigin(0)
-        .setScrollFactor(0)
-        .setDisplaySize(3000,720);
-
+        .setDepth(3)
+        .setScrollFactor(0);
 
 
 
@@ -99,15 +102,12 @@ export default class WorldScene extends Phaser.Scene {
             "floor"
         )
         .setOrigin(0)
-        .setDisplaySize(
-            3000,
-            100
-        );
+        .setDepth(4);
 
 
 
         //=========================================
-        // PISO FÍSICO INVISIBLE
+        // PISO FISICO
         //=========================================
 
 
@@ -132,31 +132,20 @@ export default class WorldScene extends Phaser.Scene {
         // TITULO
         //=========================================
 
-
         this.add.text(
             640,
             50,
             "VALLE DEL CUARZO\nDEL ALMA",
             {
-
-                fontSize: "32px",
+                fontSize:"32px",
                 color:"#00ffff",
                 fontStyle:"bold",
                 align:"center"
-
             }
         )
         .setOrigin(0.5)
-        .setScrollFactor(0);
-
-
-
-        //=========================================
-        // ANIMACIONES KAEL
-        //=========================================
-
-
-        createKaelAnimations(this);
+        .setScrollFactor(0)
+        .setDepth(10);
 
 
 
@@ -165,12 +154,17 @@ export default class WorldScene extends Phaser.Scene {
         //=========================================
 
 
+        createKaelAnimations(this);
+
+
         this.kael = this.physics.add.sprite(
             200,
             500,
             "kael"
         );
 
+
+        this.kael.setDepth(5);
 
         this.kael.setBounce(0);
 
@@ -245,12 +239,15 @@ export default class WorldScene extends Phaser.Scene {
         this.cameras.main.scrollX * 0.15;
 
 
+
         this.cityFront.x =
         this.cameras.main.scrollX * 0.30;
 
 
+
         this.cables.x =
         this.cameras.main.scrollX * 0.45;
+
 
 
 
@@ -271,10 +268,8 @@ export default class WorldScene extends Phaser.Scene {
         }
 
         else if(
-
             this.keys.D.isDown ||
             this.cursors.right.isDown
-
         ){
 
             this.kael.setVelocityX(180);
@@ -297,16 +292,12 @@ export default class WorldScene extends Phaser.Scene {
 
 
         if(
-
             (
-            this.keys.SPACE.isDown ||
-            this.cursors.up.isDown
+                this.keys.SPACE.isDown ||
+                this.cursors.up.isDown
             )
-
             &&
-
             this.kael.body.blocked.down
-
         ){
 
             this.kael.setVelocityY(-500);
@@ -314,11 +305,9 @@ export default class WorldScene extends Phaser.Scene {
         }
 
 
-
     }
 
 
 }
-
-
-
+  
+   

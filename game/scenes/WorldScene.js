@@ -90,6 +90,21 @@ export default class WorldScene extends Phaser.Scene {
 
 
         //=========================================
+        // PISO VISUAL DEL VALLE
+        //=========================================
+
+        this.floorImage = this.add.tileSprite(
+            0,
+            630,
+            3000,
+            100,
+            "floor"
+        )
+        .setOrigin(0);
+
+
+
+        //=========================================
         // TITULO DEL NIVEL
         //=========================================
 
@@ -112,7 +127,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         //=========================================
-        // SUELO
+        // SUELO FISICO (NO TOCAR)
         //=========================================
 
         this.ground = this.add.rectangle(
@@ -213,6 +228,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
     update() {
 
 
@@ -239,7 +255,6 @@ export default class WorldScene extends Phaser.Scene {
 
         this.cables.tilePositionX =
             this.cameras.main.scrollX * 0.45;
-
 
 
 
@@ -288,7 +303,6 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-
         //=========================================
         // SALTO
         //=========================================
@@ -318,5 +332,5 @@ export default class WorldScene extends Phaser.Scene {
 
 
 }
-    
+
 

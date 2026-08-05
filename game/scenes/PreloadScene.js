@@ -1,3 +1,4 @@
+
 export default class PreloadScene extends Phaser.Scene {
 
     constructor() {
@@ -7,28 +8,17 @@ export default class PreloadScene extends Phaser.Scene {
 
     preload() {
 
-
         //=========================================
         // KAEL
         //=========================================
 
         this.load.spritesheet(
             "kael",
-            "game/assets/personajes/Kael/spritesheet.png",
+            "assets/personajes/kael/spritesheet.png",
             {
                 frameWidth: 64,
                 frameHeight: 64
             }
-        );
-
-
-        //=========================================
-        // CUARZO ALMA
-        //=========================================
-
-        this.load.image(
-            "cuarzo-alma",
-            "game/assets/cuarzos/alma.png"
         );
 
 
@@ -38,31 +28,37 @@ export default class PreloadScene extends Phaser.Scene {
 
         this.load.image(
             "sky",
-            "game/assets/valle del_alma/sky.png"
+            "assets/valle%20del_alma/sky.png"
         );
-
 
         this.load.image(
             "cityBack",
-            "game/assets/valle del_alma/city_back.png"
+            "assets/valle%20del_alma/city_back.png"
         );
-
 
         this.load.image(
             "cityFront",
-            "game/assets/valle del_alma/city_front.png"
+            "assets/valle%20del_alma/city_front.png"
         );
-
 
         this.load.image(
             "cables",
-            "game/assets/valle del_alma/cables.png"
+            "assets/valle%20del_alma/cables.png"
         );
-
 
         this.load.image(
             "floor",
-            "game/assets/valle del_alma/floor.png"
+            "assets/valle%20del_alma/floor.png"
+        );
+
+
+        //=========================================
+        // CUARZO ALMA
+        //=========================================
+
+        this.load.image(
+            "cuarzo-alma",
+            "assets/cuarzos/alma.png"
         );
 
     }
@@ -78,4 +74,4 @@ export default class PreloadScene extends Phaser.Scene {
 
 }
 
-
+  

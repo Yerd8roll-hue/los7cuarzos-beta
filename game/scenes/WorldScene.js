@@ -79,47 +79,91 @@ this.cables = this.add.image(
 
 
 
+       // ==================================
+// KAEL
+// ==================================
+
+import { createKaelAnimations } from "../animations/KaelAnimations.js";
+
+export default class WorldScene extends Phaser.Scene {
+
+    constructor() {
+        super("WorldScene");
+    }
+
+    create() {
+
+        const mundoAncho = 6400;
+        const tira = 1280;
+
         // ==================================
-        // KAEL
+        // SKY
         // ==================================
 
-        this.kael = this.add.rectangle(
-            400,
-            -300,
-            50,
-            50,
-            0x00ff00
+        this.sky = this.add.image(
+            0,
+            -170,
+            "sky"
         );
 
+        this.sky
+            .setOrigin(0)
+            .setDepth(0)
+            .setScrollFactor(0.2);
+
+        // ==================================
+        // CABLES
+        // ==================================
+
+        this.cables = this.add.image(
+            0,
+            500,
+            "cables"
+        );
+
+        this.cables
+            .setOrigin(0)
+            .setDisplaySize(mundoAncho, 180)
+            .setDepth(2)
+            .setScrollFactor(1);
+
+        // ==================================
+        // FLOOR
+        // ==================================
+
+        for (let x = 0; x < mundoAncho; x += tira) {
+
+            this.add.image(
+                x,
+                570,
+                "floor"
+            )
+            .setOrigin(0)
+            .setDepth(3);
+
+        }
+
+        // ==================================
+        // PISO FISICO
+        // ==================================
+
+        this.floor = this.add.rectangle(
+            mundoAncho / 2,
+            620,
+            mundoAncho,
+            20,
+            0x000000,
+            0
+        );
 
         this.physics.add.existing(
-            this.kael
-        );
-
-
-        this.kael.body.setGravityY(
-            900
-        );
-
-
-        this.kael.body.setMaxVelocity(
-            400,
-            1200
-        );
-
-
-        this.kael.body.setCollideWorldBounds(
+            this.floor,
             true
         );
 
-
-        this.physics.add.collider(
-            this.kael,
-            this.floor
-        );
-
-
-       this.kael.setDepth(3);
+        // ==================================
+        // KAEL
+        // ==================================
 
 
 

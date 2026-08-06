@@ -1,98 +1,53 @@
-export default class MenuScene extends Phaser.Scene {
-
+export default class PreloadScene extends Phaser.Scene {
 
     constructor() {
-
-        super("MenuScene");
-
+        super("PreloadScene");
     }
 
+    preload() {
 
+        console.log("Cargando recursos...");
+
+        // ==============================
+        // VALLE DEL CUARZO DEL ALMA
+        // ==============================
+
+        this.load.image(
+            "sky",
+            "game/assets/valle del_alma/sky.png"
+        );
+
+        this.load.image(
+            "cables",
+            "game/assets/valle del_alma/cables.png"
+        );
+
+        this.load.image(
+            "floor",
+            "game/assets/valle del_alma/floor.png"
+        );
+
+        // ==============================
+        // KAEL
+        // ==============================
+
+        this.load.spritesheet(
+            "kael",
+            "game/assets/personajes/Kael/spritesheet.png",
+            {
+                frameWidth: 64,
+                frameHeight: 64
+            }
+        );
+
+    }
 
     create() {
 
+        console.log("Recursos cargados");
 
-        console.log("MenuScene funcionando");
-
-
-        this.cameras.main.setBackgroundColor("#050505");
-
-
-
-        this.add.text(
-            400,
-            180,
-            "LOS 7 CUARZOS",
-            {
-                fontSize:"48px",
-                fontFamily:"Arial",
-                color:"#00ffff"
-            }
-        )
-        .setOrigin(0.5);
-
-
-
-        const boton = this.add.text(
-            400,
-            330,
-            "INICIO",
-            {
-                fontSize:"35px",
-                fontFamily:"Arial",
-                color:"#ffffff",
-                backgroundColor:"#111111",
-                padding:{
-                    x:30,
-                    y:15
-                }
-            }
-        )
-        .setOrigin(0.5)
-        .setInteractive();
-
-
-
-        boton.on(
-            "pointerover",
-            ()=>{
-
-                boton.setStyle({
-                    color:"#00ffff"
-                });
-
-            }
-        );
-
-
-
-        boton.on(
-            "pointerout",
-            ()=>{
-
-                boton.setStyle({
-                    color:"#ffffff"
-                });
-
-            }
-        );
-
-
-
-        boton.on(
-            "pointerdown",
-            ()=>{
-
-                console.log("Entrando al Valle del Alma");
-
-                this.scene.start("WorldScene");
-
-            }
-        );
-
+        this.scene.start("MenuScene");
 
     }
 
-
 }
-  

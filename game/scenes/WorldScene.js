@@ -1,5 +1,7 @@
+import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
- export default class WorldScene extends Phaser.Scene {
+
+export default class WorldScene extends Phaser.Scene {
 
 
     constructor(){
@@ -12,27 +14,24 @@
 
 
         // ==================================
-        // MAPA GRANDE
+        // TAMAÑO DEL VALLE
         // ==================================
 
-        const ancho = 4000;
+        const ancho = 3344;
         const alto = 941;
 
 
 
         // ==================================
-        // VALLE DEL CUARZO DEL ALMA
-        // FONDOS
+        // FONDO
         // ==================================
 
 
         // CIELO
 
-        this.add.tileSprite(
+        this.add.image(
             0,
             0,
-            ancho,
-            alto,
             "sky"
         )
         .setOrigin(0)
@@ -40,13 +39,23 @@
 
 
 
+        this.add.image(
+            1672,
+            0,
+            "sky"
+        )
+        .setOrigin(0)
+        .setScrollFactor(0);
+
+
+
+
+
         // CIUDAD ATRAS
 
-        this.add.tileSprite(
+        this.add.image(
             0,
             0,
-            ancho,
-            alto,
             "city_back"
         )
         .setOrigin(0)
@@ -54,31 +63,68 @@
 
 
 
+        this.add.image(
+            1672,
+            0,
+            "city_back"
+        )
+        .setOrigin(0)
+        .setScrollFactor(0.2);
+
+
+
+
+
+
+
         // CIUDAD ADELANTE
 
-        this.add.tileSprite(
+        this.add.image(
             0,
             0,
-            ancho,
-            alto,
             "city_front"
         )
         .setOrigin(0)
-        .setScrollFactor(0.5);
+        .setScrollFactor(0.45);
+
+
+
+        this.add.image(
+            1672,
+            0,
+            "city_front"
+        )
+        .setOrigin(0)
+        .setScrollFactor(0.45);
+
+
+
+
 
 
 
         // CABLES
 
-        this.add.tileSprite(
+        this.add.image(
             0,
             0,
-            ancho,
-            alto,
             "cables"
         )
         .setOrigin(0)
-        .setScrollFactor(0.7);
+        .setScrollFactor(0.35);
+
+
+
+        this.add.image(
+            1672,
+            0,
+            "cables"
+        )
+        .setOrigin(0)
+        .setScrollFactor(0.35);
+
+
+
 
 
 
@@ -103,8 +149,11 @@
 
 
 
+
+
+
         // ==================================
-        // LIMITES DEL MUNDO
+        // LIMITES
         // ==================================
 
         this.physics.world.setBounds(
@@ -118,15 +167,24 @@
 
 
 
+
+
         // ==================================
-        // SUELO VISUAL
+        // PISO VISUAL
         // ==================================
 
-        this.add.tileSprite(
+        this.add.image(
             0,
-            820,
-            ancho,
-            180,
+            760,
+            "floor"
+        )
+        .setOrigin(0);
+
+
+
+        this.add.image(
+            1672,
+            760,
             "floor"
         )
         .setOrigin(0);
@@ -135,16 +193,18 @@
 
 
 
+
+
         // ==================================
-        // SUELO FISICO
+        // PISO INVISIBLE
         // ==================================
 
         this.floor =
         this.add.rectangle(
-            2000,
-            850,
-            ancho,
-            50,
+            1672,
+            820,
+            3344,
+            40,
             0x000000,
             0
         );
@@ -159,13 +219,15 @@
 
 
 
+
+
         // ==================================
         // KAEL TEMPORAL
         // ==================================
 
         this.kael =
         this.add.rectangle(
-            200,
+            250,
             600,
             50,
             50,
@@ -178,7 +240,13 @@
         );
 
 
-        this.kael.body.setGravityY(900);
+        this.kael.body.setGravityY(700);
+
+
+        this.kael.body.setMaxVelocity(
+            400,
+            900
+        );
 
 
         this.kael.body.setCollideWorldBounds(
@@ -189,14 +257,14 @@
 
 
 
-        // ==================================
+
         // COLISION
-        // ==================================
 
         this.physics.add.collider(
             this.kael,
             this.floor
         );
+
 
 
 
@@ -227,6 +295,7 @@
 
 
 
+
         // ==================================
         // CONTROLES
         // ==================================
@@ -235,7 +304,11 @@
         this.input.keyboard.createCursorKeys();
 
 
+        createKaelAnimations(this);
+
+
     }
+
 
 
 
@@ -246,10 +319,7 @@
 
 
 
-        // ==================================
         // MOVIMIENTO
-        // ==================================
-
 
         if(this.keys.left.isDown){
 
@@ -275,21 +345,25 @@
 
 
 
-        // ==================================
+
+
         // SALTO
-        // ==================================
 
         if(
             Phaser.Input.Keyboard.JustDown(this.keys.up) &&
-            this.kael.body.touching.down
+            this.kael.body.blocked.down
         ){
 
-            this.kael.body.setVelocityY(-500);
+            this.kael.body.setVelocityY(-850);
 
         }
+
 
 
     }
 
 
 }
+
+
+   

@@ -2,9 +2,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
     constructor() {
-
         super("WorldScene");
-
     }
 
 
@@ -12,62 +10,62 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // PARALLAX DEL VALLE
+        // FONDO VALLE DEL CUARZO DEL ALMA
         // ==================================
 
 
-        // CIELO (IMAGEN GRANDE)
+        // CIELO
         this.add.image(
-            0,
-            0,
+            1500,
+            360,
             "sky"
         )
-        .setOrigin(0)
+        .setOrigin(0.5)
         .setScrollFactor(0);
 
 
 
         // CIUDAD ATRAS
         this.add.tileSprite(
-            0,
-            0,
+            1500,
+            360,
             3000,
             720,
             "city_back"
         )
-        .setOrigin(0)
+        .setOrigin(0.5)
         .setScrollFactor(0.2);
 
 
 
         // CIUDAD ADELANTE
         this.add.tileSprite(
-            0,
-            0,
+            1500,
+            360,
             3000,
             720,
             "city_front"
         )
-        .setOrigin(0)
+        .setOrigin(0.5)
         .setScrollFactor(0.5);
 
 
 
         // CABLES
         this.add.tileSprite(
-            0,
-            0,
+            1500,
+            360,
             3000,
             720,
             "cables"
         )
-        .setOrigin(0)
+        .setOrigin(0.5)
         .setScrollFactor(0.7);
 
 
 
         // ==================================
-        // TITULO
+        // TITULO DEL NIVEL
         // ==================================
 
         this.add.text(
@@ -76,7 +74,8 @@ export default class WorldScene extends Phaser.Scene {
             "VALLE DEL CUARZO DEL ALMA",
             {
                 fontSize:"32px",
-                color:"#00ffff"
+                color:"#00ffff",
+                fontStyle:"bold"
             }
         )
         .setOrigin(0.5)
@@ -113,7 +112,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // KAEL CUADRO DE PRUEBA
+        // KAEL TEMPORAL
         // ==================================
 
         this.kael = this.add.rectangle(
@@ -134,7 +133,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // COLISION CON PISO
+        // COLISION
 
         this.physics.add.collider(
             this.kael,
@@ -165,7 +164,8 @@ export default class WorldScene extends Phaser.Scene {
         // CONTROLES
         // ==================================
 
-        this.keys = this.input.keyboard.createCursorKeys();
+        this.keys =
+        this.input.keyboard.createCursorKeys();
 
 
     }
@@ -175,23 +175,17 @@ export default class WorldScene extends Phaser.Scene {
     update(){
 
 
-        // MOVIMIENTO IZQUIERDA
-
         if(this.keys.left.isDown){
 
             this.kael.body.setVelocityX(-250);
 
         }
 
-
-        // MOVIMIENTO DERECHA
-
         else if(this.keys.right.isDown){
 
             this.kael.body.setVelocityX(250);
 
         }
-
 
         else{
 
@@ -200,8 +194,6 @@ export default class WorldScene extends Phaser.Scene {
         }
 
 
-
-        // SALTO
 
         if(
             this.keys.up.isDown &&
@@ -218,3 +210,4 @@ export default class WorldScene extends Phaser.Scene {
 
 }
   
+ 

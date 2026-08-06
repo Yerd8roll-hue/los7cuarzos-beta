@@ -10,11 +10,17 @@ export default class MenuScene extends Phaser.Scene {
         console.log("MenuScene funcionando");
 
 
-        // Fondo del menú
+        // ==============================
+        // FONDO DEL MENU
+        // ==============================
+
         this.cameras.main.setBackgroundColor("#050505");
 
 
-        // Título
+
+        // ==============================
+        // TITULO
+        // ==============================
 
         this.add.text(
             400,
@@ -30,7 +36,9 @@ export default class MenuScene extends Phaser.Scene {
 
 
 
-        // Botón INICIO
+        // ==============================
+        // BOTON INICIO
+        // ==============================
 
         const boton = this.add.text(
             400,
@@ -52,12 +60,16 @@ export default class MenuScene extends Phaser.Scene {
 
 
 
+        // ==============================
+        // EFECTO DEL BOTON
+        // ==============================
+
         boton.on(
             "pointerover",
             () => {
 
                 boton.setStyle({
-                    color: "#00ffff"
+                    color:"#00ffff"
                 });
 
             }
@@ -69,20 +81,25 @@ export default class MenuScene extends Phaser.Scene {
             () => {
 
                 boton.setStyle({
-                    color: "#ffffff"
+                    color:"#ffffff"
                 });
 
             }
         );
 
 
+
+        // ==============================
+        // ENTRAR AL MUNDO
+        // ==============================
+
         boton.on(
             "pointerdown",
             () => {
 
-                console.log("Iniciando juego");
+                console.log("Entrando al Valle del Alma");
 
-                this.scene.start("PreloadScene");
+                this.scene.start("WorldScene");
 
             }
         );

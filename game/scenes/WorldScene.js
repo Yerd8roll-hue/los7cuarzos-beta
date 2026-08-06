@@ -94,27 +94,23 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
+// ==================================
+// PISO
+// ==================================
 
-        // ==================================
-        // PISO
-        // ==================================
-
-        this.floor = this.physics.add.staticImage(
-            1500,
-            680,
-            "floor"
-        );
-
-
-        this.floor.setDisplaySize(
-            3000,
-            80
-        );
+this.floor = this.add.tileSprite(
+    1500,
+    680,
+    3000,
+    80,
+    "floor"
+);
 
 
-        this.floor.refreshBody();
-
-
+this.physics.add.existing(
+    this.floor,
+    true
+);
 
         // ==================================
         // KAEL CUADRO DE PRUEBA

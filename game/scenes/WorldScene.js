@@ -1,4 +1,3 @@
-
 import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 export default class WorldScene extends Phaser.Scene {
@@ -7,10 +6,31 @@ export default class WorldScene extends Phaser.Scene {
         super("WorldScene");
     }
 
+
     create() {
 
-        const mundoAncho = 6400;
-        const tira = 1280;
+
+        const mundoAncho = 3000;
+
+
+        // ==================================
+        // FONDO
+        // ==================================
+
+        this.cameras.main.setBackgroundColor("#05070d");
+
+
+        // ==================================
+        // MUNDO
+        // ==================================
+
+        this.physics.world.setBounds(
+            0,
+            0,
+            mundoAncho,
+            720
+        );
+
 
         // ==================================
         // SKY
@@ -18,14 +38,16 @@ export default class WorldScene extends Phaser.Scene {
 
         this.sky = this.add.image(
             0,
-            -170,
+            0,
             "sky"
         );
 
         this.sky
             .setOrigin(0)
             .setDepth(0)
-            .setScrollFactor(0.2);
+            .setScrollFactor(0);
+
+
 
         // ==================================
         // CABLES
@@ -33,170 +55,183 @@ export default class WorldScene extends Phaser.Scene {
 
         this.cables = this.add.image(
             0,
-            500,
+            250,
             "cables"
         );
 
         this.cables
             .setOrigin(0)
-            .setDisplaySize(mundoAncho, 180)
-            .setDepth(2)
-            .setScrollFactor(1);
-
-        // ==================================
-        // FLOOR
-        // ==================================
-
-        for (let x = 0; x < mundoAncho; x += tira) {
-
-            this.add.image(
-                x,
-                570,
-                "floor"
+            .setDisplaySize(
+                mundoAncho,
+                180
             )
+            .setDepth(2);
+
+
+
+        // ==================================
+        // FLOOR VISUAL
+        // ==================================
+
+        this.floorImage = this.add.image(
+            0,
+            570,
+            "floor"
+        );
+
+        this.floorImage
             .setOrigin(0)
+            .setDisplaySize(
+                mundoAncho,
+                150
+            )
             .setDepth(3);
 
-        }
+
 
         // ==================================
         // PISO FISICO
         // ==================================
 
-        this.floor = this.add.rectangle(
+        this.ground = this.add.rectangle(
             mundoAncho / 2,
-            620,
+            650,
             mundoAncho,
-            20,
+            50,
             0x000000,
             0
         );
 
+
         this.physics.add.existing(
-            this.floor,
+            this.ground,
             true
         );
+
+
 
         // ==================================
         // KAEL
         // ==================================
 
-les = this.add.image(
-    0,
-    370,
-    "cables"
-)
-.setOrigin(0)
-.setDisplaySize(6400, 200)
-.setDepth(2)
-.setScrollFactor(1);
-    .setOrigin(0)
-    .setDisplaySize(1280,150)
-    .setDepth(1);
+        createKaelAnimations(this);
 
-}
 
-        // ==================================
-        // PISO FISICO
-        // ==================================
-
-        this.floor = this.add.rectangle(
-            mundoAncho / 2,
-            620,
-            mundoAncho,
-            20,
-            0x000000,
-            0
+        this.kael = this.physics.add.sprite(
+            200,
+            450,
+            "kael"
         );
 
 
-        this.physics.add.existing(
-            this.floor,
+        this.kael.setDepth(5);
+
+        this.kael.setCollideWorldBounds(true);
+
+
+
+        this.physics.add.collider(
+            this.kael,
+            this.ground
+        );
+
+
+
+        // ==================================
+        // CAMARA
+        // ==================================
+
+        this.cameras.main.startFollow(
+            this.kael,
             true
         );
 
 
+        this.cameras.main.setBounds(
+            0,
+            0,
+            mundoAncho,
+            720
+        );
 
 
 
-
-
-       // ==================================
-// KAEL
-// ==================================
-
-     
-
-
-   
-
-
-
-
-
-       ======================
+        // ==================================
         // CONTROLES
         // ==================================
 
+        this.cursors =
+            this.input.keyboard.createCursorKeys();
+
+
         this.keys =
-        this.input.keyboard.createCursorKeys
+            this.input.keyboard.addKeys({
+
+                A: Phaser.Input.Keyboard.KeyCodes.A,
+
+                D: Phaser.Input.Keyboard.KeyCodes.D,
+
+                SPACE: Phaser.Input.Keyboard.KeyCodes.SPACE
+
+            });
+
+
+    }
 
 
 
-        createKaelAnimations(this);
+    update() {
 
 
+        if(
+            this.keys.A.isDown ||
+            this.cursors.left.isDown
+        ){
 
-        // movimiento parallax
-
-
-
-    update(){
-
-
-        if(this.keys.left.isDown){
-
-            this.kael.body.setVelocityX(
-                -250
-            );
+            this.kael.setVelocityX(-180);
 
         }
 
 
-        else if(this.keys.right.isDown){
+        else if(
+            this.keys.D.isDown ||
+            this.cursors.right.isDown
+        ){
 
-            this.kael.body.setVelocityX(
-                250
-            );
+            this.kael.setVelocityX(180);
 
         }
 
 
         else{
 
-            this.kael.body.setVelocityX(
-                0
-            );
+            this.kael.setVelocityX(0);
 
         }
 
 
 
         if(
-            Phaser.Input.Keyboard.JustDown(this.keys.up) &&
+            (
+                this.keys.SPACE.isDown ||
+                this.cursors.up.isDown
+            )
+            &&
             this.kael.body.blocked.down
         ){
 
-            this.kael.body.setVelocityY(
-                -850
-            );
+            this.kael.setVelocityY(-500);
 
         }
 
 
     }
 
-
 }
 
+
+
+    
+
  
+

@@ -41,7 +41,6 @@ this.sky
 
 
 
-
 // ==================================
 // CABLES
 // ==================================
@@ -50,20 +49,18 @@ for (let x = 0; x < mundoAncho; x += tira) {
 
     this.add.image(
         x,
-        370,
+        390,
         "cables"
     )
     .setOrigin(0)
-    .setDisplaySize(1280, 200)
+    .setDisplaySize(1280, 300)
     .setDepth(2)
     .setScrollFactor(1);
 
 }
 
 
-
-
-     // ==================================
+// ==================================
 // FLOOR
 // ==================================
 
@@ -75,11 +72,10 @@ for (let x = 0; x < mundoAncho; x += tira) {
         "floor"
     )
     .setOrigin(0)
-    .setDisplaySize(1280, 150)
+    .setDisplaySize(1280,150)
     .setDepth(1);
 
 }
-
 
         // ==================================
         // PISO FISICO

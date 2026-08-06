@@ -16,11 +16,10 @@ export default class WorldScene extends Phaser.Scene {
         // ==================================
 
 
-        this.add.tileSprite(
+        // CIELO (IMAGEN GRANDE)
+        this.add.image(
             0,
             0,
-            1280,
-            720,
             "sky"
         )
         .setOrigin(0)
@@ -28,6 +27,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+        // CIUDAD ATRAS
         this.add.tileSprite(
             0,
             0,
@@ -40,6 +40,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+        // CIUDAD ADELANTE
         this.add.tileSprite(
             0,
             0,
@@ -52,6 +53,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+        // CABLES
         this.add.tileSprite(
             0,
             0,
@@ -94,23 +96,21 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
-// ==================================
-// PISO
-// ==================================
 
-this.floor = this.add.tileSprite(
-    1500,
-    680,
-    3000,
-    80,
-    "floor"
-);
+        // ==================================
+        // PISO
+        // ==================================
+
+        this.floor = this.physics.add.staticImage(
+            1500,
+            680,
+            "floor"
+        );
 
 
-this.physics.add.existing(
-    this.floor,
-    true
-);
+        this.floor.refreshBody();
+
+
 
         // ==================================
         // KAEL CUADRO DE PRUEBA
@@ -175,8 +175,7 @@ this.physics.add.existing(
     update(){
 
 
-
-        // MOVIMIENTO
+        // MOVIMIENTO IZQUIERDA
 
         if(this.keys.left.isDown){
 
@@ -184,6 +183,8 @@ this.physics.add.existing(
 
         }
 
+
+        // MOVIMIENTO DERECHA
 
         else if(this.keys.right.isDown){
 
@@ -202,7 +203,7 @@ this.physics.add.existing(
 
         // SALTO
 
-              if(
+        if(
             this.keys.up.isDown &&
             this.kael.body.touching.down
         ){
@@ -214,5 +215,6 @@ this.physics.add.existing(
 
     }
 
-}
 
+}
+  

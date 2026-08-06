@@ -35,24 +35,19 @@ this.sky
 
 
 
-
 // ==================================
 // CABLES
 // ==================================
 
-for(let x = 0; x < mundoAncho; x += tira){
-
-    this.add.image(
-        x,
-        700,
-        "cables"
-    )
-    .setOrigin(0, 1)
-    .setDisplaySize(1280, 200)
-    .setDepth(2)
-    .setScrollFactor(1);
-
-}
+this.cables = this.add.image(
+    0,
+    370,
+    "cables"
+)
+.setOrigin(0)
+.setDisplaySize(6400, 200)
+.setDepth(2)
+.setScrollFactor(1);
     .setOrigin(0)
     .setDisplaySize(1280,150)
     .setDepth(1);

@@ -42,24 +42,23 @@ this.sky
 
 
 
-      // ==================================
+// ==================================
 // CABLES
 // ==================================
 
-for(let x = 0; x < mundoAncho; x += tira){
+for (let x = 0; x < mundoAncho; x += tira) {
 
     this.add.image(
         x,
-        150,
+        430,
         "cables"
     )
     .setOrigin(0)
-    .setDisplaySize(1280,140)
+    .setDisplaySize(1280, 140)
     .setDepth(2)
     .setScrollFactor(0.6);
 
 }
-
 
 
 

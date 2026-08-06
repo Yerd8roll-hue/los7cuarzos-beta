@@ -35,7 +35,6 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-
         // ==================================
         // CIUDAD ATRAS
         // ==================================
@@ -135,13 +134,12 @@ export default class WorldScene extends Phaser.Scene {
 
         // ==================================
         // PISO VISUAL
-        // PARTE INFERIOR DEL FLOOR
         // ==================================
 
         let suelo1 =
         this.add.image(
             0,
-            780,
+            850,
             "floor"
         )
         .setOrigin(0);
@@ -157,11 +155,10 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-
         let suelo2 =
         this.add.image(
             1672,
-            780,
+            850,
             "floor"
         )
         .setOrigin(0);
@@ -182,13 +179,13 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // PISO FISICO INVISIBLE
+        // PISO FISICO
         // ==================================
 
         this.floor =
         this.add.rectangle(
             1672,
-            850,
+            900,
             3344,
             40,
             0x000000,
@@ -215,7 +212,7 @@ export default class WorldScene extends Phaser.Scene {
         this.kael =
         this.add.rectangle(
             250,
-            720,
+            820,
             50,
             50,
             0x00ff00
@@ -254,14 +251,16 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // CAMARA
+        // CAMARA AJUSTADA
         // ==================================
 
         this.cameras.main.startFollow(
             this.kael,
             true,
             0.08,
-            0.08
+            0.08,
+            0,
+            150
         );
 
 
@@ -271,7 +270,6 @@ export default class WorldScene extends Phaser.Scene {
             ancho,
             alto
         );
-
 
 
 
@@ -324,8 +322,6 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // SALTO
-
         if(
             Phaser.Input.Keyboard.JustDown(this.keys.up) &&
             this.kael.body.blocked.down
@@ -340,5 +336,9 @@ export default class WorldScene extends Phaser.Scene {
 
 
 }
+  
 
- 
+
+
+
+

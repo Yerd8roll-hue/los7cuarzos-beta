@@ -206,19 +206,17 @@ export default class WorldScene extends Phaser.Scene {
 
         // SALTO
 
-        if(
+              if(
             this.keys.up.isDown &&
             this.kael.body.touching.down
         ){
 
             this.kael.body.setVelocityY(-500);
 
-         }
+        }
 
-
-      }
 
     }
 
-
+}
 

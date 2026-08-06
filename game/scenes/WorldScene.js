@@ -1,3 +1,4 @@
+
 import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 
@@ -69,7 +70,6 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-
         // ==================================
         // CIUDAD ADELANTE
         // ==================================
@@ -90,7 +90,6 @@ export default class WorldScene extends Phaser.Scene {
         )
         .setOrigin(0)
         .setScrollFactor(0.45);
-
 
 
 
@@ -165,8 +164,8 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // SUELO VISUAL
-        // SOLO PARTE INFERIOR
+        // PISO VISUAL
+        // PARTE INFERIOR DEL FLOOR
         // ==================================
 
         let suelo1 =
@@ -178,11 +177,12 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0);
 
 
+
         suelo1.setCrop(
             0,
-            700,
+            450,
             1672,
-            241
+            491
         );
 
 
@@ -196,11 +196,12 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0);
 
 
+
         suelo2.setCrop(
             0,
-            700,
+            450,
             1672,
-            241
+            491
         );
 
 
@@ -210,7 +211,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // SUELO FISICO
+        // PISO FISICO INVISIBLE
         // ==================================
 
         this.floor =
@@ -237,7 +238,6 @@ export default class WorldScene extends Phaser.Scene {
 
         // ==================================
         // KAEL
-        // CERCA DEL SUELO
         // ==================================
 
         this.kael =
@@ -258,12 +258,14 @@ export default class WorldScene extends Phaser.Scene {
         this.kael.body.setGravityY(700);
 
 
-        this.kael.body.setCollideWorldBounds(true);
-
-
         this.kael.body.setMaxVelocity(
             400,
             900
+        );
+
+
+        this.kael.body.setCollideWorldBounds(
+            true
         );
 
 
@@ -321,7 +323,6 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-
     update(){
 
 
@@ -331,17 +332,21 @@ export default class WorldScene extends Phaser.Scene {
 
         }
 
+
         else if(this.keys.right.isDown){
 
             this.kael.body.setVelocityX(250);
 
         }
 
+
         else{
 
             this.kael.body.setVelocityX(0);
 
         }
+
+
 
 
 
@@ -360,4 +365,4 @@ export default class WorldScene extends Phaser.Scene {
 
 
 }
-
+  

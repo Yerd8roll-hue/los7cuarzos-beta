@@ -5,7 +5,9 @@ export default class WorldScene extends Phaser.Scene {
 
 
     constructor(){
+
         super("WorldScene");
+
     }
 
 
@@ -14,11 +16,12 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // MUNDO LARGO
+        // CONFIGURACION DEL MUNDO
         // ==================================
 
         const mundoAncho = 6400;
         const mundoAlto = 720;
+        const anchoTira = 1280;
 
 
 
@@ -26,7 +29,7 @@ export default class WorldScene extends Phaser.Scene {
         // SKY
         // ==================================
 
-        for(let x = 0; x < mundoAncho; x += 1280){
+        for(let x = 0; x < mundoAncho; x += anchoTira){
 
             this.add.image(
                 x,
@@ -34,10 +37,11 @@ export default class WorldScene extends Phaser.Scene {
                 "sky"
             )
             .setOrigin(0)
-            .setScrollFactor(0);
+            .setDisplaySize(1280,720)
+            .setScrollFactor(0)
+            .setDepth(0);
 
         }
-
 
 
 
@@ -47,7 +51,7 @@ export default class WorldScene extends Phaser.Scene {
         // CITY BACK
         // ==================================
 
-        for(let x = 0; x < mundoAncho; x += 1280){
+        for(let x = 0; x < mundoAncho; x += anchoTira){
 
             this.add.image(
                 x,
@@ -55,10 +59,11 @@ export default class WorldScene extends Phaser.Scene {
                 "city_back"
             )
             .setOrigin(0)
-            .setScrollFactor(0.2);
+            .setDisplaySize(1280,720)
+            .setScrollFactor(0.2)
+            .setDepth(1);
 
         }
-
 
 
 
@@ -68,7 +73,7 @@ export default class WorldScene extends Phaser.Scene {
         // CITY FRONT
         // ==================================
 
-        for(let x = 0; x < mundoAncho; x += 1280){
+        for(let x = 0; x < mundoAncho; x += anchoTira){
 
             this.add.image(
                 x,
@@ -76,10 +81,11 @@ export default class WorldScene extends Phaser.Scene {
                 "city_front"
             )
             .setOrigin(0)
-            .setScrollFactor(0.5);
+            .setDisplaySize(1280,720)
+            .setScrollFactor(0.5)
+            .setDepth(2);
 
         }
-
 
 
 
@@ -89,7 +95,7 @@ export default class WorldScene extends Phaser.Scene {
         // CABLES
         // ==================================
 
-        for(let x = 0; x < mundoAncho; x += 1280){
+        for(let x = 0; x < mundoAncho; x += anchoTira){
 
             this.add.image(
                 x,
@@ -97,12 +103,11 @@ export default class WorldScene extends Phaser.Scene {
                 "cables"
             )
             .setOrigin(0)
-            .setScrollFactor(0.7);
+            .setDisplaySize(1280,720)
+            .setScrollFactor(0.7)
+            .setDepth(3);
 
         }
-
-
-
 
 
 
@@ -112,21 +117,7 @@ export default class WorldScene extends Phaser.Scene {
         // FLOOR
         // ==================================
 
-        for(let x = 0; x < mundoAncho; x += 1280){
-
-            this.add.image(
-                x,
-                570,
-                "floor"
-            )
-            .setOrigin(0);
-
-        }
-
-
-
-        this.floor =
-        this.add.rectangle(
+        this.floor = this.add.rectangle(
             mundoAncho / 2,
             645,
             mundoAncho,
@@ -136,12 +127,25 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
-
         this.physics.add.existing(
             this.floor,
             true
         );
 
+
+
+        for(let x = 0; x < mundoAncho; x += anchoTira){
+
+            this.add.image(
+                x,
+                570,
+                "floor"
+            )
+            .setOrigin(0)
+            .setDisplaySize(1280,150)
+            .setDepth(4);
+
+        }
 
 
 
@@ -154,15 +158,13 @@ export default class WorldScene extends Phaser.Scene {
         // NO SE CAMBIA
         // ==================================
 
-        this.kael =
-        this.add.rectangle(
-            250,
+        this.kael = this.add.rectangle(
+            200,
             760,
             50,
             50,
             0x00ff00
         );
-
 
 
         this.physics.add.existing(
@@ -176,12 +178,10 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
-
         this.kael.body.setMaxVelocity(
             400,
             1000
         );
-
 
 
         this.kael.body.setCollideWorldBounds(
@@ -195,6 +195,9 @@ export default class WorldScene extends Phaser.Scene {
             this.floor
         );
 
+
+
+        this.kael.setDepth(5);
 
 
 
@@ -228,7 +231,6 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-
         // ==================================
         // CAMARA
         // ==================================
@@ -239,7 +241,6 @@ export default class WorldScene extends Phaser.Scene {
             0.08,
             0.08
         );
-
 
 
 
@@ -258,6 +259,7 @@ export default class WorldScene extends Phaser.Scene {
 
         createKaelAnimations(this);
 
+
     }
 
 
@@ -266,6 +268,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
     update(){
+
 
 
         // MOVIMIENTO
@@ -315,10 +318,17 @@ export default class WorldScene extends Phaser.Scene {
         }
 
 
+
     }
 
 
 }
+    
+
+
+
+
+
 
 
 

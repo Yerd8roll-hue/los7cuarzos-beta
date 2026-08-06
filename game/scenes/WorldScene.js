@@ -207,37 +207,6 @@ for(let x = 0; x < mundoAncho; x += tira){
 
         // movimiento parallax
 
-        this.cameras.main.on(
-            "camerafollowupdate",
-            () => {
-
-                const camX =
-                this.cameras.main.scrollX;
-
-
-                this.children.list.forEach(
-                    obj => {
-
-                        if(
-                            obj.texture &&
-                            obj.texture.key !== "floor"
-                        ){
-
-                            obj.x =
-                            obj.x;
-
-                        }
-
-                    }
-                );
-
-            }
-        );
-
-
-    }
-
-
 
 
     update(){

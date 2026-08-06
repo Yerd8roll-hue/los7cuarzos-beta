@@ -1,24 +1,17 @@
 
-import { createKaelAnimations } from "../animations/KaelAnimations.js";
+  import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 
 export default class WorldScene extends Phaser.Scene {
 
 
     constructor(){
-
         super("WorldScene");
-
     }
-
 
 
     create(){
 
-
-        // ==================================
-        // CONFIGURACION
-        // ==================================
 
         const ancho = 1280;
         const alto = 720;
@@ -35,9 +28,7 @@ export default class WorldScene extends Phaser.Scene {
             "sky"
         )
         .setOrigin(0.5)
-        .setDisplaySize(1280,720)
         .setDepth(0);
-
 
 
 
@@ -52,9 +43,7 @@ export default class WorldScene extends Phaser.Scene {
             "city_back"
         )
         .setOrigin(0.5)
-        .setDisplaySize(1280,720)
         .setDepth(1);
-
 
 
 
@@ -69,18 +58,14 @@ export default class WorldScene extends Phaser.Scene {
             "cables"
         )
         .setOrigin(0.5)
-        .setDisplaySize(1280,720)
         .setDepth(2);
 
 
 
 
 
-
-
-
         // ==================================
-        // FLOOR VISUAL
+        // FLOOR IMAGEN
         // ==================================
 
         this.floorImage = this.add.image(
@@ -89,21 +74,19 @@ export default class WorldScene extends Phaser.Scene {
             "floor"
         )
         .setOrigin(0.5)
-        .setDisplaySize(1280,150)
         .setDepth(3);
 
 
 
 
 
-
         // ==================================
-        // FLOOR FISICO
+        // PISO FISICO
         // ==================================
 
         this.floor = this.add.rectangle(
             640,
-            690,
+            570,
             1280,
             20,
             0x000000,
@@ -121,16 +104,13 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-
-
         // ==================================
         // KAEL
-        // SE DEJA IGUAL
         // ==================================
 
         this.kael = this.add.rectangle(
             200,
-            600,
+            500,
             50,
             50,
             0x00ff00
@@ -142,11 +122,14 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
-
         this.kael.body.setGravityY(
             900
         );
 
+
+        this.kael.body.setCollideWorldBounds(
+            true
+        );
 
 
         this.kael.body.setMaxVelocity(
@@ -155,18 +138,10 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
-
-        this.kael.body.setCollideWorldBounds(
-            true
-        );
-
-
-
         this.physics.add.collider(
             this.kael,
             this.floor
         );
-
 
 
         this.kael.setDepth(4);
@@ -176,11 +151,17 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-
-
         // ==================================
         // CAMARA
         // ==================================
+
+        this.physics.world.setBounds(
+            0,
+            0,
+            ancho,
+            alto
+        );
+
 
         this.cameras.main.setBounds(
             0,
@@ -202,8 +183,6 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-
-
         // ==================================
         // CONTROLES
         // ==================================
@@ -215,67 +194,46 @@ export default class WorldScene extends Phaser.Scene {
 
         createKaelAnimations(this);
 
-
     }
-
-
 
 
 
     update(){
 
 
-
-        // MOVIMIENTO
-
         if(this.keys.left.isDown){
 
-            this.kael.body.setVelocityX(
-                -250
-            );
+            this.kael.body.setVelocityX(-250);
 
         }
 
 
         else if(this.keys.right.isDown){
 
-            this.kael.body.setVelocityX(
-                250
-            );
+            this.kael.body.setVelocityX(250);
 
         }
 
 
         else{
 
-            this.kael.body.setVelocityX(
-                0
-            );
+            this.kael.body.setVelocityX(0);
 
         }
 
 
 
-
-
-
-        // SALTO
 
         if(
             Phaser.Input.Keyboard.JustDown(this.keys.up) &&
             this.kael.body.blocked.down
         ){
 
-            this.kael.body.setVelocityY(
-                -850
-            );
+            this.kael.body.setVelocityY(-850);
 
         }
 
 
     }
 
-
 }
-
-

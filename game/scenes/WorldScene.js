@@ -1,4 +1,3 @@
-
 import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 
@@ -23,22 +22,15 @@ export default class WorldScene extends Phaser.Scene {
         // CIELO
         // ==================================
 
-        this.add.image(
-            0,
-            0,
-            "sky"
-        )
+        this.add.image(0,0,"sky")
         .setOrigin(0)
         .setScrollFactor(0);
 
 
-        this.add.image(
-            1672,
-            0,
-            "sky"
-        )
+        this.add.image(1672,0,"sky")
         .setOrigin(0)
         .setScrollFactor(0);
+
 
 
 
@@ -48,22 +40,15 @@ export default class WorldScene extends Phaser.Scene {
         // CIUDAD ATRAS
         // ==================================
 
-        this.add.image(
-            0,
-            0,
-            "city_back"
-        )
+        this.add.image(0,0,"city_back")
         .setOrigin(0)
         .setScrollFactor(0.2);
 
 
-        this.add.image(
-            1672,
-            0,
-            "city_back"
-        )
+        this.add.image(1672,0,"city_back")
         .setOrigin(0)
         .setScrollFactor(0.2);
+
 
 
 
@@ -74,22 +59,15 @@ export default class WorldScene extends Phaser.Scene {
         // CIUDAD ADELANTE
         // ==================================
 
-        this.add.image(
-            0,
-            0,
-            "city_front"
-        )
+        this.add.image(0,0,"city_front")
         .setOrigin(0)
         .setScrollFactor(0.45);
 
 
-        this.add.image(
-            1672,
-            0,
-            "city_front"
-        )
+        this.add.image(1672,0,"city_front")
         .setOrigin(0)
         .setScrollFactor(0.45);
+
 
 
 
@@ -100,20 +78,12 @@ export default class WorldScene extends Phaser.Scene {
         // CABLES
         // ==================================
 
-        this.add.image(
-            0,
-            0,
-            "cables"
-        )
+        this.add.image(0,0,"cables")
         .setOrigin(0)
         .setScrollFactor(0.35);
 
 
-        this.add.image(
-            1672,
-            0,
-            "cables"
-        )
+        this.add.image(1672,0,"cables")
         .setOrigin(0)
         .setScrollFactor(0.35);
 
@@ -171,7 +141,7 @@ export default class WorldScene extends Phaser.Scene {
         let suelo1 =
         this.add.image(
             0,
-            700,
+            780,
             "floor"
         )
         .setOrigin(0);
@@ -187,10 +157,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
         let suelo2 =
         this.add.image(
             1672,
-            700,
+            780,
             "floor"
         )
         .setOrigin(0);
@@ -217,7 +188,7 @@ export default class WorldScene extends Phaser.Scene {
         this.floor =
         this.add.rectangle(
             1672,
-            820,
+            850,
             3344,
             40,
             0x000000,
@@ -236,6 +207,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
         // ==================================
         // KAEL
         // ==================================
@@ -243,7 +215,7 @@ export default class WorldScene extends Phaser.Scene {
         this.kael =
         this.add.rectangle(
             250,
-            650,
+            720,
             50,
             50,
             0x00ff00
@@ -306,6 +278,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
         // ==================================
         // CONTROLES
         // ==================================
@@ -351,6 +324,8 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+        // SALTO
+
         if(
             Phaser.Input.Keyboard.JustDown(this.keys.up) &&
             this.kael.body.blocked.down
@@ -365,4 +340,5 @@ export default class WorldScene extends Phaser.Scene {
 
 
 }
-  
+
+ 

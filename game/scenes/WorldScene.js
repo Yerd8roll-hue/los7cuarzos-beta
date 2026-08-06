@@ -50,38 +50,35 @@ for (let x = 0; x < mundoAncho; x += tira) {
 
     this.add.image(
         x,
-        430,
+        370,
         "cables"
     )
     .setOrigin(0)
-    .setDisplaySize(1280, 140)
+    .setDisplaySize(1280, 200)
     .setDepth(2)
-    .setScrollFactor(0.6);
+    .setScrollFactor(1);
 
 }
 
 
 
 
+     // ==================================
+// FLOOR
+// ==================================
 
-        // ==================================
-        // FLOOR
-        // ==================================
+for (let x = 0; x < mundoAncho; x += tira) {
 
-        for(let x = 0; x < mundoAncho; x += tira){
+    this.add.image(
+        x,
+        570,
+        "floor"
+    )
+    .setOrigin(0)
+    .setDisplaySize(1280, 150)
+    .setDepth(1);
 
-            this.add.image(
-                x,
-                570,
-                "floor"
-            )
-            .setOrigin(0)
-            .setDepth(1)
-        }
-
-
-
-
+}
 
 
         // ==================================

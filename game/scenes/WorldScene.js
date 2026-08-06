@@ -1,4 +1,3 @@
-
 export default class WorldScene extends Phaser.Scene {
 
 
@@ -88,7 +87,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // LIMITES DEL MUNDO
+        // LIMITES
         // ==================================
 
         this.physics.world.setBounds(
@@ -106,21 +105,25 @@ export default class WorldScene extends Phaser.Scene {
 
         this.add.image(
             centroX,
-            470,
+            820,
             "floor"
         )
         .setOrigin(0.5)
+        .setDisplaySize(
+            1672,
+            180
+        )
         .setScrollFactor(1);
 
 
 
         // ==================================
-        // PISO INVISIBLE FISICO
+        // PISO FISICO INVISIBLE
         // ==================================
 
         this.floor = this.add.rectangle(
             centroX,
-            860,
+            820,
             1672,
             40,
             0x000000,
@@ -141,7 +144,7 @@ export default class WorldScene extends Phaser.Scene {
 
         this.kael = this.add.rectangle(
             200,
-            750,
+            760,
             50,
             50,
             0x00ff00
@@ -157,7 +160,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // COLISION
+        // COLISION KAEL - PISO
 
         this.physics.add.collider(
             this.kael,
@@ -227,7 +230,7 @@ export default class WorldScene extends Phaser.Scene {
 
         if(
             this.keys.up.isDown &&
-            this.kael.body.touching.down
+            this.kael.body.blocked.down
         ){
 
             this.kael.body.setVelocityY(-500);
@@ -239,3 +242,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 }
+
+  
+
+

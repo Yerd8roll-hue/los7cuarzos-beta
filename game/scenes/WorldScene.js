@@ -17,65 +17,48 @@ export default class WorldScene extends Phaser.Scene {
         const tira = 1280;
 
 
+// ==================================
+// SKY
+// ==================================
 
-        // ==================================
-        // SKY
-        // ==================================
+this.sky = this.add.image(
+    0,
+    -170,
+    "sky"
+);
 
-        for(let x = 0; x < mundoAncho; x += tira){
-
-            this.add.image(
-                x,
-                0,
-                "sky"
-            )
-            .setOrigin(0)
-            .setDepth(0);
-
-        }
-
-
-
-
-
-        // ==================================
-        // CITY BACK
-        // ==================================
-
-        for(let x = 0; x < mundoAncho; x += tira){
-
-            this.add.image(
-                x,
-                120,
-                "city_back"
-            )
-            .setOrigin(0)
-            .setDepth(1)
-            .setScrollFactor(0.4);
-
-        }
+this.sky
+    .setOrigin(0)
+    .setDepth(0)
+    .setScrollFactor(0.2);
 
 
 
 
 
 
-        // ==================================
-        // CABLES
-        // ==================================
 
-        for(let x = 0; x < mundoAncho; x += tira){
 
-            this.add.image(
-                x,
-                80,
-                "cables"
-            )
-            .setOrigin(0)
-            .setDepth(2)
-            .setScrollFactor(0.6);
 
-        }
+
+
+      // ==================================
+// CABLES
+// ==================================
+
+for(let x = 0; x < mundoAncho; x += tira){
+
+    this.add.image(
+        x,
+        150,
+        "cables"
+    )
+    .setOrigin(0)
+    .setDisplaySize(1280,140)
+    .setDepth(1)
+    .setScrollFactor(0.6);
+
+}
 
 
 

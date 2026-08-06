@@ -14,7 +14,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // CONFIGURACION DEL MUNDO
+        // MUNDO LARGO
         // ==================================
 
         const mundoAncho = 6400;
@@ -23,9 +23,8 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // CAPAS DEL VALLE
+        // SKY
         // ==================================
-
 
         this.sky = this.add.tileSprite(
             0,
@@ -39,6 +38,12 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
+
+        // ==================================
+        // CITY BACK
+        // ==================================
+
         this.cityBack = this.add.tileSprite(
             0,
             0,
@@ -51,6 +56,13 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
+
+
+        // ==================================
+        // CITY FRONT
+        // ==================================
+
         this.cityFront = this.add.tileSprite(
             0,
             0,
@@ -62,6 +74,13 @@ export default class WorldScene extends Phaser.Scene {
         .setScrollFactor(0.5);
 
 
+
+
+
+
+        // ==================================
+        // CABLES
+        // ==================================
 
         this.cables = this.add.tileSprite(
             0,
@@ -78,8 +97,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
+
         // ==================================
-        // SUELO
+        // FLOOR
+        // NO SE CAMBIA NOMBRE
         // ==================================
 
         this.floor = this.add.tileSprite(
@@ -107,17 +129,16 @@ export default class WorldScene extends Phaser.Scene {
 
         // ==================================
         // KAEL
-        // NO SE TOCA
+        // DEJADO COMO ESTABA
         // ==================================
 
         this.kael = this.add.rectangle(
             250,
-            500,
+            760,
             50,
             50,
             0x00ff00
         );
-
 
 
         this.physics.add.existing(
@@ -125,22 +146,19 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
-
         this.kael.body.setGravityY(
             900
         );
 
 
-
-        this.kael.body.setCollideWorldBounds(
-            true
-        );
-
-
-
         this.kael.body.setMaxVelocity(
             400,
             1000
+        );
+
+
+        this.kael.body.setCollideWorldBounds(
+            true
         );
 
 
@@ -158,7 +176,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // LIMITES DEL MUNDO
+        // LIMITES
         // ==================================
 
         this.physics.world.setBounds(
@@ -176,6 +194,7 @@ export default class WorldScene extends Phaser.Scene {
             mundoAncho,
             mundoAlto
         );
+
 
 
 
@@ -213,8 +232,9 @@ export default class WorldScene extends Phaser.Scene {
         createKaelAnimations(this);
 
 
-
     }
+
+
 
 
 
@@ -222,11 +242,7 @@ export default class WorldScene extends Phaser.Scene {
     update(){
 
 
-
-        // ==========================
         // MOVIMIENTO
-        // ==========================
-
 
         if(this.keys.left.isDown){
 
@@ -260,10 +276,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // ==========================
         // SALTO
-        // ==========================
-
 
         if(
             Phaser.Input.Keyboard.JustDown(this.keys.up) &&
@@ -281,17 +294,16 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // ==========================
+
         // MOVIMIENTO CABLES
-        // ==========================
 
         this.cables.tilePositionX =
         this.cameras.main.scrollX * 0.4;
-
 
 
     }
 
 
 }
+
 

@@ -1,5 +1,4 @@
-
-   import { createKaelAnimations } from "../animations/KaelAnimations.js";
+import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 
 export default class WorldScene extends Phaser.Scene {
@@ -23,14 +22,24 @@ export default class WorldScene extends Phaser.Scene {
         // CIELO
         // ==================================
 
-        this.add.image(0,0,"sky")
+        this.add.image(
+            0,
+            0,
+            "sky"
+        )
         .setOrigin(0)
         .setScrollFactor(0);
 
 
-        this.add.image(1672,0,"sky")
+        this.add.image(
+            1672,
+            0,
+            "sky"
+        )
         .setOrigin(0)
         .setScrollFactor(0);
+
+
 
 
 
@@ -39,14 +48,24 @@ export default class WorldScene extends Phaser.Scene {
         // CIUDAD ATRAS
         // ==================================
 
-        this.add.image(0,0,"city_back")
+        this.add.image(
+            0,
+            0,
+            "city_back"
+        )
         .setOrigin(0)
         .setScrollFactor(0.2);
 
 
-        this.add.image(1672,0,"city_back")
+        this.add.image(
+            1672,
+            0,
+            "city_back"
+        )
         .setOrigin(0)
         .setScrollFactor(0.2);
+
+
 
 
 
@@ -56,14 +75,23 @@ export default class WorldScene extends Phaser.Scene {
         // CIUDAD ADELANTE
         // ==================================
 
-        this.add.image(0,0,"city_front")
+        this.add.image(
+            0,
+            0,
+            "city_front"
+        )
         .setOrigin(0)
         .setScrollFactor(0.45);
 
 
-        this.add.image(1672,0,"city_front")
+        this.add.image(
+            1672,
+            0,
+            "city_front"
+        )
         .setOrigin(0)
         .setScrollFactor(0.45);
+
 
 
 
@@ -74,14 +102,23 @@ export default class WorldScene extends Phaser.Scene {
         // CABLES
         // ==================================
 
-        this.add.image(0,0,"cables")
+        this.add.image(
+            0,
+            0,
+            "cables"
+        )
         .setOrigin(0)
         .setScrollFactor(0.35);
 
 
-        this.add.image(1672,0,"cables")
+        this.add.image(
+            1672,
+            0,
+            "cables"
+        )
         .setOrigin(0)
         .setScrollFactor(0.35);
+
 
 
 
@@ -112,6 +149,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
         // ==================================
         // LIMITES
         // ==================================
@@ -129,33 +167,31 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
         // ==================================
-        // PISO VISUAL RECORTADO
+        // PISO VISUAL
         // SOLO PARTE INFERIOR
         // ==================================
 
 
-        let suelo1 =
-        this.add.image(
+        let suelo1 = this.add.image(
             0,
             700,
             "floor"
         )
         .setOrigin(0);
-
 
 
         suelo1.setCrop(
             0,
-            700,
+            600,
             1672,
-            241
+            341
         );
 
 
 
-        let suelo2 =
-        this.add.image(
+        let suelo2 = this.add.image(
             1672,
             700,
             "floor"
@@ -163,12 +199,11 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0);
 
 
-
         suelo2.setCrop(
             0,
-            700,
+            600,
             1672,
-            241
+            341
         );
 
 
@@ -203,8 +238,9 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
         // ==================================
-        // KAEL
+        // KAEL TEMPORAL
         // ==================================
 
         this.kael =
@@ -248,6 +284,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
         // ==================================
         // CAMARA
         // ==================================
@@ -266,6 +303,7 @@ export default class WorldScene extends Phaser.Scene {
             ancho,
             alto
         );
+
 
 
 
@@ -294,19 +332,19 @@ export default class WorldScene extends Phaser.Scene {
     update(){
 
 
+        // MOVIMIENTO
+
         if(this.keys.left.isDown){
 
             this.kael.body.setVelocityX(-250);
 
         }
 
-
         else if(this.keys.right.isDown){
 
             this.kael.body.setVelocityX(250);
 
         }
-
 
         else{
 
@@ -317,6 +355,9 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
+
+        // SALTO
 
         if(
             Phaser.Input.Keyboard.JustDown(this.keys.up) &&
@@ -332,3 +373,5 @@ export default class WorldScene extends Phaser.Scene {
 
 
 }
+
+    

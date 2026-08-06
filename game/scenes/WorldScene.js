@@ -9,6 +9,7 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 
+
     create(){
 
 
@@ -17,9 +18,9 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // ============================
-        // SKY REPETIDO
-        // ============================
+        // ==================================
+        // SKY
+        // ==================================
 
         for(let x = 0; x < mundoAncho; x += tira){
 
@@ -35,45 +36,55 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // ============================
+
+
+        // ==================================
         // CITY BACK
-        // ============================
+        // ==================================
 
         for(let x = 0; x < mundoAncho; x += tira){
 
             this.add.image(
                 x,
-                180,
+                120,
                 "city_back"
             )
             .setOrigin(0)
-            .setDepth(1);
+            .setDepth(1)
+            .setScrollFactor(0.4);
 
         }
 
 
 
-        // ============================
+
+
+
+        // ==================================
         // CABLES
-        // ============================
+        // ==================================
 
         for(let x = 0; x < mundoAncho; x += tira){
 
             this.add.image(
                 x,
-                160,
+                80,
                 "cables"
             )
             .setOrigin(0)
-            .setDepth(2);
+            .setDepth(2)
+            .setScrollFactor(0.6);
 
         }
 
 
 
-        // ============================
+
+
+
+        // ==================================
         // FLOOR
-        // ============================
+        // ==================================
 
         for(let x = 0; x < mundoAncho; x += tira){
 
@@ -89,9 +100,12 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // ============================
+
+
+
+        // ==================================
         // PISO FISICO
-        // ============================
+        // ==================================
 
         this.floor = this.add.rectangle(
             mundoAncho / 2,
@@ -111,9 +125,12 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // ============================
-        // KAEL CAE DESDE ARRIBA
-        // ============================
+
+
+
+        // ==================================
+        // KAEL
+        // ==================================
 
         this.kael = this.add.rectangle(
             400,
@@ -151,14 +168,16 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
-        this.kael.setDepth(4);
+        this.kael.setDepth(5);
 
 
 
 
-        // ============================
-        // MUNDO Y CAMARA
-        // ============================
+
+
+        // ==================================
+        // LIMITES
+        // ==================================
 
         this.physics.world.setBounds(
             0,
@@ -168,12 +187,14 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
+
         this.cameras.main.setBounds(
             0,
             0,
             mundoAncho,
             720
         );
+
 
 
         this.cameras.main.startFollow(
@@ -186,17 +207,53 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // ============================
+
+
+        // ==================================
         // CONTROLES
-        // ============================
+        // ==================================
 
         this.keys =
         this.input.keyboard.createCursorKeys();
 
 
+
         createKaelAnimations(this);
 
+
+
+        // movimiento parallax
+
+        this.cameras.main.on(
+            "camerafollowupdate",
+            () => {
+
+                const camX =
+                this.cameras.main.scrollX;
+
+
+                this.children.list.forEach(
+                    obj => {
+
+                        if(
+                            obj.texture &&
+                            obj.texture.key !== "floor"
+                        ){
+
+                            obj.x =
+                            obj.x;
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
     }
+
 
 
 
@@ -205,17 +262,27 @@ export default class WorldScene extends Phaser.Scene {
 
         if(this.keys.left.isDown){
 
-            this.kael.body.setVelocityX(-250);
+            this.kael.body.setVelocityX(
+                -250
+            );
 
         }
+
+
         else if(this.keys.right.isDown){
 
-            this.kael.body.setVelocityX(250);
+            this.kael.body.setVelocityX(
+                250
+            );
 
         }
+
+
         else{
 
-            this.kael.body.setVelocityX(0);
+            this.kael.body.setVelocityX(
+                0
+            );
 
         }
 
@@ -226,11 +293,14 @@ export default class WorldScene extends Phaser.Scene {
             this.kael.body.blocked.down
         ){
 
-            this.kael.body.setVelocityY(-850);
+            this.kael.body.setVelocityY(
+                -850
+            );
 
         }
 
 
     }
+
 
 }

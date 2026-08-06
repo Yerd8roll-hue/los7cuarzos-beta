@@ -8,9 +8,13 @@ export default class PreloadScene extends Phaser.Scene {
     preload() {
 
 
+        console.log("Cargando recursos...");
+
+
         // ==============================
         // VALLE DEL CUARZO DEL ALMA
         // ==============================
+
 
         this.load.image(
             "sky",
@@ -47,7 +51,7 @@ export default class PreloadScene extends Phaser.Scene {
 
     create() {
 
-        console.log("Cargando Valle del Alma...");
+        console.log("Recursos cargados");
 
         this.scene.start("MenuScene");
 

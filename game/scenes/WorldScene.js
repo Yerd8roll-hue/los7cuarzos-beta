@@ -1,3 +1,4 @@
+
 export default class WorldScene extends Phaser.Scene {
 
 
@@ -13,7 +14,6 @@ export default class WorldScene extends Phaser.Scene {
         // VALLE DEL CUARZO DEL ALMA
         // IMAGENES 1672 x 941
         // ==================================
-
 
         const centroX = 836;
         const centroY = 470;
@@ -88,7 +88,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // MUNDO
+        // LIMITES DEL MUNDO
         // ==================================
 
         this.physics.world.setBounds(
@@ -101,17 +101,37 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // PISO
+        // PISO VISUAL
         // ==================================
 
-        this.floor = this.physics.add.staticImage(
+        this.add.image(
             centroX,
-            850,
+            470,
             "floor"
+        )
+        .setOrigin(0.5)
+        .setScrollFactor(1);
+
+
+
+        // ==================================
+        // PISO INVISIBLE FISICO
+        // ==================================
+
+        this.floor = this.add.rectangle(
+            centroX,
+            860,
+            1672,
+            40,
+            0x000000,
+            0
         );
 
 
-        this.floor.refreshBody();
+        this.physics.add.existing(
+            this.floor,
+            true
+        );
 
 
 
@@ -136,6 +156,8 @@ export default class WorldScene extends Phaser.Scene {
         this.kael.body.setCollideWorldBounds(true);
 
 
+
+        // COLISION
 
         this.physics.add.collider(
             this.kael,
@@ -217,6 +239,3 @@ export default class WorldScene extends Phaser.Scene {
 
 
 }
-
-
-

@@ -1,4 +1,5 @@
-import { createKaelAnimations } from "../animations/KaelAnimations.js";
+
+   import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 
 export default class WorldScene extends Phaser.Scene {
@@ -26,9 +27,11 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0)
         .setScrollFactor(0);
 
+
         this.add.image(1672,0,"sky")
         .setOrigin(0)
         .setScrollFactor(0);
+
 
 
 
@@ -40,9 +43,12 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0)
         .setScrollFactor(0.2);
 
+
         this.add.image(1672,0,"city_back")
         .setOrigin(0)
         .setScrollFactor(0.2);
+
+
 
 
 
@@ -54,9 +60,13 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0)
         .setScrollFactor(0.45);
 
+
         this.add.image(1672,0,"city_front")
         .setOrigin(0)
         .setScrollFactor(0.45);
+
+
+
 
 
 
@@ -68,9 +78,12 @@ export default class WorldScene extends Phaser.Scene {
         .setOrigin(0)
         .setScrollFactor(0.35);
 
+
         this.add.image(1672,0,"cables")
         .setOrigin(0)
         .setScrollFactor(0.35);
+
+
 
 
 
@@ -97,6 +110,8 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
+
         // ==================================
         // LIMITES
         // ==================================
@@ -112,13 +127,16 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
+
         // ==================================
-        // PISO VISUAL
-        // SOLO PARTE INFERIOR DEL FLOOR
+        // PISO VISUAL RECORTADO
+        // SOLO PARTE INFERIOR
         // ==================================
 
 
-        let suelo1 = this.add.image(
+        let suelo1 =
+        this.add.image(
             0,
             700,
             "floor"
@@ -129,14 +147,15 @@ export default class WorldScene extends Phaser.Scene {
 
         suelo1.setCrop(
             0,
-            500,
+            700,
             1672,
-            441
+            241
         );
 
 
 
-        let suelo2 = this.add.image(
+        let suelo2 =
+        this.add.image(
             1672,
             700,
             "floor"
@@ -147,9 +166,9 @@ export default class WorldScene extends Phaser.Scene {
 
         suelo2.setCrop(
             0,
-            500,
+            700,
             1672,
-            441
+            241
         );
 
 
@@ -177,6 +196,7 @@ export default class WorldScene extends Phaser.Scene {
             this.floor,
             true
         );
+
 
 
 
@@ -211,7 +231,9 @@ export default class WorldScene extends Phaser.Scene {
         );
 
 
-        this.kael.body.setCollideWorldBounds(true);
+        this.kael.body.setCollideWorldBounds(
+            true
+        );
 
 
 
@@ -219,6 +241,7 @@ export default class WorldScene extends Phaser.Scene {
             this.kael,
             this.floor
         );
+
 
 
 
@@ -249,6 +272,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
         // ==================================
         // CONTROLES
         // ==================================
@@ -266,6 +290,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
+
     update(){
 
 
@@ -275,17 +300,21 @@ export default class WorldScene extends Phaser.Scene {
 
         }
 
+
         else if(this.keys.right.isDown){
 
             this.kael.body.setVelocityX(250);
 
         }
 
+
         else{
 
             this.kael.body.setVelocityX(0);
 
         }
+
+
 
 
 
@@ -303,5 +332,3 @@ export default class WorldScene extends Phaser.Scene {
 
 
 }
-
-    

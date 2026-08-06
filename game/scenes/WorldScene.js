@@ -213,8 +213,10 @@ export default class WorldScene extends Phaser.Scene {
 
             this.kael.body.setVelocityY(-500);
 
-        }
+         }
 
+
+      }
 
     }
 

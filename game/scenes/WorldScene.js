@@ -55,7 +55,7 @@ for(let x = 0; x < mundoAncho; x += tira){
     )
     .setOrigin(0)
     .setDisplaySize(1280,140)
-    .setDepth(1)
+    .setDepth(2)
     .setScrollFactor(0.6);
 
 }
@@ -77,8 +77,7 @@ for(let x = 0; x < mundoAncho; x += tira){
                 "floor"
             )
             .setOrigin(0)
-            .setDepth(3);
-
+            .setDepth(1)
         }
 
 
@@ -151,8 +150,7 @@ for(let x = 0; x < mundoAncho; x += tira){
         );
 
 
-        this.kael.setDepth(5);
-
+       this.kael.setDepth(3);
 
 
 

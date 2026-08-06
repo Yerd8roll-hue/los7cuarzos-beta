@@ -1,3 +1,4 @@
+
 export default class WorldScene extends Phaser.Scene {
 
 
@@ -10,15 +11,16 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // PARALLAX DEL VALLE
+        // VALLE DEL CUARZO DEL ALMA
+        // CAPAS 1672 x 941
         // ==================================
 
 
-        this.add.tileSprite(
+        // CIELO (MAS VISIBLE)
+
+        this.add.image(
             0,
             0,
-            1280,
-            720,
             "sky"
         )
         .setOrigin(0)
@@ -26,11 +28,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        this.add.tileSprite(
+        // CIUDAD DEL FONDO
+
+        this.add.image(
             0,
             0,
-            3000,
-            720,
             "city_back"
         )
         .setOrigin(0)
@@ -38,11 +40,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        this.add.tileSprite(
+        // CIUDAD CERCANA
+
+        this.add.image(
             0,
             0,
-            3000,
-            720,
             "city_front"
         )
         .setOrigin(0)
@@ -50,11 +52,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        this.add.tileSprite(
+        // CABLES
+
+        this.add.image(
             0,
             0,
-            3000,
-            720,
             "cables"
         )
         .setOrigin(0)
@@ -67,12 +69,13 @@ export default class WorldScene extends Phaser.Scene {
         // ==================================
 
         this.add.text(
-            640,
+            836,
             40,
             "VALLE DEL CUARZO DEL ALMA",
             {
                 fontSize:"32px",
-                color:"#00ffff"
+                color:"#00ffff",
+                fontStyle:"bold"
             }
         )
         .setOrigin(0.5)
@@ -87,19 +90,19 @@ export default class WorldScene extends Phaser.Scene {
         this.physics.world.setBounds(
             0,
             0,
-            3000,
-            720
+            1672,
+            941
         );
 
 
 
         // ==================================
-        // PISO
+        // PISO COMPLETO
         // ==================================
 
         this.floor = this.physics.add.staticImage(
-            1500,
-            680,
+            836,
+            850,
             "floor"
         );
 
@@ -109,14 +112,14 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // KAEL CUADRO TEMPORAL
+        // KAEL CUADRADO DE PRUEBA
         // ==================================
 
         this.kael = this.add.rectangle(
             200,
-            600,
-            40,
-            60,
+            700,
+            50,
+            50,
             0x00ff00
         );
 
@@ -151,8 +154,8 @@ export default class WorldScene extends Phaser.Scene {
         this.cameras.main.setBounds(
             0,
             0,
-            3000,
-            720
+            1672,
+            941
         );
 
 
@@ -200,7 +203,7 @@ export default class WorldScene extends Phaser.Scene {
 
         if(
             this.keys.up.isDown &&
-            this.kael.body.blocked.down
+            this.kael.body.touching.down
         ){
 
             this.kael.body.setVelocityY(-500);
@@ -212,9 +215,3 @@ export default class WorldScene extends Phaser.Scene {
 
 
 }
-   
-   
-
-
-     
- 

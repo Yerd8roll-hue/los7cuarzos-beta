@@ -1,4 +1,3 @@
-
 export default class WorldScene extends Phaser.Scene {
 
 
@@ -12,42 +11,47 @@ export default class WorldScene extends Phaser.Scene {
 
         // ==================================
         // VALLE DEL CUARZO DEL ALMA
-        // CAPAS 1672 x 941
+        // IMAGENES 1672 x 941
         // ==================================
 
 
-        // CIELO (MAS VISIBLE)
+        const centroX = 836;
+        const centroY = 470;
+
+
+
+        // CIELO
 
         this.add.image(
-            0,
-            0,
+            centroX,
+            centroY,
             "sky"
         )
-        .setOrigin(0)
+        .setOrigin(0.5)
         .setScrollFactor(0);
 
 
 
-        // CIUDAD DEL FONDO
+        // CIUDAD ATRAS
 
         this.add.image(
-            0,
-            0,
+            centroX,
+            centroY,
             "city_back"
         )
-        .setOrigin(0)
+        .setOrigin(0.5)
         .setScrollFactor(0.2);
 
 
 
-        // CIUDAD CERCANA
+        // CIUDAD ADELANTE
 
         this.add.image(
-            0,
-            0,
+            centroX,
+            centroY,
             "city_front"
         )
-        .setOrigin(0)
+        .setOrigin(0.5)
         .setScrollFactor(0.5);
 
 
@@ -55,11 +59,11 @@ export default class WorldScene extends Phaser.Scene {
         // CABLES
 
         this.add.image(
-            0,
-            0,
+            centroX,
+            centroY,
             "cables"
         )
-        .setOrigin(0)
+        .setOrigin(0.5)
         .setScrollFactor(0.7);
 
 
@@ -69,7 +73,7 @@ export default class WorldScene extends Phaser.Scene {
         // ==================================
 
         this.add.text(
-            836,
+            640,
             40,
             "VALLE DEL CUARZO DEL ALMA",
             {
@@ -84,7 +88,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // LIMITES DEL MUNDO
+        // MUNDO
         // ==================================
 
         this.physics.world.setBounds(
@@ -97,11 +101,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // PISO COMPLETO
+        // PISO
         // ==================================
 
         this.floor = this.physics.add.staticImage(
-            836,
+            centroX,
             850,
             "floor"
         );
@@ -112,12 +116,12 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // ==================================
-        // KAEL CUADRADO DE PRUEBA
+        // KAEL CUADRADO
         // ==================================
 
         this.kael = this.add.rectangle(
             200,
-            700,
+            750,
             50,
             50,
             0x00ff00
@@ -132,8 +136,6 @@ export default class WorldScene extends Phaser.Scene {
         this.kael.body.setCollideWorldBounds(true);
 
 
-
-        // COLISION CON PISO
 
         this.physics.add.collider(
             this.kael,

@@ -1,4 +1,4 @@
-js id="q8m3tz"
+
 import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 export default class WorldScene extends Phaser.Scene {

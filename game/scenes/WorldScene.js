@@ -1,4 +1,4 @@
-```js
+js id="q8m3tz"
 import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 export default class WorldScene extends Phaser.Scene {
@@ -11,11 +11,14 @@ export default class WorldScene extends Phaser.Scene {
 
         const mundoAncho = 3000;
 
-        // FONDO
         this.cameras.main.setBackgroundColor("#05070d");
 
-        // MUNDO
-        this.physics.world.setBounds(0, 0, mundoAncho, 720);
+        this.physics.world.setBounds(
+            0,
+            0,
+            mundoAncho,
+            720
+        );
 
         // SKY
         this.sky = this.add.image(0, 0, "sky");
@@ -91,34 +94,22 @@ export default class WorldScene extends Phaser.Scene {
 
     update() {
 
-        // MOVIMIENTO IZQUIERDA
         if (
             this.keys.A.isDown ||
             this.cursors.left.isDown
         ) {
-
             this.kael.setVelocityX(-180);
-
         }
-
-        // MOVIMIENTO DERECHA
         else if (
             this.keys.D.isDown ||
             this.cursors.right.isDown
         ) {
-
             this.kael.setVelocityX(180);
-
         }
-
-        // QUIETO
         else {
-
             this.kael.setVelocityX(0);
-
         }
 
-        // SALTO
         if (
             (
                 this.keys.SPACE.isDown ||
@@ -126,14 +117,10 @@ export default class WorldScene extends Phaser.Scene {
             ) &&
             this.kael.body.blocked.down
         ) {
-
             this.kael.setVelocityY(-500);
         }
     }
 }
 
 
-
-
-
-
+  

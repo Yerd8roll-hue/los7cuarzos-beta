@@ -1,3 +1,4 @@
+```js
 export default class PreloadScene extends Phaser.Scene {
 
     constructor() {
@@ -39,7 +40,6 @@ export default class PreloadScene extends Phaser.Scene {
                 frameHeight: 64
             }
         );
-
     }
 
     create() {
@@ -47,7 +47,6 @@ export default class PreloadScene extends Phaser.Scene {
         console.log("Recursos cargados");
 
         this.scene.start("MenuScene");
-
     }
-
 }
+```

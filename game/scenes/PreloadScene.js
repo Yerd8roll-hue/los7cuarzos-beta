@@ -1,4 +1,4 @@
-```js
+js
 export default class PreloadScene extends Phaser.Scene {
 
     constructor() {
@@ -49,4 +49,4 @@ export default class PreloadScene extends Phaser.Scene {
         this.scene.start("MenuScene");
     }
 }
-```
+

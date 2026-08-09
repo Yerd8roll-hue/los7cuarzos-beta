@@ -123,23 +123,132 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // TITULO
+        // 🌌 AURA DEL TITULO
         // =========================================
 
-        this.add.text(
+        const auraTitulo = this.add.circle(
             640,
-            50,
+            120,
+            85,
+            0x9b00ff,
+            0.06
+        );
+
+        auraTitulo
+            .setScrollFactor(0)
+            .setDepth(19)
+            .setAlpha(0);
+
+
+        // =========================================
+        // 🌌 TITULO DEL VALLE
+        // =========================================
+
+        const tituloValle = this.add.text(
+            640,
+            120,
             "VALLE DEL CUARZO\nDEL ALMA",
             {
-                fontSize: "32px",
-                color: "#00ffff",
-                fontStyle: "bold",
-                align: "center"
+                fontSize: "30px",
+                fontStyle: "normal",
+                color: "#e8e8ff",
+                stroke: "#7b4cff",
+                strokeThickness: 2,
+                align: "center",
+
+                shadow: {
+                    offsetX: 0,
+                    offsetY: 0,
+                    color: "#9b00ff",
+                    blur: 12,
+                    stroke: true,
+                    fill: true
+                }
             }
         )
         .setOrigin(0.5)
         .setScrollFactor(0)
-        .setDepth(10);
+        .setDepth(20)
+        .setAlpha(0)
+        .setScale(0.96);
+
+
+        // =========================================
+        // ✨ APARICION SUAVE
+        // =========================================
+
+        this.tweens.add({
+
+            targets: tituloValle,
+
+            alpha: 1,
+            scale: 1,
+
+            duration: 1800,
+
+            ease: "Sine.easeOut"
+
+        });
+
+
+        this.tweens.add({
+
+            targets: auraTitulo,
+
+            alpha: {
+                from: 0,
+                to: 0.18
+            },
+
+            scale: {
+                from: 0.8,
+                to: 1.15
+            },
+
+            duration: 2200,
+
+            yoyo: true,
+
+            repeat: 3,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 🌫️ DESAPARECER A LOS 10 SEGUNDOS
+        // =========================================
+
+        this.time.delayedCall(
+            10000,
+            () => {
+
+                this.tweens.add({
+
+                    targets: [
+                        tituloValle,
+                        auraTitulo
+                    ],
+
+                    alpha: 0,
+
+                    duration: 1800,
+
+                    ease: "Sine.easeInOut",
+
+                    onComplete: () => {
+
+                        tituloValle.destroy();
+
+                        auraTitulo.destroy();
+
+                    }
+
+                });
+
+            }
+        );
 
 
         // =========================================

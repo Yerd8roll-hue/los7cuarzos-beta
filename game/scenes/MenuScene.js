@@ -24,21 +24,61 @@ export default class MenuScene extends Phaser.Scene {
 
 
         // =========================================
-        // TITULO
+        // ⚡ TITULO LOS 7 CUARZOS
         // =========================================
 
-        this.add.text(
+        const titulo = this.add.text(
             640,
             220,
             "LOS 7 CUARZOS",
             {
-                fontSize: "64px",
-                color: "#00ffff",
-                fontStyle: "bold"
+                fontSize: "68px",
+                fontStyle: "bold",
+                color: "#ffffff",
+                stroke: "#00ffff",
+                strokeThickness: 8,
+
+                shadow: {
+                    offsetX: 0,
+                    offsetY: 0,
+                    color: "#00ffff",
+                    blur: 20,
+                    stroke: true,
+                    fill: true
+                }
             }
         )
         .setOrigin(0.5)
         .setDepth(2);
+
+
+        // =========================================
+        // ✨ PULSO DEL TITULO
+        // =========================================
+
+        this.tweens.add({
+
+            targets: titulo,
+
+            alpha: {
+                from: 0.75,
+                to: 1
+            },
+
+            scale: {
+                from: 1,
+                to: 1.03
+            },
+
+            duration: 1200,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
 
 
         // =========================================
@@ -83,4 +123,3 @@ export default class MenuScene extends Phaser.Scene {
     }
 
 }
-

@@ -141,7 +141,12 @@ this.pulsarCuarzo = () => {
     );
 };
  
-
+// Activar evento al acercarse al cuarzo
+if (
+    this.kael.x >= this.puntoCuarzo - 250
+) {
+    this.pulsarCuarzo();
+}
 
 // =========================================
 // 💎 CUARZO DEL ALMA

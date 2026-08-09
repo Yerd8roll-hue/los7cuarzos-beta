@@ -56,25 +56,12 @@ export default class WorldScene extends Phaser.Scene {
 
 
 
-        // =========================================
-        // CABLES
-        // =========================================
+       // CABLES
+this.cables = this.add.image(0, 0, "cables");
+this.cables.setOrigin(0, 0);
+this.cables.setDepth(2);
 
-        this.cables = this.add.image(
-            0,
-            250,
-            "cables"
-        );
-
-        this.cables
-            .setOrigin(0)
-            .setDisplaySize(
-                mundoAncho,
-                180
-            )
-            .setDepth(2);
-
-
+       
 
         // =========================================
         // FLOOR VISUAL

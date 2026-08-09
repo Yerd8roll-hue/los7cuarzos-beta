@@ -16,6 +16,21 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
+        // 🎧 MUSICA DEL VALLE
+        // =========================================
+
+        this.musicaValle = this.sound.add(
+            "musica-valle",
+            {
+                volume: 0.35,
+                loop: false
+            }
+        );
+
+        this.musicaValle.play();
+
+
+        // =========================================
         // MUNDO
         // =========================================
 
@@ -65,6 +80,7 @@ export default class WorldScene extends Phaser.Scene {
         // =========================================
 
         this.puntoCuarzo = 1672;
+
         this.eventoCuarzoActivo = false;
 
 
@@ -188,7 +204,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ⚡ FUNCIÓN DE LOS 7 PULSOS
+        // ⚡ EVENTO DE LOS 7 PULSOS
         // =========================================
 
         this.activarCuarzo = () => {
@@ -200,51 +216,53 @@ export default class WorldScene extends Phaser.Scene {
             this.eventoCuarzoActivo = true;
 
 
-            // =====================================
-            // 7 PULSOS DE ENERGÍA
-            // =====================================
-
             for (let i = 0; i < 7; i++) {
 
-                const pulso = this.add.circle(
-                    this.puntoCuarzo,
-                    330,
-                    45,
-                    0x00ffff,
-                    0
-                );
+                this.time.delayedCall(
+                    i * 650,
+                    () => {
 
-                pulso.setStrokeStyle(
-                    8,
-                    0x00ffff,
-                    1
-                );
+                        const pulso = this.add.circle(
+                            this.puntoCuarzo,
+                            330,
+                            45,
+                            0x00ffff,
+                            0
+                        );
 
-                pulso.setDepth(8);
+                        pulso.setStrokeStyle(
+                            8,
+                            0x00ffff,
+                            1
+                        );
 
-                pulso.setScale(0.2);
+                        pulso.setDepth(8);
 
-                this.tweens.add({
+                        pulso.setScale(0.2);
 
-                    targets: pulso,
 
-                    scale: 4,
+                        this.tweens.add({
 
-                    alpha: 0,
+                            targets: pulso,
 
-                    duration: 1000,
+                            scale: 4,
 
-                    delay: i * 700,
+                            alpha: 0,
 
-                    ease: "Cubic.easeOut",
+                            duration: 1000,
 
-                    onComplete: () => {
+                            ease: "Cubic.easeOut",
 
-                        pulso.destroy();
+                            onComplete: () => {
+
+                                pulso.destroy();
+
+                            }
+
+                        });
 
                     }
-
-                });
+                );
 
             }
 
@@ -254,7 +272,7 @@ export default class WorldScene extends Phaser.Scene {
             // =====================================
 
             this.time.delayedCall(
-                7 * 700 + 1000,
+                7 * 650 + 1000,
                 () => {
 
                     const cuarzo = this.add.circle(
@@ -266,6 +284,7 @@ export default class WorldScene extends Phaser.Scene {
                     );
 
                     cuarzo.setDepth(9);
+
 
                     this.tweens.add({
 
@@ -296,11 +315,11 @@ export default class WorldScene extends Phaser.Scene {
 
         };
 
+
     }
 
 
     update() {
-
 
         // =========================================
         // MOVIMIENTO KAEL
@@ -368,6 +387,8 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
+
+
 
 
 

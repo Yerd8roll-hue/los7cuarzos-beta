@@ -1,4 +1,4 @@
- import { createKaelAnimations } from "../animations/KaelAnimations.js";
+import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 export default class WorldScene extends Phaser.Scene {
 
@@ -484,3 +484,4 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
+

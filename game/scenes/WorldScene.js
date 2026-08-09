@@ -61,7 +61,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // PUNTO DE TRANSICIÓN / CUARZO
+        // PUNTO DEL CUARZO
         // =========================================
 
         this.puntoCuarzo = 1672;
@@ -88,7 +88,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // PISO FÍSICO
+        // PISO FISICO
         // =========================================
 
         this.ground = this.add.rectangle(
@@ -107,7 +107,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // TÍTULO
+        // TITULO
         // =========================================
 
         this.add.text(
@@ -144,6 +144,7 @@ export default class WorldScene extends Phaser.Scene {
 
         this.kael.setCollideWorldBounds(true);
 
+
         this.physics.add.collider(
             this.kael,
             this.ground
@@ -151,7 +152,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // CÁMARA
+        // CAMARA
         // =========================================
 
         this.cameras.main.startFollow(
@@ -187,7 +188,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ⚡ EVENTO DE LOS 7 PULSOS
+        // ⚡ FUNCIÓN DE LOS 7 PULSOS
         // =========================================
 
         this.activarCuarzo = () => {
@@ -199,185 +200,67 @@ export default class WorldScene extends Phaser.Scene {
             this.eventoCuarzoActivo = true;
 
 
+            // =====================================
+            // 7 PULSOS DE ENERGÍA
+            // =====================================
+
             for (let i = 0; i < 7; i++) {
 
-                this.time.delayedCall(
-                    i * 650,
-                    () => {
+                const pulso = this.add.circle(
+                    this.puntoCuarzo,
+                    330,
+                    45,
+                    0x00ffff,
+                    0
+                );
 
-                        // ---------------------------------
-                        // HAZ PRINCIPAL
-                        // ---------------------------------
+                pulso.setStrokeStyle(
+                    8,
+                    0x00ffff,
+                    1
+                );
 
-                        const haz = this.add.rectangle(
-                            this.puntoCuarzo,
-                            360,
-                            28,
-                            720,
-                            0x00ffff,
-                            0
-                        );
+                pulso.setDepth(8);
 
-                        haz.setDepth(8);
+                pulso.setScale(0.2);
 
+                this.tweens.add({
 
-                        // ---------------------------------
-                        // HAZ EXTERIOR
-                        // ---------------------------------
+                    targets: pulso,
 
-                        const brillo = this.add.rectangle(
-                            this.puntoCuarzo,
-                            360,
-                            100,
-                            720,
-                            0x00ffff,
-                            0
-                        );
+                    scale: 4,
 
-                        brillo.setDepth(7);
+                    alpha: 0,
 
+                    duration: 1000,
 
-                        // ---------------------------------
-                        // PULSO
-                        // ---------------------------------
+                    delay: i * 700,
 
-                        this.tweens.add({
+                    ease: "Cubic.easeOut",
 
-                            targets: haz,
+                    onComplete: () => {
 
-                            alpha: {
-                                from: 0,
-                                to: 0.85
-                            },
-
-                            scaleX: {
-                                from: 0.3,
-                                to: 2
-                            },
-
-                            duration: 180,
-
-                            yoyo: true,
-
-                            ease: "Cubic.easeOut",
-
-                            onComplete: () => {
-
-                                haz.destroy();
-
-                            }
-
-                        });
-
-
-                        this.tweens.add({
-
-                            targets: brillo,
-
-                            alpha: {
-                                from: 0,
-                                to: 0.25
-                            },
-
-                            scaleX: {
-                                from: 0.2,
-                                to: 1
-                            },
-
-                            duration: 280,
-
-                            yoyo: true,
-
-                            ease: "Cubic.easeOut",
-
-                            onComplete: () => {
-
-                                brillo.destroy();
-
-                            }
-
-                        });
-
-
-                        // ---------------------------------
-                        // RAYOS LATERALES
-                        // ---------------------------------
-
-                        const rayo = this.add.graphics();
-
-                        rayo.lineStyle(
-                            5,
-                            0x00ffff,
-                            1
-                        );
-
-                        rayo.beginPath();
-
-                        rayo.moveTo(
-                            this.puntoCuarzo - 70,
-                            150
-                        );
-
-                        rayo.lineTo(
-                            this.puntoCuarzo + 30,
-                            270
-                        );
-
-                        rayo.lineTo(
-                            this.puntoCuarzo - 30,
-                            390
-                        );
-
-                        rayo.lineTo(
-                            this.puntoCuarzo + 60,
-                            520
-                        );
-
-                        rayo.lineTo(
-                            this.puntoCuarzo - 20,
-                            680
-                        );
-
-                        rayo.strokePath();
-
-                        rayo.setDepth(9);
-
-                        this.tweens.add({
-
-                            targets: rayo,
-
-                            alpha: 0,
-
-                            duration: 350,
-
-                            ease: "Power2",
-
-                            onComplete: () => {
-
-                                rayo.destroy();
-
-                            }
-
-                        });
+                        pulso.destroy();
 
                     }
-                );
+
+                });
 
             }
 
 
             // =====================================
-            // 💎 APARICIÓN DEL CUARZO
+            // 💎 CUARZO DEL ALMA
             // =====================================
 
             this.time.delayedCall(
-                7 * 650 + 500,
+                7 * 700 + 1000,
                 () => {
 
                     const cuarzo = this.add.circle(
                         this.puntoCuarzo,
                         330,
-                        45,
+                        50,
                         0x9b00ff,
                         1
                     );
@@ -390,7 +273,7 @@ export default class WorldScene extends Phaser.Scene {
 
                         scale: {
                             from: 0.6,
-                            to: 1.25
+                            to: 1.3
                         },
 
                         alpha: {
@@ -417,6 +300,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
     update() {
+
 
         // =========================================
         // MOVIMIENTO KAEL
@@ -452,7 +336,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ⬆️ SALTO
+        // SALTO
         // =========================================
 
         if (
@@ -464,7 +348,7 @@ export default class WorldScene extends Phaser.Scene {
             this.kael.body.blocked.down
         ) {
 
-            this.kael.setVelocityY(-600);
+            this.kael.setVelocityY(-500);
 
         }
 
@@ -484,4 +368,8 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
+
+
+
+
 

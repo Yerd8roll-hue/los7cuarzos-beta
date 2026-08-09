@@ -69,22 +69,8 @@ this.cablesFade = this.add.rectangle(
 
 this.cablesFade.setOrigin(0, 0);
 this.cablesFade.setDepth(3);
-// =========================================
-// ⚡ EVENTO DE LOS 7 PULSOS
-// =========================================
+ false;
 
-this.puntoCuarzo = 1672;
-this.eventoCuarzoActivo = false;
-
-this.pulsarCuarzo = () => {
-
-    if (this.eventoCuarzoActivo) {
-        return;
-    }
-
-    this.eventoCuarzoActivo = true;
-
-    for (let i = 0; i < 7; i++) {
 
         const pulso = this.add.circle(
             this.puntoCuarzo,
@@ -112,41 +98,7 @@ this.pulsarCuarzo = () => {
             ease: "Cubic.easeOut"
         });
     }
-
-    // 💎 APARECE EL CUARZO DESPUÉS DE LOS 7 PULSOS
-    this.time.delayedCall(
-        7 * 700 + 1000,
-        () => {
-
-            const cuarzo = this.add.circle(
-                this.puntoCuarzo,
-                330,
-                50,
-                0x9b00ff,
-                1
-            );
-
-            cuarzo.setDepth(9);
-
-            this.tweens.add({
-                targets: cuarzo,
-                scale: 1.25,
-                alpha: 0.65,
-                duration: 700,
-                yoyo: true,
-                repeat: -1,
-                ease: "Sine.easeInOut"
-            });
-        }
-    );
-};
- 
-// Activar evento al acercarse al cuarzo
-if (
-    this.kael.x >= this.puntoCuarzo - 250
-) {
-    this.pulsarCuarzo();
-}
+         
 
 // =========================================
 // 💎 CUARZO DEL ALMA

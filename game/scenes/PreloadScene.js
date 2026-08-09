@@ -27,14 +27,17 @@ export default class PreloadScene extends Phaser.Scene {
             "musica-menu",
             "game/assets/audio/musica.mp3"
         );
-// ==============================
-// 🎧 MUSICA DEL VALLE
-// ==============================
 
-this.load.audio(
-    "musica-valle",
-    "game/assets/audio/valle.mp3"
-);
+
+        // ==============================
+        // 🎧 MUSICA DEL VALLE
+        // ==============================
+
+        this.load.audio(
+            "musica-valle",
+            "game/assets/audio/valle.mp3"
+        );
+
 
         // ==============================
         // VALLE DEL CUARZO DEL ALMA
@@ -57,6 +60,16 @@ this.load.audio(
 
 
         // ==============================
+        // 💎 GEMA DE ENERGÍA
+        // ==============================
+
+        this.load.image(
+            "gema-energia",
+            "game/assets/cuarzos/gema-energia.png"
+        );
+
+
+        // ==============================
         // KAEL
         // ==============================
 
@@ -66,6 +79,23 @@ this.load.audio(
             {
                 frameWidth: 64,
                 frameHeight: 64
+            }
+        );
+
+
+        // ==============================
+        // 🔎 COMPROBAR GEMA
+        // ==============================
+
+        this.load.once(
+            "complete",
+            () => {
+
+                console.log(
+                    "GEMA DE ENERGÍA:",
+                    this.textures.exists("gema-energia")
+                );
+
             }
         );
 

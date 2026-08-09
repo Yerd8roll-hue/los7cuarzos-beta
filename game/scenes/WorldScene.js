@@ -302,8 +302,17 @@ export default class WorldScene extends Phaser.Scene {
 
         this.energiaKael = 77;
 
-        // 🔥 Cada salto consume 10
+        // Cada salto consume 10
         this.costoSalto = 10;
+
+        // La energía se recupera solamente hasta 70
+        this.energiaMaxRecarga = 70;
+
+        // Velocidad de recuperación
+        this.velocidadRecarga = 10;
+
+        // Control del brillo al llegar a 70
+        this.brilloEnergiaActivo = false;
 
 
         // =========================================
@@ -708,7 +717,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ACTUALIZAR NUMERO
+        // NUMERO
         // =========================================
 
         this.textoEnergia.setText(
@@ -716,6 +725,140 @@ export default class WorldScene extends Phaser.Scene {
             this.energiaKael +
             " / " +
             this.energiaMaxima
+        );
+
+    }
+
+
+    // =============================================
+    // ✨ BRILLO DE KAEL AL RECARGAR A 70
+    // =============================================
+
+    brilloKaelEnergia() {
+
+        if (!this.kael) {
+            return;
+        }
+
+        if (this.brilloEnergiaActivo) {
+            return;
+        }
+
+        this.brilloEnergiaActivo = true;
+
+
+        // =========================================
+        // GUARDAR ESCALA
+        // =========================================
+
+        const escalaOriginalX =
+            this.kael.scaleX;
+
+        const escalaOriginalY =
+            this.kael.scaleY;
+
+
+        // =========================================
+        // TINTE CYAN
+        // =========================================
+
+        this.kael.setTint(
+            0x66ffff
+        );
+
+
+        // =========================================
+        // PEQUEÑO PULSO
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.kael,
+
+            scaleX: escalaOriginalX * 1.12,
+
+            scaleY: escalaOriginalY * 1.12,
+
+            duration: 180,
+
+            yoyo: true,
+
+            ease: "Sine.easeOut"
+
+        });
+
+
+        // =========================================
+        // DESTELLO ALREDEDOR
+        // =========================================
+
+        const aura =
+            this.add.circle(
+                this.kael.x,
+                this.kael.y,
+                28,
+                0x00ffff,
+                0.18
+            );
+
+
+        aura
+            .setScrollFactor(1)
+            .setDepth(4);
+
+
+        this.tweens.add({
+
+            targets: aura,
+
+            scale: 2.4,
+
+            alpha: 0,
+
+            duration: 500,
+
+            ease: "Cubic.easeOut",
+
+            onUpdate: () => {
+
+                if (this.kael) {
+
+                    aura.x =
+                        this.kael.x;
+
+                    aura.y =
+                        this.kael.y;
+
+                }
+
+            },
+
+            onComplete: () => {
+
+                aura.destroy();
+
+            }
+
+        });
+
+
+        // =========================================
+        // QUITAR TINTE
+        // =========================================
+
+        this.time.delayedCall(
+            450,
+            () => {
+
+                if (this.kael) {
+
+                    this.kael.clearTint();
+
+                }
+
+                this.brilloEnergiaActivo = false;
+
+            }
         );
 
     }
@@ -1161,7 +1304,7 @@ export default class WorldScene extends Phaser.Scene {
     // UPDATE
     // =============================================
 
-    update() {
+    update(time, delta) {
 
         if (this.finalizando) {
             return;
@@ -1227,22 +1370,91 @@ export default class WorldScene extends Phaser.Scene {
         ) {
 
             // Gastar 10 puntos
-            this.energiaKael -= this.costoSalto;
+            this.energiaKael -=
+                this.costoSalto;
 
-            // Evitar números negativos
+
             if (this.energiaKael < 0) {
 
                 this.energiaKael = 0;
 
             }
 
+
             // Actualizar barra
             this.actualizarBarraEnergia();
+
 
             // Realizar salto
             this.kael.setVelocityY(
                 -500
             );
+
+        }
+
+
+        // =========================================
+        // 🔋 RECARGA DE ENERGIA EN EL SUELO
+        // =========================================
+
+        if (
+            this.kael.body.blocked.down &&
+            this.energiaKael < this.energiaMaxRecarga
+        ) {
+
+            const energiaAnterior =
+                this.energiaKael;
+
+
+            // Recuperación suave basada en tiempo
+            this.energiaKael +=
+                this.velocidadRecarga *
+                (delta / 1000);
+
+
+            // No superar 70
+            if (
+                this.energiaKael >
+                this.energiaMaxRecarga
+            ) {
+
+                this.energiaKael =
+                    this.energiaMaxRecarga;
+
+            }
+
+
+            // Actualizar si realmente cambió
+            if (
+                this.energiaKael !==
+                energiaAnterior
+            ) {
+
+                this.actualizarBarraEnergia();
+
+            }
+
+
+            // =====================================
+            // ✨ LLEGÓ A 70
+            // =====================================
+
+            if (
+                energiaAnterior <
+                this.energiaMaxRecarga
+                &&
+                this.energiaKael >=
+                this.energiaMaxRecarga
+            ) {
+
+                this.energiaKael =
+                    this.energiaMaxRecarga;
+
+                this.actualizarBarraEnergia();
+
+                this.brilloKaelEnergia();
+
+            }
 
         }
 
@@ -1263,3 +1475,4 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
+

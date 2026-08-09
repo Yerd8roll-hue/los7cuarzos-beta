@@ -7,14 +7,28 @@ export default class PreloadScene extends Phaser.Scene {
     preload() {
 
         console.log("Cargando recursos...");
-// ==============================
-// FONDO DEL MENU
-// ==============================
 
-this.load.image(
-    "menu-fondo",
-    "game/assets/menu/fondo.png"
-);
+
+        // ==============================
+        // FONDO DEL MENU
+        // ==============================
+
+        this.load.image(
+            "menu-fondo",
+            "game/assets/menu/fondo.png"
+        );
+
+
+        // ==============================
+        // 🎧 MUSICA DEL MENU
+        // ==============================
+
+        this.load.audio(
+            "musica-menu",
+            "game/assets/audio/musica.mp3"
+        );
+
+
         // ==============================
         // VALLE DEL CUARZO DEL ALMA
         // ==============================
@@ -34,6 +48,7 @@ this.load.image(
             "game/assets/valle del_alma/floor.png"
         );
 
+
         // ==============================
         // KAEL
         // ==============================
@@ -46,15 +61,18 @@ this.load.image(
                 frameHeight: 64
             }
         );
+
     }
+
 
     create() {
 
         console.log("Recursos cargados");
 
         this.scene.start("MenuScene");
-    }
-}
 
+    }
+
+}
 
  

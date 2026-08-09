@@ -31,6 +31,20 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
+        // FIN DE LA CANCION
+        // =========================================
+
+        this.musicaValle.once(
+            "complete",
+            () => {
+
+                this.finalizarValle();
+
+            }
+        );
+
+
+        // =========================================
         // MUNDO
         // =========================================
 
@@ -141,7 +155,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🌌 TITULO DEL VALLE
+        // 🌌 TITULO
         // =========================================
 
         const tituloValle = this.add.text(
@@ -174,7 +188,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ✨ APARICION SUAVE
+        // ✨ ENTRADA DEL TITULO
         // =========================================
 
         this.tweens.add({
@@ -190,6 +204,10 @@ export default class WorldScene extends Phaser.Scene {
 
         });
 
+
+        // =========================================
+        // AURA RESPIRANDO
+        // =========================================
 
         this.tweens.add({
 
@@ -217,7 +235,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🌫️ DESAPARECER A LOS 10 SEGUNDOS
+        // 🌫️ DESAPARECER TITULO
         // =========================================
 
         this.time.delayedCall(
@@ -429,7 +447,280 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 
+    // =============================================
+    // 💥 FINAL DEL VALLE
+    // =============================================
+
+    finalizarValle() {
+
+        // Evitar que se ejecute dos veces
+        if (this.finalizando) {
+            return;
+        }
+
+        this.finalizando = true;
+
+
+        // =========================================
+        // DETENER MOVIMIENTO
+        // =========================================
+
+        if (this.kael) {
+
+            this.kael.setVelocity(
+                0,
+                0
+            );
+
+            this.kael.body.enable = false;
+
+        }
+
+
+        // =========================================
+        // ⚡ DESTELLO
+        // =========================================
+
+        const destello = this.add.rectangle(
+            640,
+            360,
+            1280,
+            720,
+            0xffffff,
+            0
+        );
+
+        destello
+            .setScrollFactor(0)
+            .setDepth(100);
+
+
+        this.tweens.add({
+
+            targets: destello,
+
+            alpha: 0.95,
+
+            duration: 180,
+
+            yoyo: true,
+
+            ease: "Quad.easeOut"
+
+        });
+
+
+        // =========================================
+        // 💥 CREAR FRAGMENTOS
+        // =========================================
+
+        const fragmentos = [];
+
+
+        for (let i = 0; i < 55; i++) {
+
+            const ancho =
+                Phaser.Math.Between(25, 100);
+
+            const alto =
+                Phaser.Math.Between(15, 70);
+
+
+            const x =
+                Phaser.Math.Between(
+                    0,
+                    1280
+                );
+
+            const y =
+                Phaser.Math.Between(
+                    0,
+                    720
+                );
+
+
+            const fragmento =
+                this.add.rectangle(
+                    x,
+                    y,
+                    ancho,
+                    alto,
+                    i % 3 === 0
+                        ? 0x9b00ff
+                        : 0x05070d,
+                    Phaser.Math.FloatBetween(
+                        0.45,
+                        0.9
+                    )
+                );
+
+
+            fragmento
+                .setScrollFactor(0)
+                .setDepth(101);
+
+
+            fragmentos.push(
+                fragmento
+            );
+
+
+            // Dirección aleatoria
+            const destinoX =
+                x +
+                Phaser.Math.Between(
+                    -500,
+                    500
+                );
+
+            const destinoY =
+                y +
+                Phaser.Math.Between(
+                    -400,
+                    400
+                );
+
+
+            this.tweens.add({
+
+                targets: fragmento,
+
+                x: destinoX,
+
+                y: destinoY,
+
+                angle:
+                    Phaser.Math.Between(
+                        -180,
+                        180
+                    ),
+
+                scaleX: 0.1,
+
+                scaleY: 0.1,
+
+                alpha: 0,
+
+                duration:
+                    Phaser.Math.Between(
+                        900,
+                        1500
+                    ),
+
+                delay:
+                    Phaser.Math.Between(
+                        0,
+                        250
+                    ),
+
+                ease: "Cubic.easeIn"
+
+            });
+
+        }
+
+
+        // =========================================
+        // 🟪 KAEL SE FRAGMENTA
+        // =========================================
+
+        if (this.kael) {
+
+            this.tweens.add({
+
+                targets: this.kael,
+
+                alpha: 0,
+
+                scale: 0.2,
+
+                angle: 180,
+
+                duration: 900,
+
+                ease: "Cubic.easeIn"
+
+            });
+
+        }
+
+
+        // =========================================
+        // 🌑 OSCURECER
+        // =========================================
+
+        this.time.delayedCall(
+            1300,
+            () => {
+
+                const negro = this.add.rectangle(
+                    640,
+                    360,
+                    1280,
+                    720,
+                    0x000000,
+                    0
+                );
+
+                negro
+                    .setScrollFactor(0)
+                    .setDepth(110);
+
+
+                this.tweens.add({
+
+                    targets: negro,
+
+                    alpha: 1,
+
+                    duration: 1000,
+
+                    ease: "Sine.easeInOut",
+
+                    onComplete: () => {
+
+                        // =================================
+                        // 🎵 DETENER MUSICA DEL VALLE
+                        // =================================
+
+                        if (this.musicaValle) {
+
+                            this.musicaValle.stop();
+
+                            this.musicaValle.destroy();
+
+                            this.musicaValle = null;
+
+                        }
+
+
+                        // =================================
+                        // 🎬 VOLVER AL MENU
+                        // =================================
+
+                        this.scene.start(
+                            "MenuScene"
+                        );
+
+                    }
+
+                });
+
+            }
+        );
+
+    }
+
+
     update() {
+
+        // Si el Valle está terminando,
+        // no permitir movimiento.
+
+        if (this.finalizando) {
+            return;
+        }
+
 
         // =========================================
         // MOVIMIENTO KAEL
@@ -487,7 +778,8 @@ export default class WorldScene extends Phaser.Scene {
         // =========================================
 
         if (
-            this.kael.x >= this.puntoCuarzo - 250
+            this.kael.x >=
+            this.puntoCuarzo - 250
         ) {
 
             this.activarCuarzo();

@@ -30,10 +30,11 @@ this.musicaMenu = this.sound.add(
     "musica-menu",
     {
         volume: 0.35,
-        loop: true,
-        seek: 187
+        loop: true
     }
 );
+
+this.musicaMenu.play();
 
 this.musicaMenu.play();
         // =========================================

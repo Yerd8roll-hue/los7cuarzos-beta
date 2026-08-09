@@ -1,3 +1,4 @@
+
 import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 export default class WorldScene extends Phaser.Scene {
@@ -305,14 +306,27 @@ export default class WorldScene extends Phaser.Scene {
         // Cada salto consume 10
         this.costoSalto = 10;
 
-        // La energía se recupera solamente hasta 70
+        // Solo recarga hasta 70
         this.energiaMaxRecarga = 70;
 
         // Velocidad de recuperación
         this.velocidadRecarga = 10;
 
-        // Control del brillo al llegar a 70
+        // Control del brillo
         this.brilloEnergiaActivo = false;
+
+
+        // =========================================
+        // 🛼 VELOCIDADES SEGUN ENERGIA
+        // =========================================
+
+        this.velocidadNormal = 180;
+
+        this.velocidadMedia = 150;
+
+        this.velocidadBaja = 110;
+
+        this.velocidadCritica = 70;
 
 
         // =========================================
@@ -340,7 +354,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // RELLENO DE ENERGIA
+        // RELLENO
         // =========================================
 
         this.barraEnergia =
@@ -352,7 +366,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // TEXTO DE ENERGIA
+        // TEXTO
         // =========================================
 
         this.textoEnergia =
@@ -566,7 +580,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
     // =============================================
-    // 🔋 ACTUALIZAR BARRA DE ENERGIA
+    // 🔋 ACTUALIZAR BARRA
     // =============================================
 
     actualizarBarraEnergia() {
@@ -582,10 +596,6 @@ export default class WorldScene extends Phaser.Scene {
             this.energiaMaxima;
 
 
-        // =========================================
-        // LIMPIAR
-        // =========================================
-
         this.barraEnergiaMarco.clear();
 
         this.barraEnergiaFondo.clear();
@@ -594,7 +604,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // MARCO OSCURO
+        // MARCO
         // =========================================
 
         this.barraEnergiaMarco.fillStyle(
@@ -649,7 +659,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ENERGIA VERDE
+        // ENERGIA
         // =========================================
 
         const anchoEnergia =
@@ -672,9 +682,7 @@ export default class WorldScene extends Phaser.Scene {
             );
 
 
-            // =====================================
-            // CYAN SUPERIOR
-            // =====================================
+            // CYAN
 
             this.barraEnergia.fillStyle(
                 0x00ffff,
@@ -693,9 +701,7 @@ export default class WorldScene extends Phaser.Scene {
             );
 
 
-            // =====================================
-            // ✨ BRILLO
-            // =====================================
+            // BRILLO
 
             this.barraEnergia.fillStyle(
                 0xffffff,
@@ -722,7 +728,7 @@ export default class WorldScene extends Phaser.Scene {
 
         this.textoEnergia.setText(
             "ENERGÍA  " +
-            this.energiaKael +
+            Math.floor(this.energiaKael) +
             " / " +
             this.energiaMaxima
         );
@@ -731,7 +737,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
     // =============================================
-    // ✨ BRILLO DE KAEL AL RECARGAR A 70
+    // ✨ BRILLO DE KAEL
     // =============================================
 
     brilloKaelEnergia() {
@@ -746,10 +752,6 @@ export default class WorldScene extends Phaser.Scene {
 
         this.brilloEnergiaActivo = true;
 
-
-        // =========================================
-        // GUARDAR ESCALA
-        // =========================================
 
         const escalaOriginalX =
             this.kael.scaleX;
@@ -768,16 +770,18 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // PEQUEÑO PULSO
+        // PULSO
         // =========================================
 
         this.tweens.add({
 
             targets: this.kael,
 
-            scaleX: escalaOriginalX * 1.12,
+            scaleX:
+                escalaOriginalX * 1.12,
 
-            scaleY: escalaOriginalY * 1.12,
+            scaleY:
+                escalaOriginalY * 1.12,
 
             duration: 180,
 
@@ -789,7 +793,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // DESTELLO ALREDEDOR
+        // AURA
         // =========================================
 
         const aura =
@@ -894,7 +898,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ⚡ PRIMER DESTELLO
+        // ⚡ DESTELLO
         // =========================================
 
         const destello = this.add.rectangle(
@@ -1136,7 +1140,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🌑 OSCURECIMIENTO
+        // 🌑 OSCURECER
         // =========================================
 
         const negro =
@@ -1253,10 +1257,6 @@ export default class WorldScene extends Phaser.Scene {
                                                 destello.destroy();
 
 
-                                                // =============================
-                                                // 🎵 DETENER MUSICA
-                                                // =============================
-
                                                 if (
                                                     this.musicaValle
                                                 ) {
@@ -1269,10 +1269,6 @@ export default class WorldScene extends Phaser.Scene {
 
                                                 }
 
-
-                                                // =============================
-                                                // 🎬 MENU
-                                                // =============================
 
                                                 this.scene.start(
                                                     "MenuScene"
@@ -1312,6 +1308,42 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
+        // 🛼 VELOCIDAD SEGUN ENERGIA
+        // =========================================
+
+        let velocidadActual;
+
+
+        if (this.energiaKael >= 70) {
+
+            velocidadActual =
+                this.velocidadNormal;
+
+        }
+
+        else if (this.energiaKael >= 30) {
+
+            velocidadActual =
+                this.velocidadMedia;
+
+        }
+
+        else if (this.energiaKael >= 10) {
+
+            velocidadActual =
+                this.velocidadBaja;
+
+        }
+
+        else {
+
+            velocidadActual =
+                this.velocidadCritica;
+
+        }
+
+
+        // =========================================
         // MOVIMIENTO KAEL
         // =========================================
 
@@ -1321,7 +1353,7 @@ export default class WorldScene extends Phaser.Scene {
         ) {
 
             this.kael.setVelocityX(
-                -180
+                -velocidadActual
             );
 
             this.kael.setFlipX(
@@ -1336,7 +1368,7 @@ export default class WorldScene extends Phaser.Scene {
         ) {
 
             this.kael.setVelocityX(
-                180
+                velocidadActual
             );
 
             this.kael.setFlipX(
@@ -1355,7 +1387,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🛼 SALTO + CONSUMO DE ENERGIA
+        // 🛼 SALTO + CONSUMO
         // =========================================
 
         if (
@@ -1369,7 +1401,6 @@ export default class WorldScene extends Phaser.Scene {
             this.energiaKael >= this.costoSalto
         ) {
 
-            // Gastar 10 puntos
             this.energiaKael -=
                 this.costoSalto;
 
@@ -1381,11 +1412,9 @@ export default class WorldScene extends Phaser.Scene {
             }
 
 
-            // Actualizar barra
             this.actualizarBarraEnergia();
 
 
-            // Realizar salto
             this.kael.setVelocityY(
                 -500
             );
@@ -1394,11 +1423,13 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🔋 RECARGA DE ENERGIA EN EL SUELO
+        // 🔋 RECARGA
+        // SOLO QUIETO EN EL SUELO
         // =========================================
 
         if (
             this.kael.body.blocked.down &&
+            this.kael.body.velocity.x === 0 &&
             this.energiaKael < this.energiaMaxRecarga
         ) {
 
@@ -1406,13 +1437,11 @@ export default class WorldScene extends Phaser.Scene {
                 this.energiaKael;
 
 
-            // Recuperación suave basada en tiempo
             this.energiaKael +=
                 this.velocidadRecarga *
                 (delta / 1000);
 
 
-            // No superar 70
             if (
                 this.energiaKael >
                 this.energiaMaxRecarga
@@ -1424,7 +1453,6 @@ export default class WorldScene extends Phaser.Scene {
             }
 
 
-            // Actualizar si realmente cambió
             if (
                 this.energiaKael !==
                 energiaAnterior
@@ -1475,5 +1503,4 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
-
 

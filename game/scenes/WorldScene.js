@@ -69,6 +69,107 @@ this.cablesFade = this.add.rectangle(
 
 this.cablesFade.setOrigin(0, 0);
 this.cablesFade.setDepth(3);
+     // =========================================
+// ⚡ EVENTO DE LOS 7 PULSOS
+// =========================================
+
+const puntoCuarzo = 1672;
+
+// Grupo visual del evento
+this.pulsosCuarzo = this.add.group();
+
+// Crear los 7 pulsos
+for (let i = 0; i < 7; i++) {
+
+    const pulso = this.add.circle(
+        puntoCuarzo,
+        330,
+        35,
+        0x00ffff,
+        0
+    );
+
+    pulso.setStrokeStyle(
+        6,
+        0x00ffff,
+        1
+    );
+
+    pulso.setDepth(8);
+
+    pulso.setScale(0.2);
+
+    this.pulsosCuarzo.add(pulso);
+
+    this.tweens.add({
+        targets: pulso,
+
+        scale: 3.5,
+
+        alpha: {
+            from: 1,
+            to: 0
+        },
+
+        duration: 900,
+
+        delay: i * 700,
+
+        ease: "Cubic.easeOut",
+
+        onComplete: () => {
+
+            pulso.setScale(0.2);
+            pulso.setAlpha(1);
+
+        }
+    });
+
+}
+
+
+// =========================================
+// 💎 CUARZO DEL ALMA
+// =========================================
+
+this.time.delayedCall(
+    7 * 700 + 900,
+    () => {
+
+        const cuarzo = this.add.circle(
+            puntoCuarzo,
+            330,
+            45,
+            0x9b00ff,
+            1
+        );
+
+        cuarzo.setDepth(9);
+
+        this.tweens.add({
+            targets: cuarzo,
+
+            scale: {
+                from: 0.5,
+                to: 1.3
+            },
+
+            alpha: {
+                from: 0.4,
+                to: 1
+            },
+
+            duration: 800,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+        });
+
+    }
+);
         // =========================================
         // FLOOR VISUAL
         // =========================================

@@ -757,8 +757,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
                     // =================================
-                    // 🌟 SORPRESA
-                    // HALO DE ENERGIA
+                    // 🌟 HALO DE ENERGIA
                     // =================================
 
                     const haloEnergia =
@@ -809,7 +808,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
                     // =================================
-                    // ☁️ NUBECITA DE KAEL
+                    // ☁️ NUBE DE KAEL
                     // =================================
 
                     this.mostrarDialogoKael();
@@ -861,7 +860,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ☁️ DIALOGO DE KAEL
+        // ☁️ DIALOGO DE KAEL — COMIC
         // =========================================
 
         this.mostrarDialogoKael = () => {
@@ -873,101 +872,116 @@ export default class WorldScene extends Phaser.Scene {
 
             const x = this.kael.x;
 
-            const y = this.kael.y - 78;
+            const y = this.kael.y - 125;
 
 
             // =====================================
-            // ☁️ NUBE
+            // ☁️ NUBE BLANCA LISA
             // =====================================
 
             const nube = this.add.graphics();
 
             nube.fillStyle(
-                0xf3efff,
-                0.93
+                0xffffff,
+                1
             );
 
+
+            // Cuerpo principal
+            nube.fillRoundedRect(
+                x - 145,
+                y - 55,
+                290,
+                110,
+                35
+            );
+
+
+            // Volumen superior izquierdo
             nube.fillCircle(
-                x,
-                y,
-                25
+                x - 95,
+                y - 42,
+                28
             );
 
+
+            // Volumen superior derecho
             nube.fillCircle(
-                x - 21,
-                y + 5,
-                17
+                x + 95,
+                y - 42,
+                28
             );
-
-            nube.fillCircle(
-                x + 21,
-                y + 5,
-                17
-            );
-
-            nube.fillCircle(
-                x - 9,
-                y - 13,
-                19
-            );
-
-            nube.fillCircle(
-                x + 10,
-                y - 11,
-                20
-            );
-
-            nube.setDepth(60);
 
 
             // =====================================
-            // 💜 BORDE
+            // 💬 COLITA DE COMIC
+            // =====================================
+
+            nube.fillTriangle(
+                x - 22,
+                y + 48,
+                x - 2,
+                y + 48,
+                x - 28,
+                y + 78
+            );
+
+
+            // =====================================
+            // 🖤 BORDE NEGRO
             // =====================================
 
             nube.lineStyle(
-                2,
-                0xb400ff,
-                0.65
+                5,
+                0x000000,
+                1
             );
 
-            nube.strokeCircle(
-                x,
-                y,
-                25
+
+            nube.strokeRoundedRect(
+                x - 145,
+                y - 55,
+                290,
+                110,
+                35
             );
 
 
             // =====================================
-            // 💬 FRASE DE KAEL
+            // 💬 TEXTO NEGRO
             // =====================================
 
             const textoKael = this.add.text(
                 x,
                 y,
-                "100% de energía...\ny yo que pensaba\nque venía a caminar.",
+                "100% DE ENERGÍA...\nY YO QUE PENSABA\nQUE VENÍA A CAMINAR.",
                 {
-                    fontSize: "11px",
+                    fontSize: "16px",
                     fontStyle: "bold",
-                    color: "#642080",
+                    fontFamily: "Arial",
+                    color: "#000000",
                     align: "center",
-                    stroke: "#ffffff",
-                    strokeThickness: 2
+                    lineSpacing: 4
                 }
             );
+
 
             textoKael
                 .setOrigin(0.5)
                 .setDepth(61);
 
 
+            nube.setDepth(60);
+
+
             // =====================================
-            // ENTRADA
+            // ✨ ENTRADA
             // =====================================
 
-            nube.setScale(0.4);
+            nube.setScale(0.7);
             nube.setAlpha(0);
 
-            textoKael.setScale(0.4);
+            textoKael.setScale(0.7);
             textoKael.setAlpha(0);
 
 
@@ -990,14 +1004,14 @@ export default class WorldScene extends Phaser.Scene {
 
 
             // =====================================
-            // SEGUIR A KAEL
+            // ☁️ SEGUIR A KAEL
             // =====================================
 
             const seguirNube = this.time.addEvent({
 
                 delay: 16,
 
-                repeat: 130,
+                repeat: 160,
 
                 callback: () => {
 
@@ -1005,17 +1019,19 @@ export default class WorldScene extends Phaser.Scene {
                         return;
                     }
 
+
                     nube.x =
                         this.kael.x;
 
                     nube.y =
-                        this.kael.y - 78;
+                        this.kael.y - 125;
+
 
                     textoKael.x =
                         this.kael.x;
 
                     textoKael.y =
-                        this.kael.y - 78;
+                        this.kael.y - 125;
 
                 }
 
@@ -1027,7 +1043,7 @@ export default class WorldScene extends Phaser.Scene {
             // =====================================
 
             this.time.delayedCall(
-                2100,
+                2700,
                 () => {
 
                     if (seguirNube) {
@@ -1044,7 +1060,7 @@ export default class WorldScene extends Phaser.Scene {
 
                         alpha: 0,
 
-                        scale: 0.88,
+                        scale: 0.9,
 
                         duration: 450,
 
@@ -1490,10 +1506,13 @@ export default class WorldScene extends Phaser.Scene {
     actualizarBarraEnergia() {
 
         const x = 55;
+
         const y = 65;
 
         const ancho = 245;
+
         const alto = 22;
+
 
         const porcentaje =
             this.energiaKael /
@@ -1842,6 +1861,7 @@ export default class WorldScene extends Phaser.Scene {
                     110
                 );
 
+
             const alto =
                 Phaser.Math.Between(
                     10,
@@ -1854,6 +1874,7 @@ export default class WorldScene extends Phaser.Scene {
                     -50,
                     1330
                 );
+
 
             const y =
                 Phaser.Math.Between(
@@ -2255,6 +2276,7 @@ export default class WorldScene extends Phaser.Scene {
 
         }
 
+
         else if (
             this.keys.D.isDown ||
             this.cursors.right.isDown
@@ -2269,6 +2291,7 @@ export default class WorldScene extends Phaser.Scene {
             );
 
         }
+
 
         else {
 
@@ -2416,6 +2439,4 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
-        
-
    

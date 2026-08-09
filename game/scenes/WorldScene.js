@@ -57,7 +57,18 @@ export default class WorldScene extends Phaser.Scene {
 this.cables = this.add.image(0, 0, "cables");
 this.cables.setOrigin(0, 0);
 this.cables.setDepth(2);
+// TRANSICIÓN SUAVE ENTRE CABLES Y CIELO
+this.cablesFade = this.add.rectangle(
+    0,
+    0,
+    1672,
+    180,
+    0x05070d,
+    0.25
+);
 
+this.cablesFade.setOrigin(0, 0);
+this.cablesFade.setDepth(3);
         // =========================================
         // FLOOR VISUAL
         // =========================================

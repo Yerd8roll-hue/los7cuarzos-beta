@@ -443,7 +443,6 @@ export default class WorldScene extends Phaser.Scene {
 
         };
 
-
     }
 
 
@@ -478,7 +477,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ⚡ DESTELLO
+        // ⚡ PRIMER DESTELLO
         // =========================================
 
         const destello = this.add.rectangle(
@@ -499,9 +498,9 @@ export default class WorldScene extends Phaser.Scene {
 
             targets: destello,
 
-            alpha: 0.95,
+            alpha: 0.9,
 
-            duration: 180,
+            duration: 160,
 
             yoyo: true,
 
@@ -511,31 +510,62 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 💥 CREAR FRAGMENTOS
+        // 💥 FRAGMENTOS DEL VALLE
         // =========================================
 
         const fragmentos = [];
 
+        const colores = [
 
-        for (let i = 0; i < 55; i++) {
+            0x00ffff, // cyan
+            0x9b00ff, // violeta
+            0x0066ff, // azul
+            0xff1744, // rojo
+            0x00ff88, // verde
+            0xffd700, // dorado
+            0xff66cc, // rosa
+            0x7b4cff  // violeta claro
+
+        ];
+
+
+        // Muchos más fragmentos
+        for (let i = 0; i < 150; i++) {
 
             const ancho =
-                Phaser.Math.Between(25, 100);
+                Phaser.Math.Between(15, 110);
 
             const alto =
-                Phaser.Math.Between(15, 70);
+                Phaser.Math.Between(10, 75);
 
 
             const x =
                 Phaser.Math.Between(
-                    0,
-                    1280
+                    -50,
+                    1330
                 );
 
             const y =
                 Phaser.Math.Between(
-                    0,
-                    720
+                    -40,
+                    760
+                );
+
+
+            // =====================================
+            // COLOR DEL FRAGMENTO
+            // =====================================
+
+            const color =
+                Phaser.Utils.Array.GetRandom(
+                    colores
+                );
+
+
+            const alphaInicial =
+                Phaser.Math.FloatBetween(
+                    0.55,
+                    0.95
                 );
 
 
@@ -545,13 +575,8 @@ export default class WorldScene extends Phaser.Scene {
                     y,
                     ancho,
                     alto,
-                    i % 3 === 0
-                        ? 0x9b00ff
-                        : 0x05070d,
-                    Phaser.Math.FloatBetween(
-                        0.45,
-                        0.9
-                    )
+                    color,
+                    alphaInicial
                 );
 
 
@@ -560,24 +585,69 @@ export default class WorldScene extends Phaser.Scene {
                 .setDepth(101);
 
 
+            // Algunas piezas tienen borde
+            if (i % 4 === 0) {
+
+                fragmento.setStrokeStyle(
+                    2,
+                    0xffffff,
+                    0.45
+                );
+
+            }
+
+
             fragmentos.push(
                 fragmento
             );
 
 
-            // Dirección aleatoria
+            // =====================================
+            // DIRECCION DEL FRAGMENTO
+            // =====================================
+
             const destinoX =
                 x +
                 Phaser.Math.Between(
-                    -500,
-                    500
+                    -700,
+                    700
                 );
+
 
             const destinoY =
                 y +
                 Phaser.Math.Between(
-                    -400,
-                    400
+                    -550,
+                    550
+                );
+
+
+            // =====================================
+            // ROTACION
+            // =====================================
+
+            const rotacion =
+                Phaser.Math.Between(
+                    -360,
+                    360
+                );
+
+
+            // =====================================
+            // VELOCIDAD
+            // =====================================
+
+            const duracion =
+                Phaser.Math.Between(
+                    1100,
+                    1900
+                );
+
+
+            const retraso =
+                Phaser.Math.Between(
+                    0,
+                    350
                 );
 
 
@@ -589,35 +659,61 @@ export default class WorldScene extends Phaser.Scene {
 
                 y: destinoY,
 
-                angle:
-                    Phaser.Math.Between(
-                        -180,
-                        180
-                    ),
+                angle: rotacion,
 
-                scaleX: 0.1,
+                scaleX: Phaser.Math.FloatBetween(
+                    0.05,
+                    0.25
+                ),
 
-                scaleY: 0.1,
+                scaleY: Phaser.Math.FloatBetween(
+                    0.05,
+                    0.25
+                ),
 
                 alpha: 0,
 
-                duration:
-                    Phaser.Math.Between(
-                        900,
-                        1500
-                    ),
+                duration: duracion,
 
-                delay:
-                    Phaser.Math.Between(
-                        0,
-                        250
-                    ),
+                delay: retraso,
 
                 ease: "Cubic.easeIn"
 
             });
 
         }
+
+
+        // =========================================
+        // 🌌 DESAPARICION DEL MUNDO
+        // =========================================
+
+        const elementosMundo = [
+
+            this.sky,
+            this.cables,
+            this.floorImage
+
+        ].filter(
+            elemento => elemento
+        );
+
+
+        this.tweens.add({
+
+            targets: elementosMundo,
+
+            alpha: 0,
+
+            scaleX: 1.04,
+
+            scaleY: 1.04,
+
+            duration: 1500,
+
+            ease: "Cubic.easeIn"
+
+        });
 
 
         // =========================================
@@ -632,11 +728,11 @@ export default class WorldScene extends Phaser.Scene {
 
                 alpha: 0,
 
-                scale: 0.2,
+                scale: 0.15,
 
-                angle: 180,
+                angle: 360,
 
-                duration: 900,
+                duration: 1100,
 
                 ease: "Cubic.easeIn"
 
@@ -646,61 +742,176 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🌑 OSCURECER
+        // 🌑 OSCURECIMIENTO INTERMEDIO
+        // =========================================
+
+        const negro = this.add.rectangle(
+            640,
+            360,
+            1280,
+            720,
+            0x05070d,
+            0
+        );
+
+        negro
+            .setScrollFactor(0)
+            .setDepth(105);
+
+
+        this.tweens.add({
+
+            targets: negro,
+
+            alpha: 0.35,
+
+            duration: 1300,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 🌟 FLASH FINAL
         // =========================================
 
         this.time.delayedCall(
-            1300,
+            1900,
             () => {
 
-                const negro = this.add.rectangle(
-                    640,
-                    360,
-                    1280,
-                    720,
-                    0x000000,
-                    0
-                );
+                // ---------------------------------
+                // Blanco inicial
+                // ---------------------------------
 
-                negro
+                const flashBlanco =
+                    this.add.rectangle(
+                        640,
+                        360,
+                        1280,
+                        720,
+                        0xffffff,
+                        0
+                    );
+
+                flashBlanco
                     .setScrollFactor(0)
-                    .setDepth(110);
+                    .setDepth(200);
 
 
                 this.tweens.add({
 
-                    targets: negro,
+                    targets: flashBlanco,
 
                     alpha: 1,
 
-                    duration: 1000,
+                    duration: 180,
 
-                    ease: "Sine.easeInOut",
+                    ease: "Quad.easeOut",
 
                     onComplete: () => {
 
-                        // =================================
-                        // 🎵 DETENER MUSICA DEL VALLE
-                        // =================================
+                        // -----------------------------
+                        // 🌟 PASO A DORADO
+                        // -----------------------------
 
-                        if (this.musicaValle) {
-
-                            this.musicaValle.stop();
-
-                            this.musicaValle.destroy();
-
-                            this.musicaValle = null;
-
-                        }
-
-
-                        // =================================
-                        // 🎬 VOLVER AL MENU
-                        // =================================
-
-                        this.scene.start(
-                            "MenuScene"
+                        flashBlanco.setFillStyle(
+                            0xffd966
                         );
+
+
+                        this.tweens.add({
+
+                            targets: flashBlanco,
+
+                            alpha: 1,
+
+                            duration: 220,
+
+                            ease: "Sine.easeInOut",
+
+                            onComplete: () => {
+
+                                // -------------------------
+                                // ⚪ REGRESO A BLANCO
+                                // -------------------------
+
+                                flashBlanco.setFillStyle(
+                                    0xffffff
+                                );
+
+
+                                this.tweens.add({
+
+                                    targets: flashBlanco,
+
+                                    alpha: 1,
+
+                                    duration: 160,
+
+                                    ease: "Sine.easeOut",
+
+                                    onComplete: () => {
+
+                                        // ---------------------
+                                        // 🌑 CAIDA A NEGRO
+                                        // ---------------------
+
+                                        this.tweens.add({
+
+                                            targets: flashBlanco,
+
+                                            alpha: 0,
+
+                                            duration: 450,
+
+                                            ease: "Sine.easeInOut",
+
+                                            onComplete: () => {
+
+                                                flashBlanco.destroy();
+
+                                                negro.destroy();
+
+                                                destello.destroy();
+
+
+                                                // =============================
+                                                // 🎵 DETENER MUSICA DEL VALLE
+                                                // =============================
+
+                                                if (
+                                                    this.musicaValle
+                                                ) {
+
+                                                    this.musicaValle.stop();
+
+                                                    this.musicaValle.destroy();
+
+                                                    this.musicaValle = null;
+
+                                                }
+
+
+                                                // =============================
+                                                // 🎬 VOLVER AL MENU
+                                                // =============================
+
+                                                this.scene.start(
+                                                    "MenuScene"
+                                                );
+
+                                            }
+
+                                        });
+
+                                    }
+
+                                });
+
+                            }
+
+                        });
 
                     }
 
@@ -711,6 +922,10 @@ export default class WorldScene extends Phaser.Scene {
 
     }
 
+
+    // =============================================
+    // UPDATE
+    // =============================================
 
     update() {
 
@@ -789,7 +1004,3 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
-
-
-
-

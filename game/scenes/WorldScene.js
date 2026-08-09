@@ -69,63 +69,78 @@ this.cablesFade = this.add.rectangle(
 
 this.cablesFade.setOrigin(0, 0);
 this.cablesFade.setDepth(3);
-     // =========================================
+// =========================================
 // ⚡ EVENTO DE LOS 7 PULSOS
 // =========================================
 
-const puntoCuarzo = 1672;
+this.puntoCuarzo = 1672;
+this.eventoCuarzoActivo = false;
 
-// Grupo visual del evento
-this.pulsosCuarzo = this.add.group();
+this.pulsarCuarzo = () => {
 
-// Crear los 7 pulsos
-for (let i = 0; i < 7; i++) {
+    if (this.eventoCuarzoActivo) {
+        return;
+    }
 
-    const pulso = this.add.circle(
-        puntoCuarzo,
-        330,
-        35,
-        0x00ffff,
-        0
-    );
+    this.eventoCuarzoActivo = true;
 
-    pulso.setStrokeStyle(
-        6,
-        0x00ffff,
-        1
-    );
+    for (let i = 0; i < 7; i++) {
 
-    pulso.setDepth(8);
+        const pulso = this.add.circle(
+            this.puntoCuarzo,
+            330,
+            45,
+            0x00ffff,
+            0
+        );
 
-    pulso.setScale(0.2);
+        pulso.setStrokeStyle(
+            8,
+            0x00ffff,
+            1
+        );
 
-    this.pulsosCuarzo.add(pulso);
+        pulso.setDepth(8);
+        pulso.setScale(0.2);
 
-    this.tweens.add({
-        targets: pulso,
+        this.tweens.add({
+            targets: pulso,
+            scale: 4,
+            alpha: 0,
+            duration: 1000,
+            delay: i * 700,
+            ease: "Cubic.easeOut"
+        });
+    }
 
-        scale: 3.5,
+    // 💎 APARECE EL CUARZO DESPUÉS DE LOS 7 PULSOS
+    this.time.delayedCall(
+        7 * 700 + 1000,
+        () => {
 
-        alpha: {
-            from: 1,
-            to: 0
-        },
+            const cuarzo = this.add.circle(
+                this.puntoCuarzo,
+                330,
+                50,
+                0x9b00ff,
+                1
+            );
 
-        duration: 900,
+            cuarzo.setDepth(9);
 
-        delay: i * 700,
-
-        ease: "Cubic.easeOut",
-
-        onComplete: () => {
-
-            pulso.setScale(0.2);
-            pulso.setAlpha(1);
-
+            this.tweens.add({
+                targets: cuarzo,
+                scale: 1.25,
+                alpha: 0.65,
+                duration: 700,
+                yoyo: true,
+                repeat: -1,
+                ease: "Sine.easeInOut"
+            });
         }
-    });
-
-}
+    );
+};
+ 
 
 
 // =========================================

@@ -57,47 +57,7 @@ export default class WorldScene extends Phaser.Scene {
 this.cables = this.add.image(0, 0, "cables");
 this.cables.setOrigin(0, 0);
 this.cables.setDepth(2);
-// TRANSICIÓN SUAVE ENTRE CABLES Y CIELO
-this.cablesFade = this.add.rectangle(
-    0,
-    0,
-    1672,
-    180,
-    0x05070d,
-    0.25
-);
 
-this.cablesFade.setOrigin(0, 0);
-this.cablesFade.setDepth(3);
- false;
-
-
-        const pulso = this.add.circle(
-            this.puntoCuarzo,
-            330,
-            45,
-            0x00ffff,
-            0
-        );
-
-        pulso.setStrokeStyle(
-            8,
-            0x00ffff,
-            1
-        );
-
-        pulso.setDepth(8);
-        pulso.setScale(0.2);
-
-        this.tweens.add({
-            targets: pulso,
-            scale: 4,
-            alpha: 0,
-            duration: 1000,
-            delay: i * 700,
-            ease: "Cubic.easeOut"
-        });
-    }
          
 
 // =========================================

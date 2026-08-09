@@ -7,7 +7,14 @@ export default class PreloadScene extends Phaser.Scene {
     preload() {
 
         console.log("Cargando recursos...");
+// ==============================
+// FONDO DEL MENU
+// ==============================
 
+this.load.image(
+    "menu-fondo",
+    "game/assets/menu/fondo.png"
+);
         // ==============================
         // VALLE DEL CUARZO DEL ALMA
         // ==============================

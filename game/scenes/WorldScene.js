@@ -55,12 +55,14 @@ export default class WorldScene extends Phaser.Scene {
             .setScrollFactor(0);
 
 
-
-       // CABLES
+// CABLES
 this.cables = this.add.image(0, 0, "cables");
 this.cables.setOrigin(0, 0);
 this.cables.setDepth(2);
 
+this.cables2 = this.add.image(1650, 0, "cables");
+this.cables2.setOrigin(0, 0);
+this.cables2.setDepth(2);
        
 
         // =========================================

@@ -296,7 +296,7 @@ export default class WorldScene extends Phaser.Scene {
 
         // =========================================
         // 🔋 ENERGIA DE KAEL
-        // PASO 1 — SOLO VISUAL
+        // PASO 1 - SOLO VISUAL
         // =========================================
 
         this.energiaMaxima = 100;
@@ -341,7 +341,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // TEXTO
+        // TEXTO DE ENERGIA
         // =========================================
 
         this.textoEnergia =
@@ -556,7 +556,7 @@ export default class WorldScene extends Phaser.Scene {
 
     // =============================================
     // 🔋 ACTUALIZAR BARRA DE ENERGIA
-    // PASO 1 — VISUAL
+    // PASO 1 - SOLO VISUAL
     // =============================================
 
     actualizarBarraEnergia() {
@@ -639,7 +639,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ENERGIA VERDE + CYAN
+        // ENERGIA VERDE
         // =========================================
 
         const anchoEnergia =
@@ -648,32 +648,8 @@ export default class WorldScene extends Phaser.Scene {
 
         if (anchoEnergia > 0) {
 
-            const gradiente =
-                this.barraEnergia.createLinearGradient(
-                    x,
-                    y,
-                    x + ancho,
-                    y
-                );
-
-            gradiente.addColorStop(
-                0,
-                "#00ff88"
-            );
-
-            gradiente.addColorStop(
-                0.5,
-                "#00ffd5"
-            );
-
-            gradiente.addColorStop(
-                1,
-                "#00ffff"
-            );
-
-
             this.barraEnergia.fillStyle(
-                gradiente,
+                0x00ff88,
                 1
             );
 
@@ -687,12 +663,12 @@ export default class WorldScene extends Phaser.Scene {
 
 
             // =====================================
-            // BRILLO SUPERIOR
+            // CYAN SUPERIOR
             // =====================================
 
             this.barraEnergia.fillStyle(
-                0xffffff,
-                0.28
+                0x00ffff,
+                0.55
             );
 
             this.barraEnergia.fillRoundedRect(
@@ -701,6 +677,27 @@ export default class WorldScene extends Phaser.Scene {
                 Math.max(
                     0,
                     anchoEnergia - 6
+                ),
+                alto - 6,
+                3
+            );
+
+
+            // =====================================
+            // ✨ BRILLO
+            // =====================================
+
+            this.barraEnergia.fillStyle(
+                0xffffff,
+                0.30
+            );
+
+            this.barraEnergia.fillRoundedRect(
+                x + 4,
+                y + 3,
+                Math.max(
+                    0,
+                    anchoEnergia - 8
                 ),
                 4,
                 2
@@ -774,7 +771,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 💥 FRAGMENTOS DEL VALLE
+        // 💥 FRAGMENTOS
         // =========================================
 
         const fragmentos = [];
@@ -796,10 +793,16 @@ export default class WorldScene extends Phaser.Scene {
         for (let i = 0; i < 150; i++) {
 
             const ancho =
-                Phaser.Math.Between(15, 110);
+                Phaser.Math.Between(
+                    15,
+                    110
+                );
 
             const alto =
-                Phaser.Math.Between(10, 75);
+                Phaser.Math.Between(
+                    10,
+                    75
+                );
 
 
             const x =
@@ -821,13 +824,6 @@ export default class WorldScene extends Phaser.Scene {
                 );
 
 
-            const alphaInicial =
-                Phaser.Math.FloatBetween(
-                    0.55,
-                    0.95
-                );
-
-
             const fragmento =
                 this.add.rectangle(
                     x,
@@ -835,7 +831,10 @@ export default class WorldScene extends Phaser.Scene {
                     ancho,
                     alto,
                     color,
-                    alphaInicial
+                    Phaser.Math.FloatBetween(
+                        0.55,
+                        0.95
+                    )
                 );
 
 
@@ -924,7 +923,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🌌 DESAPARICION DEL MUNDO
+        // 🌌 DESAPARECER EL MUNDO
         // =========================================
 
         const elementosMundo = [
@@ -981,17 +980,18 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🌑 OSCURECIMIENTO INTERMEDIO
+        // 🌑 OSCURECIMIENTO
         // =========================================
 
-        const negro = this.add.rectangle(
-            640,
-            360,
-            1280,
-            720,
-            0x05070d,
-            0
-        );
+        const negro =
+            this.add.rectangle(
+                640,
+                360,
+                1280,
+                720,
+                0x05070d,
+                0
+            );
 
         negro
             .setScrollFactor(0)
@@ -1034,6 +1034,10 @@ export default class WorldScene extends Phaser.Scene {
                     .setDepth(200);
 
 
+                // =================================
+                // ⚪ BLANCO
+                // =================================
+
                 this.tweens.add({
 
                     targets: flashBlanco,
@@ -1046,8 +1050,14 @@ export default class WorldScene extends Phaser.Scene {
 
                     onComplete: () => {
 
+
+                        // =============================
+                        // 🌟 BLANCO DORADO
+                        // =============================
+
                         flashBlanco.setFillStyle(
-                            0xffd966
+                            0xffd966,
+                            1
                         );
 
 
@@ -1055,16 +1065,20 @@ export default class WorldScene extends Phaser.Scene {
 
                             targets: flashBlanco,
 
-                            alpha: 1,
-
                             duration: 220,
 
                             ease: "Sine.easeInOut",
 
                             onComplete: () => {
 
+
+                                // =========================
+                                // ⚪ REGRESAR A BLANCO
+                                // =========================
+
                                 flashBlanco.setFillStyle(
-                                    0xffffff
+                                    0xffffff,
+                                    1
                                 );
 
 
@@ -1072,13 +1086,16 @@ export default class WorldScene extends Phaser.Scene {
 
                                     targets: flashBlanco,
 
-                                    alpha: 1,
-
                                     duration: 160,
 
                                     ease: "Sine.easeOut",
 
                                     onComplete: () => {
+
+
+                                        // =====================
+                                        // 🌑 DESAPARECER
+                                        // =====================
 
                                         this.tweens.add({
 
@@ -1100,7 +1117,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
                                                 // =============================
-                                                // 🎵 DETENER MUSICA DEL VALLE
+                                                // 🎵 DETENER MUSICA
                                                 // =============================
 
                                                 if (
@@ -1117,7 +1134,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
                                                 // =============================
-                                                // 🎬 VOLVER AL MENU
+                                                // 🎬 MENU
                                                 // =============================
 
                                                 this.scene.start(
@@ -1166,9 +1183,13 @@ export default class WorldScene extends Phaser.Scene {
             this.cursors.left.isDown
         ) {
 
-            this.kael.setVelocityX(-180);
+            this.kael.setVelocityX(
+                -180
+            );
 
-            this.kael.setFlipX(true);
+            this.kael.setFlipX(
+                true
+            );
 
         }
 
@@ -1177,15 +1198,21 @@ export default class WorldScene extends Phaser.Scene {
             this.cursors.right.isDown
         ) {
 
-            this.kael.setVelocityX(180);
+            this.kael.setVelocityX(
+                180
+            );
 
-            this.kael.setFlipX(false);
+            this.kael.setFlipX(
+                false
+            );
 
         }
 
         else {
 
-            this.kael.setVelocityX(0);
+            this.kael.setVelocityX(
+                0
+            );
 
         }
 
@@ -1203,7 +1230,9 @@ export default class WorldScene extends Phaser.Scene {
             this.kael.body.blocked.down
         ) {
 
-            this.kael.setVelocityY(-500);
+            this.kael.setVelocityY(
+                -500
+            );
 
         }
 

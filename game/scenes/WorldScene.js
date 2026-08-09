@@ -295,6 +295,114 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
+        // 🔋 ENERGIA DE KAEL
+        // PASO 1 — SOLO VISUAL
+        // =========================================
+
+        this.energiaMaxima = 100;
+
+        this.energiaKael = 77;
+
+
+        // =========================================
+        // MARCO DE LA BARRA
+        // =========================================
+
+        this.barraEnergiaMarco =
+            this.add.graphics();
+
+        this.barraEnergiaMarco
+            .setScrollFactor(0)
+            .setDepth(50);
+
+
+        // =========================================
+        // FONDO DE LA BARRA
+        // =========================================
+
+        this.barraEnergiaFondo =
+            this.add.graphics();
+
+        this.barraEnergiaFondo
+            .setScrollFactor(0)
+            .setDepth(50);
+
+
+        // =========================================
+        // RELLENO DE ENERGIA
+        // =========================================
+
+        this.barraEnergia =
+            this.add.graphics();
+
+        this.barraEnergia
+            .setScrollFactor(0)
+            .setDepth(51);
+
+
+        // =========================================
+        // TEXTO
+        // =========================================
+
+        this.textoEnergia =
+            this.add.text(
+                55,
+                38,
+                "ENERGÍA  77 / 100",
+                {
+                    fontSize: "17px",
+                    fontStyle: "bold",
+                    color: "#d9ffff",
+
+                    stroke: "#061316",
+                    strokeThickness: 4,
+
+                    shadow: {
+                        offsetX: 0,
+                        offsetY: 0,
+                        color: "#00ffff",
+                        blur: 8,
+                        stroke: true,
+                        fill: true
+                    }
+                }
+            )
+            .setScrollFactor(0)
+            .setDepth(52);
+
+
+        // =========================================
+        // DIBUJAR BARRA
+        // =========================================
+
+        this.actualizarBarraEnergia();
+
+
+        // =========================================
+        // ✨ PULSO DE LA BARRA
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.barraEnergia,
+
+            alpha: {
+                from: 0.88,
+                to: 1
+            },
+
+            duration: 900,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
         // CAMARA
         // =========================================
 
@@ -447,12 +555,168 @@ export default class WorldScene extends Phaser.Scene {
 
 
     // =============================================
+    // 🔋 ACTUALIZAR BARRA DE ENERGIA
+    // PASO 1 — VISUAL
+    // =============================================
+
+    actualizarBarraEnergia() {
+
+        const x = 55;
+        const y = 65;
+
+        const ancho = 245;
+        const alto = 22;
+
+        const porcentaje =
+            this.energiaKael /
+            this.energiaMaxima;
+
+
+        // =========================================
+        // LIMPIAR
+        // =========================================
+
+        this.barraEnergiaMarco.clear();
+
+        this.barraEnergiaFondo.clear();
+
+        this.barraEnergia.clear();
+
+
+        // =========================================
+        // MARCO OSCURO
+        // =========================================
+
+        this.barraEnergiaMarco.fillStyle(
+            0x071316,
+            0.95
+        );
+
+        this.barraEnergiaMarco.fillRoundedRect(
+            x - 6,
+            y - 6,
+            ancho + 12,
+            alto + 12,
+            8
+        );
+
+
+        // =========================================
+        // BORDE CYAN
+        // =========================================
+
+        this.barraEnergiaMarco.lineStyle(
+            2,
+            0x00ffff,
+            0.9
+        );
+
+        this.barraEnergiaMarco.strokeRoundedRect(
+            x - 6,
+            y - 6,
+            ancho + 12,
+            alto + 12,
+            8
+        );
+
+
+        // =========================================
+        // FONDO
+        // =========================================
+
+        this.barraEnergiaFondo.fillStyle(
+            0x06191b,
+            1
+        );
+
+        this.barraEnergiaFondo.fillRoundedRect(
+            x,
+            y,
+            ancho,
+            alto,
+            5
+        );
+
+
+        // =========================================
+        // ENERGIA VERDE + CYAN
+        // =========================================
+
+        const anchoEnergia =
+            ancho * porcentaje;
+
+
+        if (anchoEnergia > 0) {
+
+            const gradiente =
+                this.barraEnergia.createLinearGradient(
+                    x,
+                    y,
+                    x + ancho,
+                    y
+                );
+
+            gradiente.addColorStop(
+                0,
+                "#00ff88"
+            );
+
+            gradiente.addColorStop(
+                0.5,
+                "#00ffd5"
+            );
+
+            gradiente.addColorStop(
+                1,
+                "#00ffff"
+            );
+
+
+            this.barraEnergia.fillStyle(
+                gradiente,
+                1
+            );
+
+            this.barraEnergia.fillRoundedRect(
+                x,
+                y,
+                anchoEnergia,
+                alto,
+                5
+            );
+
+
+            // =====================================
+            // BRILLO SUPERIOR
+            // =====================================
+
+            this.barraEnergia.fillStyle(
+                0xffffff,
+                0.28
+            );
+
+            this.barraEnergia.fillRoundedRect(
+                x + 3,
+                y + 3,
+                Math.max(
+                    0,
+                    anchoEnergia - 6
+                ),
+                4,
+                2
+            );
+
+        }
+
+    }
+
+
+    // =============================================
     // 💥 FINAL DEL VALLE
     // =============================================
 
     finalizarValle() {
 
-        // Evitar que se ejecute dos veces
         if (this.finalizando) {
             return;
         }
@@ -517,19 +781,18 @@ export default class WorldScene extends Phaser.Scene {
 
         const colores = [
 
-            0x00ffff, // cyan
-            0x9b00ff, // violeta
-            0x0066ff, // azul
-            0xff1744, // rojo
-            0x00ff88, // verde
-            0xffd700, // dorado
-            0xff66cc, // rosa
-            0x7b4cff  // violeta claro
+            0x00ffff,
+            0x9b00ff,
+            0x0066ff,
+            0xff1744,
+            0x00ff88,
+            0xffd700,
+            0xff66cc,
+            0x7b4cff
 
         ];
 
 
-        // Muchos más fragmentos
         for (let i = 0; i < 150; i++) {
 
             const ancho =
@@ -551,10 +814,6 @@ export default class WorldScene extends Phaser.Scene {
                     760
                 );
 
-
-            // =====================================
-            // COLOR DEL FRAGMENTO
-            // =====================================
 
             const color =
                 Phaser.Utils.Array.GetRandom(
@@ -585,7 +844,6 @@ export default class WorldScene extends Phaser.Scene {
                 .setDepth(101);
 
 
-            // Algunas piezas tienen borde
             if (i % 4 === 0) {
 
                 fragmento.setStrokeStyle(
@@ -601,10 +859,6 @@ export default class WorldScene extends Phaser.Scene {
                 fragmento
             );
 
-
-            // =====================================
-            // DIRECCION DEL FRAGMENTO
-            // =====================================
 
             const destinoX =
                 x +
@@ -622,35 +876,6 @@ export default class WorldScene extends Phaser.Scene {
                 );
 
 
-            // =====================================
-            // ROTACION
-            // =====================================
-
-            const rotacion =
-                Phaser.Math.Between(
-                    -360,
-                    360
-                );
-
-
-            // =====================================
-            // VELOCIDAD
-            // =====================================
-
-            const duracion =
-                Phaser.Math.Between(
-                    1100,
-                    1900
-                );
-
-
-            const retraso =
-                Phaser.Math.Between(
-                    0,
-                    350
-                );
-
-
             this.tweens.add({
 
                 targets: fragmento,
@@ -659,23 +884,37 @@ export default class WorldScene extends Phaser.Scene {
 
                 y: destinoY,
 
-                angle: rotacion,
+                angle:
+                    Phaser.Math.Between(
+                        -360,
+                        360
+                    ),
 
-                scaleX: Phaser.Math.FloatBetween(
-                    0.05,
-                    0.25
-                ),
+                scaleX:
+                    Phaser.Math.FloatBetween(
+                        0.05,
+                        0.25
+                    ),
 
-                scaleY: Phaser.Math.FloatBetween(
-                    0.05,
-                    0.25
-                ),
+                scaleY:
+                    Phaser.Math.FloatBetween(
+                        0.05,
+                        0.25
+                    ),
 
                 alpha: 0,
 
-                duration: duracion,
+                duration:
+                    Phaser.Math.Between(
+                        1100,
+                        1900
+                    ),
 
-                delay: retraso,
+                delay:
+                    Phaser.Math.Between(
+                        0,
+                        350
+                    ),
 
                 ease: "Cubic.easeIn"
 
@@ -780,10 +1019,6 @@ export default class WorldScene extends Phaser.Scene {
             1900,
             () => {
 
-                // ---------------------------------
-                // Blanco inicial
-                // ---------------------------------
-
                 const flashBlanco =
                     this.add.rectangle(
                         640,
@@ -811,10 +1046,6 @@ export default class WorldScene extends Phaser.Scene {
 
                     onComplete: () => {
 
-                        // -----------------------------
-                        // 🌟 PASO A DORADO
-                        // -----------------------------
-
                         flashBlanco.setFillStyle(
                             0xffd966
                         );
@@ -832,10 +1063,6 @@ export default class WorldScene extends Phaser.Scene {
 
                             onComplete: () => {
 
-                                // -------------------------
-                                // ⚪ REGRESO A BLANCO
-                                // -------------------------
-
                                 flashBlanco.setFillStyle(
                                     0xffffff
                                 );
@@ -852,10 +1079,6 @@ export default class WorldScene extends Phaser.Scene {
                                     ease: "Sine.easeOut",
 
                                     onComplete: () => {
-
-                                        // ---------------------
-                                        // 🌑 CAIDA A NEGRO
-                                        // ---------------------
 
                                         this.tweens.add({
 
@@ -928,9 +1151,6 @@ export default class WorldScene extends Phaser.Scene {
     // =============================================
 
     update() {
-
-        // Si el Valle está terminando,
-        // no permitir movimiento.
 
         if (this.finalizando) {
             return;

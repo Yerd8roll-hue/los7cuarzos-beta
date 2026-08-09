@@ -82,23 +82,6 @@ export default class PreloadScene extends Phaser.Scene {
             }
         );
 
-
-        // ==============================
-        // 🔎 COMPROBAR GEMA
-        // ==============================
-
-        this.load.once(
-            "complete",
-            () => {
-
-                console.log(
-                    "GEMA DE ENERGÍA:",
-                    this.textures.exists("gema-energia")
-                );
-
-            }
-        );
-
     }
 
 

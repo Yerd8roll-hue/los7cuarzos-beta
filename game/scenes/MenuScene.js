@@ -1,4 +1,3 @@
-```js
 export default class MenuScene extends Phaser.Scene {
 
     constructor() {
@@ -84,4 +83,4 @@ export default class MenuScene extends Phaser.Scene {
     }
 
 }
-```
+

@@ -20,16 +20,6 @@ export default class PreloadScene extends Phaser.Scene {
 
 
         // ==============================
-        // 🎧 MUSICA DEL MENU
-        // ==============================
-
-        this.load.audio(
-            "musica-menu",
-            "game/assets/audio/musica.mp3"
-        );
-
-
-        // ==============================
         // VALLE DEL CUARZO DEL ALMA
         // ==============================
 
@@ -75,4 +65,3 @@ export default class PreloadScene extends Phaser.Scene {
 
 }
 
- 

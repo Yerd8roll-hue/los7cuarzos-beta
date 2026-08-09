@@ -296,12 +296,14 @@ export default class WorldScene extends Phaser.Scene {
 
         // =========================================
         // 🔋 ENERGIA DE KAEL
-        // PASO 1 - SOLO VISUAL
         // =========================================
 
         this.energiaMaxima = 100;
 
         this.energiaKael = 77;
+
+        // 🔥 Cada salto consume 10
+        this.costoSalto = 10;
 
 
         // =========================================
@@ -556,7 +558,6 @@ export default class WorldScene extends Phaser.Scene {
 
     // =============================================
     // 🔋 ACTUALIZAR BARRA DE ENERGIA
-    // PASO 1 - SOLO VISUAL
     // =============================================
 
     actualizarBarraEnergia() {
@@ -704,6 +705,18 @@ export default class WorldScene extends Phaser.Scene {
             );
 
         }
+
+
+        // =========================================
+        // ACTUALIZAR NUMERO
+        // =========================================
+
+        this.textoEnergia.setText(
+            "ENERGÍA  " +
+            this.energiaKael +
+            " / " +
+            this.energiaMaxima
+        );
 
     }
 
@@ -1034,10 +1047,6 @@ export default class WorldScene extends Phaser.Scene {
                     .setDepth(200);
 
 
-                // =================================
-                // ⚪ BLANCO
-                // =================================
-
                 this.tweens.add({
 
                     targets: flashBlanco,
@@ -1049,11 +1058,6 @@ export default class WorldScene extends Phaser.Scene {
                     ease: "Quad.easeOut",
 
                     onComplete: () => {
-
-
-                        // =============================
-                        // 🌟 BLANCO DORADO
-                        // =============================
 
                         flashBlanco.setFillStyle(
                             0xffd966,
@@ -1071,11 +1075,6 @@ export default class WorldScene extends Phaser.Scene {
 
                             onComplete: () => {
 
-
-                                // =========================
-                                // ⚪ REGRESAR A BLANCO
-                                // =========================
-
                                 flashBlanco.setFillStyle(
                                     0xffffff,
                                     1
@@ -1091,11 +1090,6 @@ export default class WorldScene extends Phaser.Scene {
                                     ease: "Sine.easeOut",
 
                                     onComplete: () => {
-
-
-                                        // =====================
-                                        // 🌑 DESAPARECER
-                                        // =====================
 
                                         this.tweens.add({
 
@@ -1218,7 +1212,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // SALTO
+        // 🛼 SALTO + CONSUMO DE ENERGIA
         // =========================================
 
         if (
@@ -1228,8 +1222,24 @@ export default class WorldScene extends Phaser.Scene {
             )
             &&
             this.kael.body.blocked.down
+            &&
+            this.energiaKael >= this.costoSalto
         ) {
 
+            // Gastar 10 puntos
+            this.energiaKael -= this.costoSalto;
+
+            // Evitar números negativos
+            if (this.energiaKael < 0) {
+
+                this.energiaKael = 0;
+
+            }
+
+            // Actualizar barra
+            this.actualizarBarraEnergia();
+
+            // Realizar salto
             this.kael.setVelocityY(
                 -500
             );

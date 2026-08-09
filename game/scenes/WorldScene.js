@@ -1,6 +1,5 @@
 import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
-
 export default class WorldScene extends Phaser.Scene {
 
     constructor() {
@@ -382,8 +381,55 @@ export default class WorldScene extends Phaser.Scene {
 
         this.gemaEnergia
             .setOrigin(0.5)
-            .setScale(0.10)
+            .setScale(0.075)
+            .setAlpha(0.78)
             .setDepth(8);
+
+
+        // =========================================
+        // 🌌 AURA FOSFORESCENTE
+        // =========================================
+
+        this.auraGemaEnergia = this.add.circle(
+            this.puntoGemaEnergia,
+            500,
+            32,
+            0x9b00ff,
+            0.10
+        );
+
+        this.auraGemaEnergia
+            .setDepth(7)
+            .setAlpha(0.35);
+
+
+        // =========================================
+        // ✨ BRILLO DEL ALMA
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.auraGemaEnergia,
+
+            scale: {
+                from: 0.65,
+                to: 1.35
+            },
+
+            alpha: {
+                from: 0.18,
+                to: 0.45
+            },
+
+            duration: 1000,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
 
 
         // =========================================
@@ -408,14 +454,35 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 💎 VIBRACIÓN SUAVE
+        // 🌌 FLOTACIÓN DEL AURA
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.auraGemaEnergia,
+
+            y: 480,
+
+            duration: 1100,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 💜 VIBRACIÓN SUAVE
         // =========================================
 
         this.tweens.add({
 
             targets: this.gemaEnergia,
 
-            x: this.puntoGemaEnergia + 4,
+            x: this.puntoGemaEnergia + 3,
 
             duration: 180,
 
@@ -429,16 +496,19 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 💎 BALANCEO
+        // ✨ RESPLANDOR VIOLETA
         // =========================================
 
         this.tweens.add({
 
             targets: this.gemaEnergia,
 
-            angle: 5,
+            alpha: {
+                from: 0.62,
+                to: 0.88
+            },
 
-            duration: 800,
+            duration: 700,
 
             yoyo: true,
 
@@ -450,19 +520,16 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ✨ BRILLO DE LA GEMA
+        // 🌙 BALANCEO DEL ALMA
         // =========================================
 
         this.tweens.add({
 
             targets: this.gemaEnergia,
 
-            alpha: {
-                from: 0.75,
-                to: 1
-            },
+            angle: 4,
 
-            duration: 650,
+            duration: 850,
 
             yoyo: true,
 
@@ -499,6 +566,10 @@ export default class WorldScene extends Phaser.Scene {
                 this.gemaEnergia
             );
 
+            this.tweens.killTweensOf(
+                this.auraGemaEnergia
+            );
+
 
             // =====================================
             // 💎 BRILLO INICIAL
@@ -508,7 +579,7 @@ export default class WorldScene extends Phaser.Scene {
 
                 targets: this.gemaEnergia,
 
-                scale: 0.16,
+                scale: 0.12,
 
                 alpha: 1,
 
@@ -527,7 +598,7 @@ export default class WorldScene extends Phaser.Scene {
                 this.gemaEnergia.x,
                 this.gemaEnergia.y,
                 10,
-                0x00ffff,
+                0x9b00ff,
                 0.95
             );
 
@@ -542,13 +613,13 @@ export default class WorldScene extends Phaser.Scene {
                 this.gemaEnergia.x,
                 this.gemaEnergia.y,
                 25,
-                0x00ffff,
+                0x9b00ff,
                 0
             );
 
             auraGema.setStrokeStyle(
                 4,
-                0x00ffff,
+                0x9b00ff,
                 0.9
             );
 
@@ -632,7 +703,7 @@ export default class WorldScene extends Phaser.Scene {
                             this.kael.x,
                             this.kael.y,
                             20,
-                            0x00ffff,
+                            0x9b00ff,
                             0.25
                         );
 
@@ -695,6 +766,17 @@ export default class WorldScene extends Phaser.Scene {
                             this.gemaEnergia.destroy();
 
                             this.gemaEnergia = null;
+
+
+                            if (
+                                this.auraGemaEnergia
+                            ) {
+
+                                this.auraGemaEnergia.destroy();
+
+                                this.auraGemaEnergia = null;
+
+                            }
 
                         }
 
@@ -1450,7 +1532,8 @@ export default class WorldScene extends Phaser.Scene {
             this.sky,
             this.cables,
             this.floorImage,
-            this.gemaEnergia
+            this.gemaEnergia,
+            this.auraGemaEnergia
 
         ].filter(
             elemento => elemento

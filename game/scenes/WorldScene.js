@@ -285,7 +285,6 @@ export default class WorldScene extends Phaser.Scene {
 
         createKaelAnimations(this);
 
-
         this.kael = this.physics.add.sprite(
             200,
             450,
@@ -382,29 +381,109 @@ export default class WorldScene extends Phaser.Scene {
         this.gemaEnergia
             .setOrigin(0.5)
             .setScale(0.075)
-            .setAlpha(0.78)
-            .setDepth(8);
+            .setDepth(8)
+            .setAlpha(0.92);
 
 
         // =========================================
-        // 🌌 AURA FOSFORESCENTE
+        // 🌫️ AURA VIOLETA
         // =========================================
 
         this.auraGemaEnergia = this.add.circle(
             this.puntoGemaEnergia,
             500,
-            32,
-            0x9b00ff,
+            25,
+            0xb400ff,
             0.10
         );
 
-        this.auraGemaEnergia
-            .setDepth(7)
-            .setAlpha(0.35);
+        this.auraGemaEnergia.setDepth(7);
 
 
         // =========================================
-        // ✨ BRILLO DEL ALMA
+        // 💜 BRILLO INTERNO
+        // =========================================
+
+        this.brilloGemaEnergia = this.add.circle(
+            this.puntoGemaEnergia,
+            500,
+            12,
+            0xe98cff,
+            0.18
+        );
+
+        this.brilloGemaEnergia.setDepth(8);
+
+
+        // =========================================
+        // 💎 FLOTACIÓN
+        // =========================================
+
+        this.tweens.add({
+
+            targets: [
+                this.gemaEnergia,
+                this.auraGemaEnergia,
+                this.brilloGemaEnergia
+            ],
+
+            y: "-=18",
+
+            duration: 1100,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 💎 VIBRACIÓN SUAVE
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.gemaEnergia,
+
+            x: this.puntoGemaEnergia + 3,
+
+            duration: 150,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 💎 BALANCEO
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.gemaEnergia,
+
+            angle: 4,
+
+            duration: 850,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 💜 RESPIRACIÓN VIOLETA
         // =========================================
 
         this.tweens.add({
@@ -412,13 +491,13 @@ export default class WorldScene extends Phaser.Scene {
             targets: this.auraGemaEnergia,
 
             scale: {
-                from: 0.65,
-                to: 1.35
+                from: 0.75,
+                to: 1.45
             },
 
             alpha: {
-                from: 0.18,
-                to: 0.45
+                from: 0.06,
+                to: 0.20
             },
 
             duration: 1000,
@@ -433,79 +512,21 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 💎 FLOTACIÓN
+        // ✨ BRILLO INTERNO
         // =========================================
 
         this.tweens.add({
 
-            targets: this.gemaEnergia,
+            targets: this.brilloGemaEnergia,
 
-            y: 480,
-
-            duration: 1100,
-
-            yoyo: true,
-
-            repeat: -1,
-
-            ease: "Sine.easeInOut"
-
-        });
-
-
-        // =========================================
-        // 🌌 FLOTACIÓN DEL AURA
-        // =========================================
-
-        this.tweens.add({
-
-            targets: this.auraGemaEnergia,
-
-            y: 480,
-
-            duration: 1100,
-
-            yoyo: true,
-
-            repeat: -1,
-
-            ease: "Sine.easeInOut"
-
-        });
-
-
-        // =========================================
-        // 💜 VIBRACIÓN SUAVE
-        // =========================================
-
-        this.tweens.add({
-
-            targets: this.gemaEnergia,
-
-            x: this.puntoGemaEnergia + 3,
-
-            duration: 180,
-
-            yoyo: true,
-
-            repeat: -1,
-
-            ease: "Sine.easeInOut"
-
-        });
-
-
-        // =========================================
-        // ✨ RESPLANDOR VIOLETA
-        // =========================================
-
-        this.tweens.add({
-
-            targets: this.gemaEnergia,
+            scale: {
+                from: 0.7,
+                to: 1.4
+            },
 
             alpha: {
-                from: 0.62,
-                to: 0.88
+                from: 0.10,
+                to: 0.35
             },
 
             duration: 700,
@@ -520,16 +541,19 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🌙 BALANCEO DEL ALMA
+        // ✨ TRANSPARENCIA
         // =========================================
 
         this.tweens.add({
 
             targets: this.gemaEnergia,
 
-            angle: 4,
+            alpha: {
+                from: 0.78,
+                to: 1
+            },
 
-            duration: 850,
+            duration: 800,
 
             yoyo: true,
 
@@ -559,7 +583,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
             // =====================================
-            // DETENER MOVIMIENTOS DE LA GEMA
+            // DETENER MOVIMIENTOS
             // =====================================
 
             this.tweens.killTweensOf(
@@ -570,77 +594,41 @@ export default class WorldScene extends Phaser.Scene {
                 this.auraGemaEnergia
             );
 
-
-            // =====================================
-            // 💎 BRILLO INICIAL
-            // =====================================
-
-            this.tweens.add({
-
-                targets: this.gemaEnergia,
-
-                scale: 0.12,
-
-                alpha: 1,
-
-                duration: 250,
-
-                ease: "Sine.easeOut"
-
-            });
+            this.tweens.killTweensOf(
+                this.brilloGemaEnergia
+            );
 
 
             // =====================================
-            // ⚡ PARTÍCULA DE ENERGÍA
+            // 💜 EXPLOSION VIOLETA
             // =====================================
 
-            const energia = this.add.circle(
+            const explosion = this.add.circle(
                 this.gemaEnergia.x,
                 this.gemaEnergia.y,
-                10,
-                0x9b00ff,
-                0.95
+                12,
+                0xd95cff,
+                0.65
             );
 
-            energia.setDepth(10);
-
-
-            // =====================================
-            // ✨ AURA
-            // =====================================
-
-            const auraGema = this.add.circle(
-                this.gemaEnergia.x,
-                this.gemaEnergia.y,
-                25,
-                0x9b00ff,
-                0
-            );
-
-            auraGema.setStrokeStyle(
-                4,
-                0x9b00ff,
-                0.9
-            );
-
-            auraGema.setDepth(9);
+            explosion.setDepth(10);
 
 
             this.tweens.add({
 
-                targets: auraGema,
+                targets: explosion,
 
-                scale: 2.5,
+                scale: 4,
 
                 alpha: 0,
 
-                duration: 600,
+                duration: 500,
 
                 ease: "Cubic.easeOut",
 
                 onComplete: () => {
 
-                    auraGema.destroy();
+                    explosion.destroy();
 
                 }
 
@@ -648,18 +636,92 @@ export default class WorldScene extends Phaser.Scene {
 
 
             // =====================================
-            // ⚡ ENERGÍA VIAJA HACIA KAEL
+            // ⚡ PARTICULAS DE ENERGIA
             // =====================================
+
+            for (let i = 0; i < 18; i++) {
+
+                const particula = this.add.circle(
+                    this.gemaEnergia.x,
+                    this.gemaEnergia.y,
+                    Phaser.Math.Between(3, 6),
+                    Phaser.Utils.Array.GetRandom([
+                        0xd95cff,
+                        0xb400ff,
+                        0xe98cff,
+                        0xffffff
+                    ]),
+                    Phaser.Math.FloatBetween(
+                        0.65,
+                        1
+                    )
+                );
+
+                particula.setDepth(11);
+
+
+                this.tweens.add({
+
+                    targets: particula,
+
+                    x:
+                        this.kael.x +
+                        Phaser.Math.Between(-18, 18),
+
+                    y:
+                        this.kael.y +
+                        Phaser.Math.Between(-18, 18),
+
+                    scale: 0.2,
+
+                    alpha: 0,
+
+                    duration:
+                        Phaser.Math.Between(
+                            600,
+                            1000
+                        ),
+
+                    delay: i * 25,
+
+                    ease: "Cubic.easeIn",
+
+                    onComplete: () => {
+
+                        particula.destroy();
+
+                    }
+
+                });
+
+            }
+
+
+            // =====================================
+            // ⚡ ENERGIA PRINCIPAL
+            // =====================================
+
+            const energiaPrincipal =
+                this.add.circle(
+                    this.gemaEnergia.x,
+                    this.gemaEnergia.y,
+                    9,
+                    0xffffff,
+                    0.95
+                );
+
+            energiaPrincipal.setDepth(12);
+
 
             this.tweens.add({
 
-                targets: energia,
+                targets: energiaPrincipal,
 
                 x: this.kael.x,
 
                 y: this.kael.y,
 
-                scale: 0.25,
+                scale: 0.35,
 
                 duration: 900,
 
@@ -667,7 +729,7 @@ export default class WorldScene extends Phaser.Scene {
 
                 onComplete: () => {
 
-                    energia.destroy();
+                    energiaPrincipal.destroy();
 
 
                     // =================================
@@ -695,30 +757,31 @@ export default class WorldScene extends Phaser.Scene {
 
 
                     // =================================
-                    // 🌟 PULSO DE CARGA
+                    // 🌟 SORPRESA
+                    // HALO DE ENERGIA
                     // =================================
 
-                    const pulsoCarga =
+                    const haloEnergia =
                         this.add.circle(
                             this.kael.x,
                             this.kael.y,
-                            20,
-                            0x9b00ff,
-                            0.25
+                            30,
+                            0xb400ff,
+                            0.12
                         );
 
-                    pulsoCarga.setDepth(7);
+                    haloEnergia.setDepth(6);
 
 
                     this.tweens.add({
 
-                        targets: pulsoCarga,
+                        targets: haloEnergia,
 
-                        scale: 3.5,
+                        scale: 2.2,
 
                         alpha: 0,
 
-                        duration: 700,
+                        duration: 900,
 
                         ease: "Cubic.easeOut",
 
@@ -726,10 +789,10 @@ export default class WorldScene extends Phaser.Scene {
 
                             if (this.kael) {
 
-                                pulsoCarga.x =
+                                haloEnergia.x =
                                     this.kael.x;
 
-                                pulsoCarga.y =
+                                haloEnergia.y =
                                     this.kael.y;
 
                             }
@@ -738,11 +801,18 @@ export default class WorldScene extends Phaser.Scene {
 
                         onComplete: () => {
 
-                            pulsoCarga.destroy();
+                            haloEnergia.destroy();
 
                         }
 
                     });
+
+
+                    // =================================
+                    // ☁️ NUBECITA DE KAEL
+                    // =================================
+
+                    this.mostrarDialogoKael();
 
 
                     // =================================
@@ -751,7 +821,11 @@ export default class WorldScene extends Phaser.Scene {
 
                     this.tweens.add({
 
-                        targets: this.gemaEnergia,
+                        targets: [
+                            this.gemaEnergia,
+                            this.auraGemaEnergia,
+                            this.brilloGemaEnergia
+                        ],
 
                         scale: 0,
 
@@ -765,18 +839,15 @@ export default class WorldScene extends Phaser.Scene {
 
                             this.gemaEnergia.destroy();
 
+                            this.auraGemaEnergia.destroy();
+
+                            this.brilloGemaEnergia.destroy();
+
                             this.gemaEnergia = null;
 
+                            this.auraGemaEnergia = null;
 
-                            if (
-                                this.auraGemaEnergia
-                            ) {
-
-                                this.auraGemaEnergia.destroy();
-
-                                this.auraGemaEnergia = null;
-
-                            }
+                            this.brilloGemaEnergia = null;
 
                         }
 
@@ -785,6 +856,378 @@ export default class WorldScene extends Phaser.Scene {
                 }
 
             });
+
+        };
+
+
+        // =========================================
+        // ☁️ DIALOGO DE KAEL
+        // =========================================
+
+        this.mostrarDialogoKael = () => {
+
+            if (!this.kael) {
+                return;
+            }
+
+
+            const x = this.kael.x;
+
+            const y = this.kael.y - 78;
+
+
+            // =====================================
+            // ☁️ NUBE
+            // =====================================
+
+            const nube = this.add.graphics();
+
+            nube.fillStyle(
+                0xf3efff,
+                0.93
+            );
+
+            nube.fillCircle(
+                x,
+                y,
+                25
+            );
+
+            nube.fillCircle(
+                x - 21,
+                y + 5,
+                17
+            );
+
+            nube.fillCircle(
+                x + 21,
+                y + 5,
+                17
+            );
+
+            nube.fillCircle(
+                x - 9,
+                y - 13,
+                19
+            );
+
+            nube.fillCircle(
+                x + 10,
+                y - 11,
+                20
+            );
+
+            nube.setDepth(60);
+
+
+            // =====================================
+            // 💜 BORDE
+            // =====================================
+
+            nube.lineStyle(
+                2,
+                0xb400ff,
+                0.65
+            );
+
+            nube.strokeCircle(
+                x,
+                y,
+                25
+            );
+
+
+            // =====================================
+            // 💬 FRASE DE KAEL
+            // =====================================
+
+            const textoKael = this.add.text(
+                x,
+                y,
+                "100% de energía...\ny yo que pensaba\nque venía a caminar.",
+                {
+                    fontSize: "11px",
+                    fontStyle: "bold",
+                    color: "#642080",
+                    align: "center",
+                    stroke: "#ffffff",
+                    strokeThickness: 2
+                }
+            );
+
+            textoKael
+                .setOrigin(0.5)
+                .setDepth(61);
+
+
+            // =====================================
+            // ENTRADA
+            // =====================================
+
+            nube.setScale(0.4);
+            nube.setAlpha(0);
+
+            textoKael.setScale(0.4);
+            textoKael.setAlpha(0);
+
+
+            this.tweens.add({
+
+                targets: [
+                    nube,
+                    textoKael
+                ],
+
+                scale: 1,
+
+                alpha: 1,
+
+                duration: 350,
+
+                ease: "Back.easeOut"
+
+            });
+
+
+            // =====================================
+            // SEGUIR A KAEL
+            // =====================================
+
+            const seguirNube = this.time.addEvent({
+
+                delay: 16,
+
+                repeat: 130,
+
+                callback: () => {
+
+                    if (!this.kael) {
+                        return;
+                    }
+
+                    nube.x =
+                        this.kael.x;
+
+                    nube.y =
+                        this.kael.y - 78;
+
+                    textoKael.x =
+                        this.kael.x;
+
+                    textoKael.y =
+                        this.kael.y - 78;
+
+                }
+
+            });
+
+
+            // =====================================
+            // ☁️ DESAPARECER
+            // =====================================
+
+            this.time.delayedCall(
+                2100,
+                () => {
+
+                    if (seguirNube) {
+                        seguirNube.remove();
+                    }
+
+
+                    this.tweens.add({
+
+                        targets: [
+                            nube,
+                            textoKael
+                        ],
+
+                        alpha: 0,
+
+                        scale: 0.88,
+
+                        duration: 450,
+
+                        ease: "Sine.easeIn",
+
+                        onComplete: () => {
+
+                            nube.destroy();
+
+                            textoKael.destroy();
+
+
+                            // =========================
+                            // ✨ DESTELLO DORADO
+                            // =========================
+
+                            this.mostrarAvisoCuarzo();
+
+                        }
+
+                    });
+
+                }
+            );
+
+        };
+
+
+        // =========================================
+        // ✨ DESTELLO + AVISO DEL CUARZO
+        // =========================================
+
+        this.mostrarAvisoCuarzo = () => {
+
+            // =====================================
+            // ✨ DESTELLO DORADO
+            // =====================================
+
+            const destelloDorado =
+                this.add.rectangle(
+                    640,
+                    360,
+                    1280,
+                    720,
+                    0xffd966,
+                    0
+                );
+
+            destelloDorado
+                .setScrollFactor(0)
+                .setDepth(80);
+
+
+            this.tweens.add({
+
+                targets: destelloDorado,
+
+                alpha: 0.42,
+
+                duration: 130,
+
+                yoyo: true,
+
+                ease: "Quad.easeOut",
+
+                onComplete: () => {
+
+                    destelloDorado.destroy();
+
+                }
+
+            });
+
+
+            // =====================================
+            // ⚠️ AVISO
+            // =====================================
+
+            const aviso = this.add.text(
+                640,
+                55,
+                "¡RECOGE EL CUARZO DEL ALMA\nANTES DE QUE SE ACABE EL TIEMPO!",
+                {
+                    fontSize: "21px",
+                    fontStyle: "bold",
+                    color: "#fff4bd",
+                    align: "center",
+
+                    stroke: "#4a2800",
+                    strokeThickness: 4,
+
+                    shadow: {
+                        offsetX: 0,
+                        offsetY: 0,
+                        color: "#ffd966",
+                        blur: 14,
+                        stroke: true,
+                        fill: true
+                    }
+                }
+            );
+
+            aviso
+                .setOrigin(0.5)
+                .setScrollFactor(0)
+                .setDepth(82)
+                .setAlpha(0)
+                .setScale(0.92);
+
+
+            // =====================================
+            // ENTRADA
+            // =====================================
+
+            this.tweens.add({
+
+                targets: aviso,
+
+                alpha: 1,
+
+                scale: 1,
+
+                duration: 450,
+
+                ease: "Back.easeOut"
+
+            });
+
+
+            // =====================================
+            // BRILLO SUAVE
+            // =====================================
+
+            this.tweens.add({
+
+                targets: aviso,
+
+                alpha: {
+                    from: 0.82,
+                    to: 1
+                },
+
+                duration: 700,
+
+                yoyo: true,
+
+                repeat: 2,
+
+                ease: "Sine.easeInOut"
+
+            });
+
+
+            // =====================================
+            // DESAPARECER
+            // =====================================
+
+            this.time.delayedCall(
+                4200,
+                () => {
+
+                    this.tweens.add({
+
+                        targets: aviso,
+
+                        alpha: 0,
+
+                        y: 35,
+
+                        duration: 650,
+
+                        ease: "Sine.easeIn",
+
+                        onComplete: () => {
+
+                            aviso.destroy();
+
+                        }
+
+                    });
+
+                }
+            );
 
         };
 
@@ -1532,8 +1975,7 @@ export default class WorldScene extends Phaser.Scene {
             this.sky,
             this.cables,
             this.floorImage,
-            this.gemaEnergia,
-            this.auraGemaEnergia
+            this.gemaEnergia
 
         ].filter(
             elemento => elemento
@@ -1974,3 +2416,6 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
+        
+
+   

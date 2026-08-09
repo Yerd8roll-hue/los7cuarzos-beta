@@ -1,10 +1,12 @@
 import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
+
 export default class WorldScene extends Phaser.Scene {
 
     constructor() {
         super("WorldScene");
     }
+
 
     create() {
 
@@ -96,6 +98,15 @@ export default class WorldScene extends Phaser.Scene {
         this.puntoCuarzo = 1672;
 
         this.eventoCuarzoActivo = false;
+
+
+        // =========================================
+        // 💎 PUNTO DE LA GEMA DE ENERGÍA
+        // =========================================
+
+        this.puntoGemaEnergia = 2800;
+
+        this.gemaEnergiaRecogida = false;
 
 
         // =========================================
@@ -275,6 +286,7 @@ export default class WorldScene extends Phaser.Scene {
 
         createKaelAnimations(this);
 
+
         this.kael = this.physics.add.sprite(
             200,
             450,
@@ -302,17 +314,20 @@ export default class WorldScene extends Phaser.Scene {
 
         this.energiaKael = 77;
 
-        // Cada salto consume 10
         this.costoSalto = 10;
 
-        // Solo recarga hasta 70
         this.energiaMaxRecarga = 70;
 
-        // Velocidad de recuperación
         this.velocidadRecarga = 10;
 
-        // Control del brillo
         this.brilloEnergiaActivo = false;
+
+
+        // =========================================
+        // ⚡ IMPULSO DE LA GEMA
+        // =========================================
+
+        this.gemaEnergiaActiva = false;
 
 
         // =========================================
@@ -326,6 +341,370 @@ export default class WorldScene extends Phaser.Scene {
         this.velocidadBaja = 110;
 
         this.velocidadCritica = 70;
+
+
+        // =========================================
+        // ⚡ VELOCIDADES POTENCIADAS
+        // =========================================
+
+        this.velocidadNormalPotenciada = 300;
+
+        this.velocidadMediaPotenciada = 245;
+
+        this.velocidadBajaPotenciada = 180;
+
+        this.velocidadCriticaPotenciada = 120;
+
+
+        // =========================================
+        // 🦘 SALTO NORMAL
+        // =========================================
+
+        this.fuerzaSalto = -500;
+
+
+        // =========================================
+        // 🦘 SALTO POTENCIADO
+        // =========================================
+
+        this.fuerzaSaltoPotenciado = -680;
+
+
+        // =========================================
+        // 💎 CREAR GEMA DE ENERGÍA
+        // =========================================
+
+        this.gemaEnergia = this.add.image(
+            this.puntoGemaEnergia,
+            500,
+            "gema-energia"
+        );
+
+        this.gemaEnergia
+            .setOrigin(0.5)
+            .setScale(0.10)
+            .setDepth(8);
+
+
+        // =========================================
+        // 💎 FLOTACIÓN
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.gemaEnergia,
+
+            y: 480,
+
+            duration: 1100,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 💎 VIBRACIÓN SUAVE
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.gemaEnergia,
+
+            x: this.puntoGemaEnergia + 4,
+
+            duration: 180,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 💎 BALANCEO
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.gemaEnergia,
+
+            angle: 5,
+
+            duration: 800,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // ✨ BRILLO DE LA GEMA
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.gemaEnergia,
+
+            alpha: {
+                from: 0.75,
+                to: 1
+            },
+
+            duration: 650,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // ⚡ ACTIVAR GEMA DE ENERGÍA
+        // =========================================
+
+        this.activarGemaEnergia = () => {
+
+            if (
+                this.gemaEnergiaRecogida ||
+                !this.gemaEnergia ||
+                !this.kael
+            ) {
+                return;
+            }
+
+
+            this.gemaEnergiaRecogida = true;
+
+
+            // =====================================
+            // DETENER MOVIMIENTOS DE LA GEMA
+            // =====================================
+
+            this.tweens.killTweensOf(
+                this.gemaEnergia
+            );
+
+
+            // =====================================
+            // 💎 BRILLO INICIAL
+            // =====================================
+
+            this.tweens.add({
+
+                targets: this.gemaEnergia,
+
+                scale: 0.16,
+
+                alpha: 1,
+
+                duration: 250,
+
+                ease: "Sine.easeOut"
+
+            });
+
+
+            // =====================================
+            // ⚡ PARTÍCULA DE ENERGÍA
+            // =====================================
+
+            const energia = this.add.circle(
+                this.gemaEnergia.x,
+                this.gemaEnergia.y,
+                10,
+                0x00ffff,
+                0.95
+            );
+
+            energia.setDepth(10);
+
+
+            // =====================================
+            // ✨ AURA
+            // =====================================
+
+            const auraGema = this.add.circle(
+                this.gemaEnergia.x,
+                this.gemaEnergia.y,
+                25,
+                0x00ffff,
+                0
+            );
+
+            auraGema.setStrokeStyle(
+                4,
+                0x00ffff,
+                0.9
+            );
+
+            auraGema.setDepth(9);
+
+
+            this.tweens.add({
+
+                targets: auraGema,
+
+                scale: 2.5,
+
+                alpha: 0,
+
+                duration: 600,
+
+                ease: "Cubic.easeOut",
+
+                onComplete: () => {
+
+                    auraGema.destroy();
+
+                }
+
+            });
+
+
+            // =====================================
+            // ⚡ ENERGÍA VIAJA HACIA KAEL
+            // =====================================
+
+            this.tweens.add({
+
+                targets: energia,
+
+                x: this.kael.x,
+
+                y: this.kael.y,
+
+                scale: 0.25,
+
+                duration: 900,
+
+                ease: "Cubic.easeIn",
+
+                onComplete: () => {
+
+                    energia.destroy();
+
+
+                    // =================================
+                    // 🔋 CARGAR AL 100%
+                    // =================================
+
+                    this.energiaKael =
+                        this.energiaMaxima;
+
+                    this.actualizarBarraEnergia();
+
+
+                    // =================================
+                    // ⚡ ACTIVAR POTENCIA
+                    // =================================
+
+                    this.gemaEnergiaActiva = true;
+
+
+                    // =================================
+                    // ✨ BRILLO DE KAEL
+                    // =================================
+
+                    this.brilloKaelEnergia();
+
+
+                    // =================================
+                    // 🌟 PULSO DE CARGA
+                    // =================================
+
+                    const pulsoCarga =
+                        this.add.circle(
+                            this.kael.x,
+                            this.kael.y,
+                            20,
+                            0x00ffff,
+                            0.25
+                        );
+
+                    pulsoCarga.setDepth(7);
+
+
+                    this.tweens.add({
+
+                        targets: pulsoCarga,
+
+                        scale: 3.5,
+
+                        alpha: 0,
+
+                        duration: 700,
+
+                        ease: "Cubic.easeOut",
+
+                        onUpdate: () => {
+
+                            if (this.kael) {
+
+                                pulsoCarga.x =
+                                    this.kael.x;
+
+                                pulsoCarga.y =
+                                    this.kael.y;
+
+                            }
+
+                        },
+
+                        onComplete: () => {
+
+                            pulsoCarga.destroy();
+
+                        }
+
+                    });
+
+
+                    // =================================
+                    // 💎 DESAPARECER GEMA
+                    // =================================
+
+                    this.tweens.add({
+
+                        targets: this.gemaEnergia,
+
+                        scale: 0,
+
+                        alpha: 0,
+
+                        duration: 500,
+
+                        ease: "Back.easeIn",
+
+                        onComplete: () => {
+
+                            this.gemaEnergia.destroy();
+
+                            this.gemaEnergia = null;
+
+                        }
+
+                    });
+
+                }
+
+            });
+
+        };
 
 
         // =========================================
@@ -529,6 +908,7 @@ export default class WorldScene extends Phaser.Scene {
 
             // =====================================
             // 💎 CUARZO DEL ALMA
+            // NO SE TOCA
             // =====================================
 
             this.time.delayedCall(
@@ -681,8 +1061,6 @@ export default class WorldScene extends Phaser.Scene {
             );
 
 
-            // CYAN
-
             this.barraEnergia.fillStyle(
                 0x00ffff,
                 0.55
@@ -699,8 +1077,6 @@ export default class WorldScene extends Phaser.Scene {
                 3
             );
 
-
-            // BRILLO
 
             this.barraEnergia.fillStyle(
                 0xffffff,
@@ -759,18 +1135,10 @@ export default class WorldScene extends Phaser.Scene {
             this.kael.scaleY;
 
 
-        // =========================================
-        // TINTE CYAN
-        // =========================================
-
         this.kael.setTint(
             0x66ffff
         );
 
-
-        // =========================================
-        // PULSO
-        // =========================================
 
         this.tweens.add({
 
@@ -790,10 +1158,6 @@ export default class WorldScene extends Phaser.Scene {
 
         });
 
-
-        // =========================================
-        // AURA
-        // =========================================
 
         const aura =
             this.add.circle(
@@ -844,10 +1208,6 @@ export default class WorldScene extends Phaser.Scene {
 
         });
 
-
-        // =========================================
-        // QUITAR TINTE
-        // =========================================
 
         this.time.delayedCall(
             450,
@@ -1089,7 +1449,8 @@ export default class WorldScene extends Phaser.Scene {
 
             this.sky,
             this.cables,
-            this.floorImage
+            this.floorImage,
+            this.gemaEnergia
 
         ].filter(
             elemento => elemento
@@ -1316,28 +1677,36 @@ export default class WorldScene extends Phaser.Scene {
         if (this.energiaKael >= 70) {
 
             velocidadActual =
-                this.velocidadNormal;
+                this.gemaEnergiaActiva
+                    ? this.velocidadNormalPotenciada
+                    : this.velocidadNormal;
 
         }
 
         else if (this.energiaKael >= 30) {
 
             velocidadActual =
-                this.velocidadMedia;
+                this.gemaEnergiaActiva
+                    ? this.velocidadMediaPotenciada
+                    : this.velocidadMedia;
 
         }
 
         else if (this.energiaKael >= 10) {
 
             velocidadActual =
-                this.velocidadBaja;
+                this.gemaEnergiaActiva
+                    ? this.velocidadBajaPotenciada
+                    : this.velocidadBaja;
 
         }
 
         else {
 
             velocidadActual =
-                this.velocidadCritica;
+                this.gemaEnergiaActiva
+                    ? this.velocidadCriticaPotenciada
+                    : this.velocidadCritica;
 
         }
 
@@ -1415,7 +1784,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
             this.kael.setVelocityY(
-                -500
+
+                this.gemaEnergiaActiva
+                    ? this.fuerzaSaltoPotenciado
+                    : this.fuerzaSalto
+
             );
 
         }
@@ -1482,6 +1855,22 @@ export default class WorldScene extends Phaser.Scene {
                 this.brilloKaelEnergia();
 
             }
+
+        }
+
+
+        // =========================================
+        // 💎 LLEGADA A GEMA DE ENERGÍA
+        // =========================================
+
+        if (
+            !this.gemaEnergiaRecogida &&
+            this.gemaEnergia &&
+            this.kael.x >=
+            this.puntoGemaEnergia - 35
+        ) {
+
+            this.activarGemaEnergia();
 
         }
 

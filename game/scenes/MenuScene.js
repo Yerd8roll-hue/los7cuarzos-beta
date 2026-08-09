@@ -22,21 +22,6 @@ export default class MenuScene extends Phaser.Scene {
             .setDisplaySize(1280, 720)
             .setDepth(0);
 
-// =========================================
-// 🎧 AMBIENTE DEL INICIO
-// =========================================
-
-this.musicaMenu = this.sound.add(
-    "musica-menu",
-    {
-        volume: 0.35,
-        loop: true
-    }
-);
-
-this.musicaMenu.play();
-
-this.musicaMenu.play();
         // =========================================
         // ⚡ TITULO LOS 7 CUARZOS
         // =========================================

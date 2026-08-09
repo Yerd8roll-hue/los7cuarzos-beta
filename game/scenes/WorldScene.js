@@ -860,7 +860,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ☁️ DIALOGO DE KAEL — COMIC
+        // ☁️ DIALOGO DE KAEL — ESTILO COMIC
         // =========================================
 
         this.mostrarDialogoKael = () => {
@@ -872,14 +872,20 @@ export default class WorldScene extends Phaser.Scene {
 
             const x = this.kael.x;
 
-            const y = this.kael.y - 125;
+            const y = this.kael.y - 155;
 
 
             // =====================================
-            // ☁️ NUBE BLANCA LISA
+            // ☁️ GLOBO BLANCO LISO
             // =====================================
 
             const nube = this.add.graphics();
+
+            nube.setPosition(
+                x,
+                y
+            );
+
 
             nube.fillStyle(
                 0xffffff,
@@ -887,43 +893,16 @@ export default class WorldScene extends Phaser.Scene {
             );
 
 
-            // Cuerpo principal
+            // =====================================
+            // CUERPO PRINCIPAL
+            // =====================================
+
             nube.fillRoundedRect(
-                x - 145,
-                y - 55,
-                290,
-                110,
-                35
-            );
-
-
-            // Volumen superior izquierdo
-            nube.fillCircle(
-                x - 95,
-                y - 42,
-                28
-            );
-
-
-            // Volumen superior derecho
-            nube.fillCircle(
-                x + 95,
-                y - 42,
-                28
-            );
-
-
-            // =====================================
-            // 💬 COLITA DE COMIC
-            // =====================================
-
-            nube.fillTriangle(
-                x - 22,
-                y + 48,
-                x - 2,
-                y + 48,
-                x - 28,
-                y + 78
+                -155,
+                -58,
+                310,
+                116,
+                32
             );
 
 
@@ -932,57 +911,135 @@ export default class WorldScene extends Phaser.Scene {
             // =====================================
 
             nube.lineStyle(
-                5,
+                6,
                 0x000000,
                 1
             );
 
 
             nube.strokeRoundedRect(
-                x - 145,
-                y - 55,
-                290,
-                110,
-                35
+                -155,
+                -58,
+                310,
+                116,
+                32
             );
 
 
             // =====================================
-            // 💬 TEXTO NEGRO
+            // ☁️ TRES CIRCULOS
             // =====================================
 
-            const textoKael = this.add.text(
-                x,
-                y,
-                "100% DE ENERGÍA...\nY YO QUE PENSABA\nQUE VENÍA A CAMINAR.",
-                {
-                    fontSize: "16px",
-                    fontStyle: "bold",
-                    fontFamily: "Arial",
-                    color: "#000000",
-                    align: "center",
-                    lineSpacing: 4
-                }
+            nube.fillStyle(
+                0xffffff,
+                1
             );
+
+
+            nube.fillCircle(
+                -48,
+                76,
+                15
+            );
+
+
+            nube.fillCircle(
+                -30,
+                103,
+                10
+            );
+
+
+            nube.fillCircle(
+                -14,
+                123,
+                7
+            );
+
+
+            // =====================================
+            // 🖤 BORDES DE LOS CIRCULOS
+            // =====================================
+
+            nube.lineStyle(
+                4,
+                0x000000,
+                1
+            );
+
+
+            nube.strokeCircle(
+                -48,
+                76,
+                15
+            );
+
+
+            nube.strokeCircle(
+                -30,
+                103,
+                10
+            );
+
+
+            nube.strokeCircle(
+                -14,
+                123,
+                7
+            );
+
+
+            nube.setDepth(
+                100
+            );
+
+
+            // =====================================
+            // 💬 TEXTO
+            // =====================================
+
+            const textoKael =
+                this.add.text(
+                    x,
+                    y,
+                    "100% DE ENERGÍA...\nY YO QUE PENSABA\nQUE VENÍA A CAMINAR.",
+                    {
+                        fontFamily: "Arial",
+                        fontSize: "18px",
+                        fontStyle: "bold",
+                        color: "#000000",
+                        align: "center",
+                        lineSpacing: 5,
+                        resolution: 2
+                    }
+                );
 
 
             textoKael
                 .setOrigin(0.5)
-                .setDepth(61);
-
-
-            nube.setDepth(60);
+                .setDepth(101);
 
 
             // =====================================
             // ✨ ENTRADA
             // =====================================
 
-            nube.setScale(0.7);
-            nube.setAlpha(0);
+            nube.setScale(
+                0.7
+            );
 
-            textoKael.setScale(0.7);
-            textoKael.setAlpha(0);
+            nube.setAlpha(
+                0
+            );
+
+
+            textoKael.setScale(
+                0.7
+            );
+
+            textoKael.setAlpha(
+                0
+            );
 
 
             this.tweens.add({
@@ -996,7 +1053,7 @@ export default class WorldScene extends Phaser.Scene {
 
                 alpha: 1,
 
-                duration: 350,
+                duration: 400,
 
                 ease: "Back.easeOut"
 
@@ -1007,35 +1064,34 @@ export default class WorldScene extends Phaser.Scene {
             // ☁️ SEGUIR A KAEL
             // =====================================
 
-            const seguirNube = this.time.addEvent({
+            const seguirNube =
+                this.time.addEvent({
 
-                delay: 16,
+                    delay: 16,
 
-                repeat: 160,
+                    repeat: 170,
 
-                callback: () => {
+                    callback: () => {
 
-                    if (!this.kael) {
-                        return;
+                        if (!this.kael) {
+                            return;
+                        }
+
+
+                        nube.setPosition(
+                            this.kael.x,
+                            this.kael.y - 155
+                        );
+
+
+                        textoKael.setPosition(
+                            this.kael.x,
+                            this.kael.y - 155
+                        );
+
                     }
 
-
-                    nube.x =
-                        this.kael.x;
-
-                    nube.y =
-                        this.kael.y - 125;
-
-
-                    textoKael.x =
-                        this.kael.x;
-
-                    textoKael.y =
-                        this.kael.y - 125;
-
-                }
-
-            });
+                });
 
 
             // =====================================
@@ -1074,7 +1130,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
                             // =========================
-                            // ✨ DESTELLO DORADO
+                            // ✨ CONTINUAR
                             // =========================
 
                             this.mostrarAvisoCuarzo();
@@ -1084,6 +1140,7 @@ export default class WorldScene extends Phaser.Scene {
                     });
 
                 }
+
             );
 
         };
@@ -1094,10 +1151,6 @@ export default class WorldScene extends Phaser.Scene {
         // =========================================
 
         this.mostrarAvisoCuarzo = () => {
-
-            // =====================================
-            // ✨ DESTELLO DORADO
-            // =====================================
 
             const destelloDorado =
                 this.add.rectangle(
@@ -1171,10 +1224,6 @@ export default class WorldScene extends Phaser.Scene {
                 .setScale(0.92);
 
 
-            // =====================================
-            // ENTRADA
-            // =====================================
-
             this.tweens.add({
 
                 targets: aviso,
@@ -1189,10 +1238,6 @@ export default class WorldScene extends Phaser.Scene {
 
             });
 
-
-            // =====================================
-            // BRILLO SUAVE
-            // =====================================
 
             this.tweens.add({
 
@@ -1213,10 +1258,6 @@ export default class WorldScene extends Phaser.Scene {
 
             });
 
-
-            // =====================================
-            // DESAPARECER
-            // =====================================
 
             this.time.delayedCall(
                 4200,
@@ -1449,7 +1490,6 @@ export default class WorldScene extends Phaser.Scene {
 
             // =====================================
             // 💎 CUARZO DEL ALMA
-            // NO SE TOCA
             // =====================================
 
             this.time.delayedCall(
@@ -1512,7 +1552,6 @@ export default class WorldScene extends Phaser.Scene {
         const ancho = 245;
 
         const alto = 22;
-
 
         const porcentaje =
             this.energiaKael /
@@ -1837,8 +1876,6 @@ export default class WorldScene extends Phaser.Scene {
         // 💥 FRAGMENTOS
         // =========================================
 
-        const fragmentos = [];
-
         const colores = [
 
             0x00ffff,
@@ -1917,11 +1954,6 @@ export default class WorldScene extends Phaser.Scene {
                 );
 
             }
-
-
-            fragmentos.push(
-                fragmento
-            );
 
 
             const destinoX =
@@ -2276,7 +2308,6 @@ export default class WorldScene extends Phaser.Scene {
 
         }
 
-
         else if (
             this.keys.D.isDown ||
             this.cursors.right.isDown
@@ -2291,7 +2322,6 @@ export default class WorldScene extends Phaser.Scene {
             );
 
         }
-
 
         else {
 
@@ -2439,4 +2469,3 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
-   

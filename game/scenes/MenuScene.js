@@ -1,53 +1,46 @@
-export default class PreloadScene extends Phaser.Scene {
+export default class MenuScene extends Phaser.Scene {
 
     constructor() {
-        super("PreloadScene");
-    }
-
-    preload() {
-
-        console.log("Cargando recursos...");
-
-        // ==============================
-        // VALLE DEL CUARZO DEL ALMA
-        // ==============================
-
-        this.load.image(
-            "sky",
-            "game/assets/valle del_alma/sky.png"
-        );
-
-        this.load.image(
-            "cables",
-            "game/assets/valle del_alma/cables.png"
-        );
-
-        this.load.image(
-            "floor",
-            "game/assets/valle del_alma/floor.png"
-        );
-
-        // ==============================
-        // KAEL
-        // ==============================
-
-        this.load.spritesheet(
-            "kael",
-            "game/assets/personajes/Kael/spritesheet.png",
-            {
-                frameWidth: 64,
-                frameHeight: 64
-            }
-        );
-
+        super("MenuScene");
     }
 
     create() {
 
-        console.log("Recursos cargados");
+        this.cameras.main.setBackgroundColor("#05070d");
 
-        this.scene.start("MenuScene");
+        this.add.text(
+            640,
+            220,
+            "LOS 7 CUARZOS",
+            {
+                fontSize: "64px",
+                color: "#00ffff",
+                fontStyle: "bold"
+            }
+        ).setOrigin(0.5);
+
+        const boton = this.add.text(
+            640,
+            400,
+            "INICIO",
+            {
+                fontSize: "36px",
+                color: "#ffffff",
+                backgroundColor: "#111111",
+                padding: {
+                    left: 30,
+                    right: 30,
+                    top: 15,
+                    bottom: 15
+                }
+            }
+        ).setOrigin(0.5);
+
+        boton.setInteractive({ useHandCursor: true });
+
+        boton.on("pointerdown", () => {
+            this.scene.start("WorldScene");
+        });
 
     }
-
 }

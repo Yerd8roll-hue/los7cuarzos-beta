@@ -24,7 +24,7 @@ export default class MenuScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🎧 AMBIENTE DEL INICIO
+        // 🎧 MUSICA DEL MENU
         // =========================================
 
         this.musicaMenu = this.sound.add(
@@ -131,6 +131,24 @@ export default class MenuScene extends Phaser.Scene {
 
         boton.on("pointerdown", () => {
 
+            // Evitar doble clic
+            boton.disableInteractive();
+
+
+            // Detener completamente
+            // la música del menú
+            if (this.musicaMenu) {
+
+                this.musicaMenu.stop();
+
+                this.musicaMenu.destroy();
+
+                this.musicaMenu = null;
+
+            }
+
+
+            // Entrar al Valle
             this.scene.start("WorldScene");
 
         });
@@ -138,5 +156,4 @@ export default class MenuScene extends Phaser.Scene {
     }
 
 }
-
 

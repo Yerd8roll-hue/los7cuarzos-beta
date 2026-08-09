@@ -16,7 +16,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🎧 MUSICA DEL VALLE
+        // 🎵 MUSICA DEL VALLE
         // =========================================
 
         this.musicaValle = this.sound.add(
@@ -190,6 +190,7 @@ export default class WorldScene extends Phaser.Scene {
 
         this.cursors =
             this.input.keyboard.createCursorKeys();
+
 
         this.keys =
             this.input.keyboard.addKeys({
@@ -387,9 +388,6 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
-
-
-
 
 
 

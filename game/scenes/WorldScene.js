@@ -53,7 +53,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // SKY
+        // 🌌 SKY
         // =========================================
 
         this.sky = this.add.image(
@@ -66,6 +66,207 @@ export default class WorldScene extends Phaser.Scene {
             .setOrigin(0, 0)
             .setDepth(0)
             .setScrollFactor(0);
+
+
+        // =========================================
+        // ✨ LUCES DEL CIELO
+        // =========================================
+
+        this.lucesCielo = [];
+
+        const posicionesLuces = [
+            [90, 85, 2],
+            [180, 145, 3],
+            [290, 70, 2],
+            [410, 125, 2],
+            [535, 65, 3],
+            [670, 150, 2],
+            [790, 90, 2],
+            [920, 55, 3],
+            [1050, 135, 2],
+            [1170, 80, 2],
+            [1320, 145, 3],
+            [1460, 70, 2],
+            [1590, 120, 2],
+            [1740, 60, 3],
+            [1880, 145, 2],
+            [2020, 85, 2],
+            [2160, 125, 3],
+            [2310, 65, 2],
+            [2460, 150, 2],
+            [2610, 90, 3],
+            [2760, 135, 2],
+            [2910, 70, 2]
+        ];
+
+
+        posicionesLuces.forEach(
+            (posicion, indice) => {
+
+                const luz = this.add.circle(
+                    posicion[0],
+                    posicion[1],
+                    posicion[2],
+                    indice % 4 === 0
+                        ? 0xb8eaff
+                        : 0xffffff,
+                    Phaser.Math.FloatBetween(
+                        0.35,
+                        0.8
+                    )
+                );
+
+                luz
+                    .setDepth(1)
+                    .setScrollFactor(0);
+
+                this.lucesCielo.push(luz);
+
+
+                // Parpadeo individual
+                this.tweens.add({
+
+                    targets: luz,
+
+                    alpha: {
+                        from: Phaser.Math.FloatBetween(
+                            0.2,
+                            0.45
+                        ),
+
+                        to: Phaser.Math.FloatBetween(
+                            0.7,
+                            1
+                        )
+                    },
+
+                    scale: {
+                        from: 0.7,
+                        to: Phaser.Math.FloatBetween(
+                            1.1,
+                            1.6
+                        )
+                    },
+
+                    duration: Phaser.Math.Between(
+                        1100,
+                        2400
+                    ),
+
+                    delay: Phaser.Math.Between(
+                        0,
+                        1200
+                    ),
+
+                    yoyo: true,
+
+                    repeat: -1,
+
+                    ease: "Sine.easeInOut"
+
+                });
+
+            }
+        );
+
+
+        // =========================================
+        // 🌟 LUCES GRANDES DEL CIELO
+        // =========================================
+
+        const lucesGrandes = [
+            [350, 105],
+            [1120, 110],
+            [1650, 100],
+            [2250, 115],
+            [2840, 105]
+        ];
+
+
+        lucesGrandes.forEach(
+            (posicion, indice) => {
+
+                const halo = this.add.circle(
+                    posicion[0],
+                    posicion[1],
+                    15,
+                    0x7bdcff,
+                    0.035
+                );
+
+                halo
+                    .setDepth(1)
+                    .setScrollFactor(0);
+
+
+                const luz = this.add.circle(
+                    posicion[0],
+                    posicion[1],
+                    3,
+                    0xdfffff,
+                    0.85
+                );
+
+                luz
+                    .setDepth(2)
+                    .setScrollFactor(0);
+
+
+                this.tweens.add({
+
+                    targets: halo,
+
+                    scale: {
+                        from: 0.7,
+                        to: 1.7
+                    },
+
+                    alpha: {
+                        from: 0.02,
+                        to: 0.12
+                    },
+
+                    duration:
+                        1600 +
+                        indice * 180,
+
+                    yoyo: true,
+
+                    repeat: -1,
+
+                    ease: "Sine.easeInOut"
+
+                });
+
+
+                this.tweens.add({
+
+                    targets: luz,
+
+                    scale: {
+                        from: 0.7,
+                        to: 1.3
+                    },
+
+                    alpha: {
+                        from: 0.45,
+                        to: 1
+                    },
+
+                    duration:
+                        1200 +
+                        indice * 130,
+
+                    yoyo: true,
+
+                    repeat: -1,
+
+                    ease: "Sine.easeInOut"
+
+                });
+
+            }
+        );
 
 
         // =========================================
@@ -677,10 +878,6 @@ export default class WorldScene extends Phaser.Scene {
             }
 
 
-            // =====================================
-            // ➡️ VA HASTA EL FINAL
-            // =====================================
-
             this.tweens.add({
 
                 targets: this.dron,
@@ -693,11 +890,6 @@ export default class WorldScene extends Phaser.Scene {
 
                 onComplete: () => {
 
-
-                    // =================================
-                    // ⬅️ REGRESA AL CUARZO
-                    // =================================
-
                     this.tweens.add({
 
                         targets: this.dron,
@@ -709,11 +901,6 @@ export default class WorldScene extends Phaser.Scene {
                         ease: "Sine.easeInOut",
 
                         onComplete: () => {
-
-
-                            // =============================
-                            // 🛑 PAUSA EN EL CUARZO
-                            // =============================
 
                             this.time.delayedCall(
                                 2200,
@@ -769,7 +956,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🛼 VELOCIDADES SEGUN ENERGIA
+        // 🛼 VELOCIDADES
         // =========================================
 
         this.velocidadNormal = 180;
@@ -1071,7 +1258,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
             // =====================================
-            // ⚡ PARTICULAS DE ENERGIA
+            // ⚡ PARTICULAS
             // =====================================
 
             for (let i = 0; i < 18; i++) {
@@ -1531,10 +1718,6 @@ export default class WorldScene extends Phaser.Scene {
             }
 
 
-            // =====================================
-            // 🔴 LEDS PARPADEAN
-            // =====================================
-
             this.tweens.add({
 
                 targets: [
@@ -1564,10 +1747,6 @@ export default class WorldScene extends Phaser.Scene {
             });
 
 
-            // =====================================
-            // 🔴 NUCLEO EN ALERTA
-            // =====================================
-
             this.dronNucleo.setFillStyle(
                 0xff3333,
                 1
@@ -1578,10 +1757,6 @@ export default class WorldScene extends Phaser.Scene {
                 0.18
             );
 
-
-            // =====================================
-            // 🤖 MENSAJE DEL DRON
-            // =====================================
 
             const alerta = this.add.text(
                 this.dron.x,
@@ -1612,10 +1787,6 @@ export default class WorldScene extends Phaser.Scene {
                 .setDepth(100);
 
 
-            // =====================================
-            // 🤖 ALERTA SIGUE AL DRON
-            // =====================================
-
             const seguirAlerta =
                 this.time.addEvent({
 
@@ -1643,10 +1814,6 @@ export default class WorldScene extends Phaser.Scene {
                 });
 
 
-            // =====================================
-            // 😏 CHISTE DE KAEL
-            // =====================================
-
             this.time.delayedCall(
                 650,
                 () => {
@@ -1660,10 +1827,6 @@ export default class WorldScene extends Phaser.Scene {
                 }
             );
 
-
-            // =====================================
-            // DESAPARECER ALERTA
-            // =====================================
 
             this.time.delayedCall(
                 2400,
@@ -2137,10 +2300,6 @@ export default class WorldScene extends Phaser.Scene {
             .setScrollFactor(0)
             .setDepth(52);
 
-
-        // =========================================
-        // DIBUJAR BARRA
-        // =========================================
 
         this.actualizarBarraEnergia();
 
@@ -3285,5 +3444,4 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
-            
 

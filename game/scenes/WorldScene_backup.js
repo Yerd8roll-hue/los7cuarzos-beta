@@ -1,11 +1,12 @@
 
-import { createKaelAnimations } from "../animations/KaelAnimations.js";
+   import { createKaelAnimations } from "../animations/KaelAnimations.js";
 
 export default class WorldScene extends Phaser.Scene {
 
     constructor() {
         super("WorldScene");
     }
+
 
     create() {
 
@@ -97,6 +98,15 @@ export default class WorldScene extends Phaser.Scene {
         this.puntoCuarzo = 1672;
 
         this.eventoCuarzoActivo = false;
+
+
+        // =========================================
+        // 💎 PUNTO DE LA GEMA DE ENERGÍA
+        // =========================================
+
+        this.puntoGemaEnergia = 2800;
+
+        this.gemaEnergiaRecogida = false;
 
 
         // =========================================
@@ -303,17 +313,20 @@ export default class WorldScene extends Phaser.Scene {
 
         this.energiaKael = 77;
 
-        // Cada salto consume 10
         this.costoSalto = 10;
 
-        // Solo recarga hasta 70
         this.energiaMaxRecarga = 70;
 
-        // Velocidad de recuperación
         this.velocidadRecarga = 10;
 
-        // Control del brillo
         this.brilloEnergiaActivo = false;
+
+
+        // =========================================
+        // ⚡ IMPULSO DE LA GEMA
+        // =========================================
+
+        this.gemaEnergiaActiva = false;
 
 
         // =========================================
@@ -327,6 +340,954 @@ export default class WorldScene extends Phaser.Scene {
         this.velocidadBaja = 110;
 
         this.velocidadCritica = 70;
+
+
+        // =========================================
+        // ⚡ VELOCIDADES POTENCIADAS
+        // =========================================
+
+        this.velocidadNormalPotenciada = 300;
+
+        this.velocidadMediaPotenciada = 245;
+
+        this.velocidadBajaPotenciada = 180;
+
+        this.velocidadCriticaPotenciada = 120;
+
+
+        // =========================================
+        // 🦘 SALTO NORMAL
+        // =========================================
+
+        this.fuerzaSalto = -500;
+
+
+        // =========================================
+        // 🦘 SALTO POTENCIADO
+        // =========================================
+
+        this.fuerzaSaltoPotenciado = -680;
+
+
+        // =========================================
+        // 💎 CREAR GEMA DE ENERGÍA
+        // =========================================
+
+        this.gemaEnergia = this.add.image(
+            this.puntoGemaEnergia,
+            500,
+            "gema-energia"
+        );
+
+        this.gemaEnergia
+            .setOrigin(0.5)
+            .setScale(0.075)
+            .setDepth(8)
+            .setAlpha(0.92);
+
+
+        // =========================================
+        // 🌫️ AURA VIOLETA
+        // =========================================
+
+        this.auraGemaEnergia = this.add.circle(
+            this.puntoGemaEnergia,
+            500,
+            25,
+            0xb400ff,
+            0.10
+        );
+
+        this.auraGemaEnergia.setDepth(7);
+
+
+        // =========================================
+        // 💜 BRILLO INTERNO
+        // =========================================
+
+        this.brilloGemaEnergia = this.add.circle(
+            this.puntoGemaEnergia,
+            500,
+            12,
+            0xe98cff,
+            0.18
+        );
+
+        this.brilloGemaEnergia.setDepth(8);
+
+
+        // =========================================
+        // 💎 FLOTACIÓN
+        // =========================================
+
+        this.tweens.add({
+
+            targets: [
+                this.gemaEnergia,
+                this.auraGemaEnergia,
+                this.brilloGemaEnergia
+            ],
+
+            y: "-=18",
+
+            duration: 1100,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 💎 VIBRACIÓN SUAVE
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.gemaEnergia,
+
+            x: this.puntoGemaEnergia + 3,
+
+            duration: 150,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 💎 BALANCEO
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.gemaEnergia,
+
+            angle: 4,
+
+            duration: 850,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 💜 RESPIRACIÓN VIOLETA
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.auraGemaEnergia,
+
+            scale: {
+                from: 0.75,
+                to: 1.45
+            },
+
+            alpha: {
+                from: 0.06,
+                to: 0.20
+            },
+
+            duration: 1000,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // ✨ BRILLO INTERNO
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.brilloGemaEnergia,
+
+            scale: {
+                from: 0.7,
+                to: 1.4
+            },
+
+            alpha: {
+                from: 0.10,
+                to: 0.35
+            },
+
+            duration: 700,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // ✨ TRANSPARENCIA
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.gemaEnergia,
+
+            alpha: {
+                from: 0.78,
+                to: 1
+            },
+
+            duration: 800,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // ⚡ ACTIVAR GEMA DE ENERGÍA
+        // =========================================
+
+        this.activarGemaEnergia = () => {
+
+            if (
+                this.gemaEnergiaRecogida ||
+                !this.gemaEnergia ||
+                !this.kael
+            ) {
+                return;
+            }
+
+
+            this.gemaEnergiaRecogida = true;
+
+
+            // =====================================
+            // DETENER MOVIMIENTOS
+            // =====================================
+
+            this.tweens.killTweensOf(
+                this.gemaEnergia
+            );
+
+            this.tweens.killTweensOf(
+                this.auraGemaEnergia
+            );
+
+            this.tweens.killTweensOf(
+                this.brilloGemaEnergia
+            );
+
+
+            // =====================================
+            // 💜 EXPLOSION VIOLETA
+            // =====================================
+
+            const explosion = this.add.circle(
+                this.gemaEnergia.x,
+                this.gemaEnergia.y,
+                12,
+                0xd95cff,
+                0.65
+            );
+
+            explosion.setDepth(10);
+
+
+            this.tweens.add({
+
+                targets: explosion,
+
+                scale: 4,
+
+                alpha: 0,
+
+                duration: 500,
+
+                ease: "Cubic.easeOut",
+
+                onComplete: () => {
+
+                    explosion.destroy();
+
+                }
+
+            });
+
+
+            // =====================================
+            // ⚡ PARTICULAS DE ENERGIA
+            // =====================================
+
+            for (let i = 0; i < 18; i++) {
+
+                const particula = this.add.circle(
+                    this.gemaEnergia.x,
+                    this.gemaEnergia.y,
+                    Phaser.Math.Between(3, 6),
+                    Phaser.Utils.Array.GetRandom([
+                        0xd95cff,
+                        0xb400ff,
+                        0xe98cff,
+                        0xffffff
+                    ]),
+                    Phaser.Math.FloatBetween(
+                        0.65,
+                        1
+                    )
+                );
+
+                particula.setDepth(11);
+
+
+                this.tweens.add({
+
+                    targets: particula,
+
+                    x:
+                        this.kael.x +
+                        Phaser.Math.Between(-18, 18),
+
+                    y:
+                        this.kael.y +
+                        Phaser.Math.Between(-18, 18),
+
+                    scale: 0.2,
+
+                    alpha: 0,
+
+                    duration:
+                        Phaser.Math.Between(
+                            600,
+                            1000
+                        ),
+
+                    delay: i * 25,
+
+                    ease: "Cubic.easeIn",
+
+                    onComplete: () => {
+
+                        particula.destroy();
+
+                    }
+
+                });
+
+            }
+
+
+            // =====================================
+            // ⚡ ENERGIA PRINCIPAL
+            // =====================================
+
+            const energiaPrincipal =
+                this.add.circle(
+                    this.gemaEnergia.x,
+                    this.gemaEnergia.y,
+                    9,
+                    0xffffff,
+                    0.95
+                );
+
+            energiaPrincipal.setDepth(12);
+
+
+            this.tweens.add({
+
+                targets: energiaPrincipal,
+
+                x: this.kael.x,
+
+                y: this.kael.y,
+
+                scale: 0.35,
+
+                duration: 900,
+
+                ease: "Cubic.easeIn",
+
+                onComplete: () => {
+
+                    energiaPrincipal.destroy();
+
+
+                    // =================================
+                    // 🔋 CARGAR AL 100%
+                    // =================================
+
+                    this.energiaKael =
+                        this.energiaMaxima;
+
+                    this.actualizarBarraEnergia();
+
+
+                    // =================================
+                    // ⚡ ACTIVAR POTENCIA
+                    // =================================
+
+                    this.gemaEnergiaActiva = true;
+
+
+                    // =================================
+                    // ✨ BRILLO DE KAEL
+                    // =================================
+
+                    this.brilloKaelEnergia();
+
+
+                    // =================================
+                    // 🌟 HALO DE ENERGIA
+                    // =================================
+
+                    const haloEnergia =
+                        this.add.circle(
+                            this.kael.x,
+                            this.kael.y,
+                            30,
+                            0xb400ff,
+                            0.12
+                        );
+
+                    haloEnergia.setDepth(6);
+
+
+                    this.tweens.add({
+
+                        targets: haloEnergia,
+
+                        scale: 2.2,
+
+                        alpha: 0,
+
+                        duration: 900,
+
+                        ease: "Cubic.easeOut",
+
+                        onUpdate: () => {
+
+                            if (this.kael) {
+
+                                haloEnergia.x =
+                                    this.kael.x;
+
+                                haloEnergia.y =
+                                    this.kael.y;
+
+                            }
+
+                        },
+
+                        onComplete: () => {
+
+                            haloEnergia.destroy();
+
+                        }
+
+                    });
+
+
+                    // =================================
+                    // ☁️ NUBE DE KAEL
+                    // =================================
+
+                    this.mostrarDialogoKael();
+
+
+                    // =================================
+                    // 💎 DESAPARECER GEMA
+                    // =================================
+
+                    this.tweens.add({
+
+                        targets: [
+                            this.gemaEnergia,
+                            this.auraGemaEnergia,
+                            this.brilloGemaEnergia
+                        ],
+
+                        scale: 0,
+
+                        alpha: 0,
+
+                        duration: 500,
+
+                        ease: "Back.easeIn",
+
+                        onComplete: () => {
+
+                            this.gemaEnergia.destroy();
+
+                            this.auraGemaEnergia.destroy();
+
+                            this.brilloGemaEnergia.destroy();
+
+                            this.gemaEnergia = null;
+
+                            this.auraGemaEnergia = null;
+
+                            this.brilloGemaEnergia = null;
+
+                        }
+
+                    });
+
+                }
+
+            });
+
+        };
+
+
+        // =========================================
+        // ☁️ DIALOGO DE KAEL — ESTILO COMIC
+        // =========================================
+
+        this.mostrarDialogoKael = () => {
+
+            if (!this.kael) {
+                return;
+            }
+
+
+            const x = this.kael.x;
+
+            const y = this.kael.y - 155;
+
+
+            // =====================================
+            // ☁️ GLOBO BLANCO LISO
+            // =====================================
+
+            const nube = this.add.graphics();
+
+            nube.setPosition(
+                x,
+                y
+            );
+
+
+            nube.fillStyle(
+                0xffffff,
+                1
+            );
+
+
+            // =====================================
+            // CUERPO PRINCIPAL
+            // =====================================
+
+            nube.fillRoundedRect(
+                -155,
+                -58,
+                310,
+                116,
+                32
+            );
+
+
+            // =====================================
+            // 🖤 BORDE NEGRO
+            // =====================================
+
+            nube.lineStyle(
+                6,
+                0x000000,
+                1
+            );
+
+
+            nube.strokeRoundedRect(
+                -155,
+                -58,
+                310,
+                116,
+                32
+            );
+
+
+            // =====================================
+            // ☁️ TRES CIRCULOS
+            // =====================================
+
+            nube.fillStyle(
+                0xffffff,
+                1
+            );
+
+
+            nube.fillCircle(
+                -48,
+                76,
+                15
+            );
+
+
+            nube.fillCircle(
+                -30,
+                103,
+                10
+            );
+
+
+            nube.fillCircle(
+                -14,
+                123,
+                7
+            );
+
+
+            // =====================================
+            // 🖤 BORDES DE LOS CIRCULOS
+            // =====================================
+
+            nube.lineStyle(
+                4,
+                0x000000,
+                1
+            );
+
+
+            nube.strokeCircle(
+                -48,
+                76,
+                15
+            );
+
+
+            nube.strokeCircle(
+                -30,
+                103,
+                10
+            );
+
+
+            nube.strokeCircle(
+                -14,
+                123,
+                7
+            );
+
+
+            nube.setDepth(
+                100
+            );
+
+
+            // =====================================
+            // 💬 TEXTO
+            // =====================================
+
+            const textoKael =
+                this.add.text(
+                    x,
+                    y,
+                    "100% DE ENERGÍA...\nY YO QUE PENSABA\nQUE VENÍA A CAMINAR.",
+                    {
+                        fontFamily: "Arial",
+                        fontSize: "18px",
+                        fontStyle: "bold",
+                        color: "#000000",
+                        align: "center",
+                        lineSpacing: 5,
+                        resolution: 2
+                    }
+                );
+
+
+            textoKael
+                .setOrigin(0.5)
+                .setDepth(101);
+
+
+            // =====================================
+            // ✨ ENTRADA
+            // =====================================
+
+            nube.setScale(
+                0.7
+            );
+
+            nube.setAlpha(
+                0
+            );
+
+
+            textoKael.setScale(
+                0.7
+            );
+
+            textoKael.setAlpha(
+                0
+            );
+
+
+            this.tweens.add({
+
+                targets: [
+                    nube,
+                    textoKael
+                ],
+
+                scale: 1,
+
+                alpha: 1,
+
+                duration: 400,
+
+                ease: "Back.easeOut"
+
+            });
+
+
+            // =====================================
+            // ☁️ SEGUIR A KAEL
+            // =====================================
+
+            const seguirNube =
+                this.time.addEvent({
+
+                    delay: 16,
+
+                    repeat: 170,
+
+                    callback: () => {
+
+                        if (!this.kael) {
+                            return;
+                        }
+
+
+                        nube.setPosition(
+                            this.kael.x,
+                            this.kael.y - 155
+                        );
+
+
+                        textoKael.setPosition(
+                            this.kael.x,
+                            this.kael.y - 155
+                        );
+
+                    }
+
+                });
+
+
+            // =====================================
+            // ☁️ DESAPARECER
+            // =====================================
+
+            this.time.delayedCall(
+                2700,
+                () => {
+
+                    if (seguirNube) {
+                        seguirNube.remove();
+                    }
+
+
+                    this.tweens.add({
+
+                        targets: [
+                            nube,
+                            textoKael
+                        ],
+
+                        alpha: 0,
+
+                        scale: 0.9,
+
+                        duration: 450,
+
+                        ease: "Sine.easeIn",
+
+                        onComplete: () => {
+
+                            nube.destroy();
+
+                            textoKael.destroy();
+
+
+                            // =========================
+                            // ✨ CONTINUAR
+                            // =========================
+
+                            this.mostrarAvisoCuarzo();
+
+                        }
+
+                    });
+
+                }
+
+            );
+
+        };
+
+
+        // =========================================
+        // ✨ DESTELLO + AVISO DEL CUARZO
+        // =========================================
+
+        this.mostrarAvisoCuarzo = () => {
+
+            const destelloDorado =
+                this.add.rectangle(
+                    640,
+                    360,
+                    1280,
+                    720,
+                    0xffd966,
+                    0
+                );
+
+            destelloDorado
+                .setScrollFactor(0)
+                .setDepth(80);
+
+
+            this.tweens.add({
+
+                targets: destelloDorado,
+
+                alpha: 0.42,
+
+                duration: 130,
+
+                yoyo: true,
+
+                ease: "Quad.easeOut",
+
+                onComplete: () => {
+
+                    destelloDorado.destroy();
+
+                }
+
+            });
+
+
+            // =====================================
+            // ⚠️ AVISO
+            // =====================================
+
+            const aviso = this.add.text(
+                640,
+                55,
+                "¡RECOGE EL CUARZO DEL ALMA\nANTES DE QUE SE ACABE EL TIEMPO!",
+                {
+                    fontSize: "21px",
+                    fontStyle: "bold",
+                    color: "#fff4bd",
+                    align: "center",
+
+                    stroke: "#4a2800",
+                    strokeThickness: 4,
+
+                    shadow: {
+                        offsetX: 0,
+                        offsetY: 0,
+                        color: "#ffd966",
+                        blur: 14,
+                        stroke: true,
+                        fill: true
+                    }
+                }
+            );
+
+            aviso
+                .setOrigin(0.5)
+                .setScrollFactor(0)
+                .setDepth(82)
+                .setAlpha(0)
+                .setScale(0.92);
+
+
+            this.tweens.add({
+
+                targets: aviso,
+
+                alpha: 1,
+
+                scale: 1,
+
+                duration: 450,
+
+                ease: "Back.easeOut"
+
+            });
+
+
+            this.tweens.add({
+
+                targets: aviso,
+
+                alpha: {
+                    from: 0.82,
+                    to: 1
+                },
+
+                duration: 700,
+
+                yoyo: true,
+
+                repeat: 2,
+
+                ease: "Sine.easeInOut"
+
+            });
+
+
+            this.time.delayedCall(
+                4200,
+                () => {
+
+                    this.tweens.add({
+
+                        targets: aviso,
+
+                        alpha: 0,
+
+                        y: 35,
+
+                        duration: 650,
+
+                        ease: "Sine.easeIn",
+
+                        onComplete: () => {
+
+                            aviso.destroy();
+
+                        }
+
+                    });
+
+                }
+            );
+
+        };
 
 
         // =========================================
@@ -586,9 +1547,11 @@ export default class WorldScene extends Phaser.Scene {
     actualizarBarraEnergia() {
 
         const x = 55;
+
         const y = 65;
 
         const ancho = 245;
+
         const alto = 22;
 
         const porcentaje =
@@ -682,8 +1645,6 @@ export default class WorldScene extends Phaser.Scene {
             );
 
 
-            // CYAN
-
             this.barraEnergia.fillStyle(
                 0x00ffff,
                 0.55
@@ -700,8 +1661,6 @@ export default class WorldScene extends Phaser.Scene {
                 3
             );
 
-
-            // BRILLO
 
             this.barraEnergia.fillStyle(
                 0xffffff,
@@ -760,18 +1719,10 @@ export default class WorldScene extends Phaser.Scene {
             this.kael.scaleY;
 
 
-        // =========================================
-        // TINTE CYAN
-        // =========================================
-
         this.kael.setTint(
             0x66ffff
         );
 
-
-        // =========================================
-        // PULSO
-        // =========================================
 
         this.tweens.add({
 
@@ -791,10 +1742,6 @@ export default class WorldScene extends Phaser.Scene {
 
         });
 
-
-        // =========================================
-        // AURA
-        // =========================================
 
         const aura =
             this.add.circle(
@@ -845,10 +1792,6 @@ export default class WorldScene extends Phaser.Scene {
 
         });
 
-
-        // =========================================
-        // QUITAR TINTE
-        // =========================================
 
         this.time.delayedCall(
             450,
@@ -934,8 +1877,6 @@ export default class WorldScene extends Phaser.Scene {
         // 💥 FRAGMENTOS
         // =========================================
 
-        const fragmentos = [];
-
         const colores = [
 
             0x00ffff,
@@ -958,6 +1899,7 @@ export default class WorldScene extends Phaser.Scene {
                     110
                 );
 
+
             const alto =
                 Phaser.Math.Between(
                     10,
@@ -970,6 +1912,7 @@ export default class WorldScene extends Phaser.Scene {
                     -50,
                     1330
                 );
+
 
             const y =
                 Phaser.Math.Between(
@@ -1012,11 +1955,6 @@ export default class WorldScene extends Phaser.Scene {
                 );
 
             }
-
-
-            fragmentos.push(
-                fragmento
-            );
 
 
             const destinoX =
@@ -1090,7 +2028,8 @@ export default class WorldScene extends Phaser.Scene {
 
             this.sky,
             this.cables,
-            this.floorImage
+            this.floorImage,
+            this.gemaEnergia
 
         ].filter(
             elemento => elemento
@@ -1317,28 +2256,36 @@ export default class WorldScene extends Phaser.Scene {
         if (this.energiaKael >= 70) {
 
             velocidadActual =
-                this.velocidadNormal;
+                this.gemaEnergiaActiva
+                    ? this.velocidadNormalPotenciada
+                    : this.velocidadNormal;
 
         }
 
         else if (this.energiaKael >= 30) {
 
             velocidadActual =
-                this.velocidadMedia;
+                this.gemaEnergiaActiva
+                    ? this.velocidadMediaPotenciada
+                    : this.velocidadMedia;
 
         }
 
         else if (this.energiaKael >= 10) {
 
             velocidadActual =
-                this.velocidadBaja;
+                this.gemaEnergiaActiva
+                    ? this.velocidadBajaPotenciada
+                    : this.velocidadBaja;
 
         }
 
         else {
 
             velocidadActual =
-                this.velocidadCritica;
+                this.gemaEnergiaActiva
+                    ? this.velocidadCriticaPotenciada
+                    : this.velocidadCritica;
 
         }
 
@@ -1416,7 +2363,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
             this.kael.setVelocityY(
-                -500
+
+                this.gemaEnergiaActiva
+                    ? this.fuerzaSaltoPotenciado
+                    : this.fuerzaSalto
+
             );
 
         }
@@ -1488,6 +2439,22 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
+        // 💎 LLEGADA A GEMA DE ENERGÍA
+        // =========================================
+
+        if (
+            !this.gemaEnergiaRecogida &&
+            this.gemaEnergia &&
+            this.kael.x >=
+            this.puntoGemaEnergia - 35
+        ) {
+
+            this.activarGemaEnergia();
+
+        }
+
+
+        // =========================================
         // ⚡ LLEGADA AL CUARZO
         // =========================================
 
@@ -1503,4 +2470,3 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
-

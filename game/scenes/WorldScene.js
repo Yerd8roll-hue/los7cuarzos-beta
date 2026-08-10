@@ -69,204 +69,170 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ✨ LUCES DEL CIELO
+        // ✨ LUCES DE LA CIUDAD
         // =========================================
 
-        this.lucesCielo = [];
+        this.lucesCiudad = [];
 
-        const posicionesLuces = [
-            [90, 85, 2],
-            [180, 145, 3],
-            [290, 70, 2],
-            [410, 125, 2],
-            [535, 65, 3],
-            [670, 150, 2],
-            [790, 90, 2],
-            [920, 55, 3],
-            [1050, 135, 2],
-            [1170, 80, 2],
-            [1320, 145, 3],
-            [1460, 70, 2],
-            [1590, 120, 2],
-            [1740, 60, 3],
-            [1880, 145, 2],
-            [2020, 85, 2],
-            [2160, 125, 3],
-            [2310, 65, 2],
-            [2460, 150, 2],
-            [2610, 90, 3],
-            [2760, 135, 2],
-            [2910, 70, 2]
+        const coloresLuces = [
+            0xff3030,
+            0x00ff88,
+            0x00d9ff,
+            0xffd447,
+            0xb400ff,
+            0xff66cc
         ];
 
+        for (let i = 0; i < 95; i++) {
 
-        posicionesLuces.forEach(
-            (posicion, indice) => {
+            const x = Phaser.Math.Between(
+                30,
+                mundoAncho - 30
+            );
 
-                const luz = this.add.circle(
-                    posicion[0],
-                    posicion[1],
-                    posicion[2],
-                    indice % 4 === 0
-                        ? 0xb8eaff
-                        : 0xffffff,
-                    Phaser.Math.FloatBetween(
-                        0.35,
-                        0.8
-                    )
+            const y = Phaser.Math.Between(
+                190,
+                520
+            );
+
+            const ancho = Phaser.Math.Between(
+                3,
+                8
+            );
+
+            const alto = Phaser.Math.Between(
+                3,
+                8
+            );
+
+            const color =
+                Phaser.Utils.Array.GetRandom(
+                    coloresLuces
                 );
 
-                luz
-                    .setDepth(1)
-                    .setScrollFactor(0);
-
-                this.lucesCielo.push(luz);
-
-
-                // Parpadeo individual
-                this.tweens.add({
-
-                    targets: luz,
-
-                    alpha: {
-                        from: Phaser.Math.FloatBetween(
-                            0.2,
-                            0.45
-                        ),
-
-                        to: Phaser.Math.FloatBetween(
-                            0.7,
-                            1
-                        )
-                    },
-
-                    scale: {
-                        from: 0.7,
-                        to: Phaser.Math.FloatBetween(
-                            1.1,
-                            1.6
-                        )
-                    },
-
-                    duration: Phaser.Math.Between(
-                        1100,
-                        2400
-                    ),
-
-                    delay: Phaser.Math.Between(
-                        0,
-                        1200
-                    ),
-
-                    yoyo: true,
-
-                    repeat: -1,
-
-                    ease: "Sine.easeInOut"
-
-                });
-
-            }
-        );
-
-
-        // =========================================
-        // 🌟 LUCES GRANDES DEL CIELO
-        // =========================================
-
-        const lucesGrandes = [
-            [350, 105],
-            [1120, 110],
-            [1650, 100],
-            [2250, 115],
-            [2840, 105]
-        ];
-
-
-        lucesGrandes.forEach(
-            (posicion, indice) => {
-
-                const halo = this.add.circle(
-                    posicion[0],
-                    posicion[1],
-                    15,
-                    0x7bdcff,
-                    0.035
-                );
-
-                halo
-                    .setDepth(1)
-                    .setScrollFactor(0);
-
-
-                const luz = this.add.circle(
-                    posicion[0],
-                    posicion[1],
-                    3,
-                    0xdfffff,
+            const luz = this.add.rectangle(
+                x,
+                y,
+                ancho,
+                alto,
+                color,
+                Phaser.Math.FloatBetween(
+                    0.35,
                     0.85
+                )
+            );
+
+            luz.setDepth(1);
+            luz.setScrollFactor(0.20);
+
+            this.lucesCiudad.push(luz);
+
+
+            // =====================================
+            // ✨ PARPADEO INDIVIDUAL
+            // =====================================
+
+            this.tweens.add({
+
+                targets: luz,
+
+                alpha: {
+                    from: luz.alpha,
+                    to: Phaser.Math.FloatBetween(
+                        0.15,
+                        1
+                    )
+                },
+
+                duration:
+                    Phaser.Math.Between(
+                        900,
+                        2200
+                    ),
+
+                yoyo: true,
+
+                repeat: -1,
+
+                delay:
+                    Phaser.Math.Between(
+                        0,
+                        1800
+                    ),
+
+                ease: "Sine.easeInOut"
+
+            });
+
+        }
+
+
+        // =========================================
+        // 🌃 LUCES GRANDES DE EDIFICIOS
+        // =========================================
+
+        for (let i = 0; i < 25; i++) {
+
+            const luzGrande =
+                this.add.rectangle(
+
+                    Phaser.Math.Between(
+                        80,
+                        mundoAncho - 80
+                    ),
+
+                    Phaser.Math.Between(
+                        270,
+                        500
+                    ),
+
+                    Phaser.Math.Between(
+                        8,
+                        16
+                    ),
+
+                    Phaser.Math.Between(
+                        5,
+                        10
+                    ),
+
+                    Phaser.Utils.Array.GetRandom(
+                        coloresLuces
+                    ),
+
+                    0.35
+
                 );
 
-                luz
-                    .setDepth(2)
-                    .setScrollFactor(0);
+            luzGrande
+                .setDepth(1)
+                .setScrollFactor(0.2);
 
 
-                this.tweens.add({
+            this.tweens.add({
 
-                    targets: halo,
+                targets: luzGrande,
 
-                    scale: {
-                        from: 0.7,
-                        to: 1.7
-                    },
+                alpha: {
+                    from: 0.25,
+                    to: 0.85
+                },
 
-                    alpha: {
-                        from: 0.02,
-                        to: 0.12
-                    },
+                duration:
+                    Phaser.Math.Between(
+                        1300,
+                        2800
+                    ),
 
-                    duration:
-                        1600 +
-                        indice * 180,
+                yoyo: true,
 
-                    yoyo: true,
+                repeat: -1,
 
-                    repeat: -1,
+                ease: "Sine.easeInOut"
 
-                    ease: "Sine.easeInOut"
+            });
 
-                });
-
-
-                this.tweens.add({
-
-                    targets: luz,
-
-                    scale: {
-                        from: 0.7,
-                        to: 1.3
-                    },
-
-                    alpha: {
-                        from: 0.45,
-                        to: 1
-                    },
-
-                    duration:
-                        1200 +
-                        indice * 130,
-
-                    yoyo: true,
-
-                    repeat: -1,
-
-                    ease: "Sine.easeInOut"
-
-                });
-
-            }
-        );
+        }
 
 
         // =========================================
@@ -744,6 +710,21 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
+        // 🤖 SISTEMA DE DISPAROS
+        // =========================================
+
+        this.dronDisparosRealizados = 0;
+
+        this.dronDisparando = false;
+
+        this.dronPuedeDisparar = true;
+
+        this.dronDanioPorDisparo = 7;
+
+        this.dronMaximoDisparosIniciales = 2;
+
+
+        // =========================================
         // ESTADOS
         // =========================================
 
@@ -956,7 +937,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🛼 VELOCIDADES
+        // 🛼 VELOCIDADES SEGUN ENERGIA
         // =========================================
 
         this.velocidadNormal = 180;
@@ -1258,7 +1239,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
             // =====================================
-            // ⚡ PARTICULAS
+            // ⚡ PARTICULAS DE ENERGIA
             // =====================================
 
             for (let i = 0; i < 18; i++) {
@@ -1417,16 +1398,8 @@ export default class WorldScene extends Phaser.Scene {
                     });
 
 
-                    // =================================
-                    // ☁️ DIALOGO
-                    // =================================
-
                     this.mostrarDialogoKael();
 
-
-                    // =================================
-                    // 💎 DESAPARECER GEMA
-                    // =================================
 
                     this.tweens.add({
 
@@ -1818,7 +1791,10 @@ export default class WorldScene extends Phaser.Scene {
                 650,
                 () => {
 
-                    if (this.kael) {
+                    if (
+                        this.kael &&
+                        !this.finalizando
+                    ) {
 
                         this.mostrarDialogoKaelDron();
 
@@ -1828,8 +1804,50 @@ export default class WorldScene extends Phaser.Scene {
             );
 
 
+            // =====================================
+            // 🔴 PRIMEROS DOS DISPAROS
+            // =====================================
+
             this.time.delayedCall(
-                2400,
+                1100,
+                () => {
+
+                    if (
+                        !this.finalizando &&
+                        this.dronDetectando
+                    ) {
+
+                        this.dispararRayoDron();
+
+                    }
+
+                }
+            );
+
+
+            this.time.delayedCall(
+                2200,
+                () => {
+
+                    if (
+                        !this.finalizando &&
+                        this.dronDetectando
+                    ) {
+
+                        this.dispararRayoDron();
+
+                    }
+
+                }
+            );
+
+
+            // =====================================
+            // DESAPARECER ALERTA
+            // =====================================
+
+            this.time.delayedCall(
+                3000,
                 () => {
 
                     if (seguirAlerta) {
@@ -1858,6 +1876,690 @@ export default class WorldScene extends Phaser.Scene {
                         });
 
                     }
+
+                }
+            );
+
+        };
+
+
+        // =========================================
+        // 🔴 DISPARO DEL DRON
+        // =========================================
+
+        this.dispararRayoDron = () => {
+
+            if (
+                !this.dron ||
+                !this.kael ||
+                this.finalizando ||
+                !this.dronPuedeDisparar
+            ) {
+                return;
+            }
+
+
+            this.dronPuedeDisparar = false;
+
+            this.dronDisparando = true;
+
+
+            const origenX =
+                this.dron.x - 5;
+
+            const origenY =
+                this.dron.y + 4;
+
+
+            const destinoX =
+                this.kael.x;
+
+            const destinoY =
+                this.kael.y;
+
+
+            // =====================================
+            // 🔴 CARGA DEL NUCLEO
+            // =====================================
+
+            this.dronNucleo.setFillStyle(
+                0xff2222,
+                1
+            );
+
+            this.dronNucleoBrillo.setFillStyle(
+                0xff1111,
+                0.35
+            );
+
+
+            this.tweens.add({
+
+                targets: [
+                    this.dronNucleo,
+                    this.dronNucleoBrillo
+                ],
+
+                scale: 1.45,
+
+                duration: 180,
+
+                yoyo: true,
+
+                ease: "Sine.easeOut"
+
+            });
+
+
+            // =====================================
+            // 💥 DESTELLO DE SALIDA
+            // =====================================
+
+            const salida =
+                this.add.circle(
+                    origenX,
+                    origenY,
+                    10,
+                    0xff2222,
+                    0.85
+                );
+
+            salida.setDepth(15);
+
+
+            this.tweens.add({
+
+                targets: salida,
+
+                scale: 2.8,
+
+                alpha: 0,
+
+                duration: 220,
+
+                onComplete: () => {
+
+                    salida.destroy();
+
+                }
+
+            });
+
+
+            // =====================================
+            // 🔴 RAYO PRINCIPAL
+            // =====================================
+
+            const rayo =
+                this.add.graphics();
+
+            rayo.setDepth(14);
+
+
+            rayo.lineStyle(
+                9,
+                0xff1111,
+                0.22
+            );
+
+            rayo.beginPath();
+
+            rayo.moveTo(
+                origenX,
+                origenY
+            );
+
+            rayo.lineTo(
+                destinoX,
+                destinoY
+            );
+
+            rayo.strokePath();
+
+
+            // =====================================
+            // ⚡ NUCLEO DEL RAYO
+            // =====================================
+
+            const rayoNucleo =
+                this.add.graphics();
+
+            rayoNucleo.setDepth(15);
+
+
+            rayoNucleo.lineStyle(
+                3,
+                0xff4444,
+                1
+            );
+
+            rayoNucleo.beginPath();
+
+            rayoNucleo.moveTo(
+                origenX,
+                origenY
+            );
+
+            rayoNucleo.lineTo(
+                destinoX,
+                destinoY
+            );
+
+            rayoNucleo.strokePath();
+
+
+            // =====================================
+            // ✨ CENTRO BLANCO
+            // =====================================
+
+            const rayoCentro =
+                this.add.graphics();
+
+            rayoCentro.setDepth(16);
+
+
+            rayoCentro.lineStyle(
+                1,
+                0xffffff,
+                1
+            );
+
+            rayoCentro.beginPath();
+
+            rayoCentro.moveTo(
+                origenX,
+                origenY
+            );
+
+            rayoCentro.lineTo(
+                destinoX,
+                destinoY
+            );
+
+            rayoCentro.strokePath();
+
+
+            // =====================================
+            // 💥 IMPACTO
+            // =====================================
+
+            const impacto =
+                this.add.circle(
+                    destinoX,
+                    destinoY,
+                    15,
+                    0xff2222,
+                    0.9
+                );
+
+            impacto.setDepth(17);
+
+
+            const impactoBrillo =
+                this.add.circle(
+                    destinoX,
+                    destinoY,
+                    6,
+                    0xffffff,
+                    1
+                );
+
+            impactoBrillo.setDepth(18);
+
+
+            this.tweens.add({
+
+                targets: impacto,
+
+                scale: 3.2,
+
+                alpha: 0,
+
+                duration: 300,
+
+                ease: "Cubic.easeOut",
+
+                onComplete: () => {
+
+                    impacto.destroy();
+
+                }
+
+            });
+
+
+            this.tweens.add({
+
+                targets: impactoBrillo,
+
+                scale: 2.5,
+
+                alpha: 0,
+
+                duration: 180,
+
+                onComplete: () => {
+
+                    impactoBrillo.destroy();
+
+                }
+
+            });
+
+
+            // =====================================
+            // 💥 CHISPAS DEL IMPACTO
+            // =====================================
+
+            for (let i = 0; i < 10; i++) {
+
+                const chispa =
+                    this.add.rectangle(
+                        destinoX,
+                        destinoY,
+                        Phaser.Math.Between(
+                            2,
+                            5
+                        ),
+                        Phaser.Math.Between(
+                            5,
+                            11
+                        ),
+                        Phaser.Utils.Array.GetRandom([
+                            0xff3333,
+                            0xff7777,
+                            0xffffff,
+                            0xffd966
+                        ]),
+                        1
+                    );
+
+                chispa.setDepth(18);
+
+
+                this.tweens.add({
+
+                    targets: chispa,
+
+                    x:
+                        destinoX +
+                        Phaser.Math.Between(
+                            -45,
+                            45
+                        ),
+
+                    y:
+                        destinoY +
+                        Phaser.Math.Between(
+                            -45,
+                            45
+                        ),
+
+                    angle:
+                        Phaser.Math.Between(
+                            -180,
+                            180
+                        ),
+
+                    alpha: 0,
+
+                    duration:
+                        Phaser.Math.Between(
+                            250,
+                            500
+                        ),
+
+                    ease: "Cubic.easeOut",
+
+                    onComplete: () => {
+
+                        chispa.destroy();
+
+                    }
+
+                });
+
+            }
+
+
+            // =====================================
+            // 🔋 QUITAR 7 DE ENERGÍA
+            // =====================================
+
+            this.time.delayedCall(
+                90,
+                () => {
+
+                    if (
+                        this.finalizando ||
+                        !this.kael
+                    ) {
+                        return;
+                    }
+
+
+                    this.energiaKael -=
+                        this.dronDanioPorDisparo;
+
+
+                    if (
+                        this.energiaKael < 0
+                    ) {
+
+                        this.energiaKael = 0;
+
+                    }
+
+
+                    this.actualizarBarraEnergia();
+
+
+                    // =================================
+                    // 🔴 TEXTO -7
+                    // =================================
+
+                    const danoTexto =
+                        this.add.text(
+                            this.kael.x,
+                            this.kael.y - 55,
+                            "-7 ENERGÍA",
+                            {
+                                fontFamily: "Arial",
+                                fontSize: "18px",
+                                fontStyle: "bold",
+                                color: "#ff4444",
+
+                                stroke: "#000000",
+                                strokeThickness: 4,
+
+                                shadow: {
+                                    offsetX: 0,
+                                    offsetY: 0,
+                                    color: "#ff0000",
+                                    blur: 8,
+                                    stroke: true,
+                                    fill: true
+                                }
+                            }
+                        );
+
+                    danoTexto
+                        .setOrigin(0.5)
+                        .setDepth(100);
+
+
+                    this.tweens.add({
+
+                        targets: danoTexto,
+
+                        y: "-=35",
+
+                        alpha: 0,
+
+                        duration: 700,
+
+                        ease: "Cubic.easeOut",
+
+                        onComplete: () => {
+
+                            danoTexto.destroy();
+
+                        }
+
+                    });
+
+
+                    // =================================
+                    // ⚡ SACUDIDA DE KAEL
+                    // =================================
+
+                    this.tweens.add({
+
+                        targets: this.kael,
+
+                        x: this.kael.x + 8,
+
+                        duration: 55,
+
+                        yoyo: true,
+
+                        repeat: 3,
+
+                        ease: "Sine.easeInOut"
+
+                    });
+
+
+                    // =================================
+                    // 💀 ENERGÍA AGOTADA
+                    // =================================
+
+                    if (
+                        this.energiaKael <= 0
+                    ) {
+
+                        this.muerteKaelPorDron();
+
+                    }
+
+                }
+            );
+
+
+            // =====================================
+            // LIMPIAR RAYO
+            // =====================================
+
+            this.time.delayedCall(
+                180,
+                () => {
+
+                    rayo.destroy();
+
+                    rayoNucleo.destroy();
+
+                    rayoCentro.destroy();
+
+                }
+            );
+
+
+            // =====================================
+            // SIGUIENTE DISPARO
+            // =====================================
+
+            this.time.delayedCall(
+                1150,
+                () => {
+
+                    this.dronPuedeDisparar = true;
+
+                    this.dronDisparando = false;
+
+
+                    if (
+                        this.dronDetectando &&
+                        !this.finalizando
+                    ) {
+
+                        this.dispararRayoDron();
+
+                    }
+
+                }
+            );
+
+        };
+
+
+        // =========================================
+        // 💀 MUERTE DE KAEL POR DRON
+        // =========================================
+
+        this.muerteKaelPorDron = () => {
+
+            if (
+                this.finalizando ||
+                !this.kael
+            ) {
+                return;
+            }
+
+
+            // =====================================
+            // 🚫 DETENER DISPAROS
+            // =====================================
+
+            this.dronDetectando = false;
+
+            this.dronPuedeDisparar = false;
+
+            this.dronDisparando = false;
+
+
+            // =====================================
+            // 🔋 ASEGURAR 0
+            // =====================================
+
+            this.energiaKael = 0;
+
+            this.actualizarBarraEnergia();
+
+
+            // =====================================
+            // 💥 IMPACTO FINAL
+            // =====================================
+
+            const impactoFinal =
+                this.add.circle(
+                    this.kael.x,
+                    this.kael.y,
+                    15,
+                    0xff2222,
+                    0.9
+                );
+
+            impactoFinal.setDepth(30);
+
+
+            this.tweens.add({
+
+                targets: impactoFinal,
+
+                scale: 3.5,
+
+                alpha: 0,
+
+                duration: 350,
+
+                ease: "Cubic.easeOut",
+
+                onComplete: () => {
+
+                    impactoFinal.destroy();
+
+                }
+
+            });
+
+
+            // =====================================
+            // 🧍 KAEL SE DESACTIVA
+            // =====================================
+
+            this.kael.setVelocity(
+                0,
+                0
+            );
+
+            this.kael.body.enable = false;
+
+
+            // =====================================
+            // 🔴 TINT ROJO
+            // =====================================
+
+            this.kael.setTint(
+                0xff3333
+            );
+
+
+            // =====================================
+            // 💥 PEQUEÑA EXPLOSIÓN ANTES DEL FINAL
+            // =====================================
+
+            for (let i = 0; i < 20; i++) {
+
+                const particula =
+                    this.add.circle(
+                        this.kael.x,
+                        this.kael.y,
+                        Phaser.Math.Between(
+                            2,
+                            6
+                        ),
+                        Phaser.Utils.Array.GetRandom([
+                            0xff2222,
+                            0xff6600,
+                            0xffd966,
+                            0xffffff
+                        ]),
+                        1
+                    );
+
+                particula.setDepth(31);
+
+
+                this.tweens.add({
+
+                    targets: particula,
+
+                    x:
+                        this.kael.x +
+                        Phaser.Math.Between(
+                            -90,
+                            90
+                        ),
+
+                    y:
+                        this.kael.y +
+                        Phaser.Math.Between(
+                            -90,
+                            90
+                        ),
+
+                    scale: 0,
+
+                    alpha: 0,
+
+                    duration:
+                        Phaser.Math.Between(
+                            300,
+                            700
+                        ),
+
+                    ease: "Cubic.easeOut",
+
+                    onComplete: () => {
+
+                        particula.destroy();
+
+                    }
+
+                });
+
+            }
+
+
+            // =====================================
+            // 💥 ENTRAR A LA EXPLOSIÓN FINAL
+            // =====================================
+
+            this.time.delayedCall(
+                750,
+                () => {
+
+                    this.finalizarValle();
 
                 }
             );
@@ -2301,6 +3003,10 @@ export default class WorldScene extends Phaser.Scene {
             .setDepth(52);
 
 
+        // =========================================
+        // DIBUJAR BARRA
+        // =========================================
+
         this.actualizarBarraEnergia();
 
 
@@ -2491,8 +3197,12 @@ export default class WorldScene extends Phaser.Scene {
         const alto = 22;
 
         const porcentaje =
-            this.energiaKael /
-            this.energiaMaxima;
+            Phaser.Math.Clamp(
+                this.energiaKael /
+                this.energiaMaxima,
+                0,
+                1
+            );
 
 
         this.barraEnergiaMarco.clear();
@@ -2747,9 +3457,22 @@ export default class WorldScene extends Phaser.Scene {
                 0
             );
 
-            this.kael.body.enable = false;
+            if (this.kael.body) {
+
+                this.kael.body.enable = false;
+
+            }
 
         }
+
+
+        // =========================================
+        // 🛑 DETENER DISPAROS
+        // =========================================
+
+        this.dronPuedeDisparar = false;
+
+        this.dronDetectando = false;
 
 
         const destello = this.add.rectangle(
@@ -2956,6 +3679,31 @@ export default class WorldScene extends Phaser.Scene {
         });
 
 
+        // =========================================
+        // ✨ APAGAR LUCES DE LA CIUDAD
+        // =========================================
+
+        if (this.lucesCiudad) {
+
+            this.tweens.add({
+
+                targets: this.lucesCiudad,
+
+                alpha: 0,
+
+                scaleX: 0.5,
+
+                scaleY: 0.5,
+
+                duration: 900,
+
+                ease: "Cubic.easeIn"
+
+            });
+
+        }
+
+
         if (this.kael) {
 
             this.tweens.add({
@@ -3145,8 +3893,10 @@ export default class WorldScene extends Phaser.Scene {
             this.dron &&
             this.dronNucleo &&
             this.dronLedIzq &&
-            this.dronLedDer
+            this.dronLedDer &&
+            this.kael
         ) {
+
 
             // =====================================
             // 🌌 HALO SIGUE AL DRON
@@ -3445,3 +4195,7 @@ export default class WorldScene extends Phaser.Scene {
 
 }
 
+
+
+
+        

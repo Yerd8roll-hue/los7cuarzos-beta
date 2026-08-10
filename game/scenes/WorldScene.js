@@ -30,6 +30,7 @@ export default class WorldScene extends Phaser.Scene {
 
         this.musicaValle.play();
 
+
         this.musicaValle.once(
             "complete",
             () => {
@@ -93,7 +94,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 💎 PUNTO GEMA DE ENERGÍA
+        // 💎 PUNTO DE LA GEMA DE ENERGÍA
         // =========================================
 
         this.puntoGemaEnergia = 2800;
@@ -190,6 +191,10 @@ export default class WorldScene extends Phaser.Scene {
         .setScale(0.96);
 
 
+        // =========================================
+        // ✨ ENTRADA DEL TITULO
+        // =========================================
+
         this.tweens.add({
 
             targets: tituloValle,
@@ -203,6 +208,10 @@ export default class WorldScene extends Phaser.Scene {
 
         });
 
+
+        // =========================================
+        // AURA RESPIRANDO
+        // =========================================
 
         this.tweens.add({
 
@@ -229,6 +238,10 @@ export default class WorldScene extends Phaser.Scene {
         });
 
 
+        // =========================================
+        // 🌫️ DESAPARECER TITULO
+        // =========================================
+
         this.time.delayedCall(
             10000,
             () => {
@@ -249,6 +262,7 @@ export default class WorldScene extends Phaser.Scene {
                     onComplete: () => {
 
                         tituloValle.destroy();
+
                         auraTitulo.destroy();
 
                     }
@@ -285,190 +299,93 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🤖 DRON
+        // 🤖 DRON VIGILANTE
         // =========================================
 
-        this.dron = this.add.container(
-            1550,
-            390
-        );
-
-        this.dron.setDepth(6);
-
-
-        // =========================================
-        // CUERPO DEL DRON
-        // =========================================
-
-        const cuerpoDron = this.add.graphics();
-
-        cuerpoDron.fillStyle(
-            0x18232d,
+        this.dron = this.add.rectangle(
+            1900,
+            390,
+            70,
+            38,
+            0x20252c,
             1
         );
 
-        cuerpoDron.fillRoundedRect(
-            -48,
-            -25,
-            96,
-            50,
-            14
-        );
+        this.dron.setDepth(7);
 
-        cuerpoDron.lineStyle(
-            3,
-            0x00ffff,
+
+        // =========================================
+        // DETALLE DEL DRON
+        // =========================================
+
+        this.dronBody = this.add.rectangle(
+            this.dron.x,
+            this.dron.y - 4,
+            48,
+            10,
+            0x39414b,
             1
         );
 
-        cuerpoDron.strokeRoundedRect(
-            -48,
-            -25,
-            96,
-            50,
-            14
-        );
-
-        this.dron.add(
-            cuerpoDron
-        );
+        this.dronBody.setDepth(8);
 
 
         // =========================================
-        // 👁️ VISOR
+        // 🔴 LED DEL DRON
         // =========================================
 
-        const visorDron = this.add.rectangle(
-            0,
-            0,
-            42,
-            13,
-            0xff1744,
-            1
-        );
-
-        visorDron.setStrokeStyle(
-            2,
-            0xff6680,
-            1
-        );
-
-        this.dron.add(
-            visorDron
-        );
-
-
-        // =========================================
-        // 💡 LED
-        // =========================================
-
-        const haloLED = this.add.circle(
-            0,
-            0,
-            18,
-            0x00ffff,
-            0.08
-        );
-
-        const ledExterior = this.add.circle(
-            0,
-            0,
-            8,
-            0x00ffff,
-            0.45
-        );
-
-        const ledCentro = this.add.circle(
-            0,
-            0,
-            4,
-            0xffffff,
-            1
-        );
-
-        this.dron.add([
-            haloLED,
-            ledExterior,
-            ledCentro
-        ]);
-
-
-        // =========================================
-        // 🪽 SOPORTES
-        // =========================================
-
-        const soporteIzq = this.add.rectangle(
-            -63,
-            0,
-            18,
+        this.dronLed = this.add.circle(
+            this.dron.x - 25,
+            this.dron.y,
             5,
-            0x00ffff,
-            1
+            0xff3333,
+            0.75
         );
 
-        const soporteDer = this.add.rectangle(
-            63,
-            0,
-            18,
-            5,
-            0x00ffff,
-            1
-        );
-
-        this.dron.add([
-            soporteIzq,
-            soporteDer
-        ]);
+        this.dronLed.setDepth(9);
 
 
         // =========================================
-        // 🔴 LUCES LATERALES
+        // ✨ HALO SUTIL
         // =========================================
 
-        const luzIzq = this.add.circle(
-            -39,
-            22,
-            4,
-            0xff1744,
-            1
+        this.dronHalo = this.add.circle(
+            this.dron.x - 25,
+            this.dron.y,
+            10,
+            0xff2222,
+            0.07
         );
 
-        const luzDer = this.add.circle(
-            39,
-            22,
-            4,
-            0xff1744,
-            1
-        );
-
-        this.dron.add([
-            luzIzq,
-            luzDer
-        ]);
+        this.dronHalo.setDepth(6);
 
 
         // =========================================
-        // ✨ PULSO NORMAL LED
+        // 🤖 ESTADO DEL DRON
+        // =========================================
+
+        this.dronDetectando = false;
+
+        this.dronAlertaMostrada = false;
+
+
+        // =========================================
+        // ↔️ PATRULLA DEL DRON
         // =========================================
 
         this.tweens.add({
 
             targets: [
-                haloLED,
-                ledExterior
+                this.dron,
+                this.dronBody
             ],
 
-            scale: {
-                from: 0.8,
-                to: 1.35
+            x: {
+                from: 1700,
+                to: 2200
             },
 
-            alpha: {
-                from: 0.15,
-                to: 0.65
-            },
-
-            duration: 650,
+            duration: 4200,
 
             yoyo: true,
 
@@ -477,408 +394,6 @@ export default class WorldScene extends Phaser.Scene {
             ease: "Sine.easeInOut"
 
         });
-
-
-        // =========================================
-        // 👁️ ESTADO DEL DRON
-        // =========================================
-
-        this.dronDetectando = false;
-
-
-        // =========================================
-        // 👁️ DETECCION
-        // =========================================
-
-        this.comprobarVisionDron = () => {
-
-            if (
-                !this.dron ||
-                !this.kael ||
-                this.dronDetectando
-            ) {
-                return;
-            }
-
-
-            const distanciaX =
-                Math.abs(
-                    this.kael.x -
-                    this.dron.x
-                );
-
-
-            const distanciaY =
-                Math.abs(
-                    this.kael.y -
-                    this.dron.y
-                );
-
-
-            const veAKael =
-                distanciaX < 500 &&
-                distanciaY < 220;
-
-
-            if (veAKael) {
-
-                this.dronDetectando = true;
-
-
-                // =================================
-                // 🔴 CAMBIAR VISOR
-                // =================================
-
-                visorDron.setFillStyle(
-                    0xff003c,
-                    1
-                );
-
-
-                // =================================
-                // 💡 LED ROJO
-                // =================================
-
-                haloLED.setFillStyle(
-                    0xff1744,
-                    1
-                );
-
-                ledExterior.setFillStyle(
-                    0xff1744,
-                    1
-                );
-
-
-                // =================================
-                // 🚨 ALERTA
-                // =================================
-
-                this.mostrarAlertaDron();
-
-            }
-
-        };
-
-
-        // =========================================
-        // 🚨 ALERTA DEL DRON
-        // =========================================
-
-        this.mostrarAlertaDron = () => {
-
-            const alerta = this.add.text(
-                640,
-                105,
-                "¡ALERTA INTRUSO!",
-                {
-                    fontFamily: "Arial",
-                    fontSize: "24px",
-                    fontStyle: "bold",
-                    color: "#ff304f",
-
-                    stroke: "#160006",
-                    strokeThickness: 5,
-
-                    shadow: {
-                        offsetX: 0,
-                        offsetY: 0,
-                        color: "#ff1744",
-                        blur: 12,
-                        stroke: true,
-                        fill: true
-                    }
-                }
-            );
-
-            alerta
-                .setOrigin(0.5)
-                .setScrollFactor(0)
-                .setDepth(90)
-                .setAlpha(0)
-                .setScale(0.8);
-
-
-            this.tweens.add({
-
-                targets: alerta,
-
-                alpha: 1,
-                scale: 1,
-
-                duration: 300,
-
-                ease: "Back.easeOut"
-
-            });
-
-
-            this.time.delayedCall(
-                900,
-                () => {
-
-                    this.mostrarDialogoDron();
-
-                }
-            );
-
-
-            this.time.delayedCall(
-                2500,
-                () => {
-
-                    this.tweens.add({
-
-                        targets: alerta,
-
-                        alpha: 0,
-
-                        y: 80,
-
-                        duration: 400,
-
-                        onComplete: () => {
-
-                            alerta.destroy();
-
-                        }
-
-                    });
-
-                }
-            );
-
-        };
-
-
-        // =========================================
-        // ☁️ CHISTE DE KAEL
-        // =========================================
-
-        this.mostrarDialogoDron = () => {
-
-            if (!this.kael) {
-                return;
-            }
-
-
-            const x =
-                this.kael.x;
-
-            const y =
-                this.kael.y - 155;
-
-
-            const nube =
-                this.add.graphics();
-
-
-            nube.setPosition(
-                x,
-                y
-            );
-
-
-            nube.fillStyle(
-                0xffffff,
-                1
-            );
-
-
-            nube.fillRoundedRect(
-                -155,
-                -58,
-                310,
-                116,
-                32
-            );
-
-
-            nube.lineStyle(
-                6,
-                0x000000,
-                1
-            );
-
-
-            nube.strokeRoundedRect(
-                -155,
-                -58,
-                310,
-                116,
-                32
-            );
-
-
-            nube.fillStyle(
-                0xffffff,
-                1
-            );
-
-
-            nube.fillCircle(
-                -48,
-                76,
-                15
-            );
-
-            nube.fillCircle(
-                -30,
-                103,
-                10
-            );
-
-            nube.fillCircle(
-                -14,
-                123,
-                7
-            );
-
-
-            nube.lineStyle(
-                4,
-                0x000000,
-                1
-            );
-
-
-            nube.strokeCircle(
-                -48,
-                76,
-                15
-            );
-
-            nube.strokeCircle(
-                -30,
-                103,
-                10
-            );
-
-            nube.strokeCircle(
-                -14,
-                123,
-                7
-            );
-
-
-            nube.setDepth(
-                100
-            );
-
-
-            const textoKael =
-                this.add.text(
-                    x,
-                    y,
-                    "¿ALERTA INTRUSO? 😏\nTRANQUILO, DRON...\nSOLO ESTABA MIRANDO.\n¡AHORA SÍ ME TOCA CORRER!",
-                    {
-                        fontFamily: "Arial",
-                        fontSize: "16px",
-                        fontStyle: "bold",
-                        color: "#000000",
-                        align: "center",
-                        lineSpacing: 4,
-                        resolution: 2
-                    }
-                );
-
-
-            textoKael
-                .setOrigin(0.5)
-                .setDepth(101);
-
-
-            nube.setScale(0.7);
-            nube.setAlpha(0);
-
-            textoKael.setScale(0.7);
-            textoKael.setAlpha(0);
-
-
-            this.tweens.add({
-
-                targets: [
-                    nube,
-                    textoKael
-                ],
-
-                scale: 1,
-                alpha: 1,
-
-                duration: 400,
-
-                ease: "Back.easeOut"
-
-            });
-
-
-            const seguirNube =
-                this.time.addEvent({
-
-                    delay: 16,
-
-                    repeat: 170,
-
-                    callback: () => {
-
-                        if (!this.kael) {
-                            return;
-                        }
-
-
-                        nube.setPosition(
-                            this.kael.x,
-                            this.kael.y - 155
-                        );
-
-
-                        textoKael.setPosition(
-                            this.kael.x,
-                            this.kael.y - 155
-                        );
-
-                    }
-
-                });
-
-
-            this.time.delayedCall(
-                3000,
-                () => {
-
-                    if (seguirNube) {
-                        seguirNube.remove();
-                    }
-
-
-                    this.tweens.add({
-
-                        targets: [
-                            nube,
-                            textoKael
-                        ],
-
-                        alpha: 0,
-
-                        scale: 0.9,
-
-                        duration: 450,
-
-                        ease: "Sine.easeIn",
-
-                        onComplete: () => {
-
-                            nube.destroy();
-                            textoKael.destroy();
-
-                        }
-
-                    });
-
-                }
-            );
-
-        };
 
 
         // =========================================
@@ -906,7 +421,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // VELOCIDADES
+        // 🛼 VELOCIDADES SEGUN ENERGIA
         // =========================================
 
         this.velocidadNormal = 180;
@@ -918,6 +433,10 @@ export default class WorldScene extends Phaser.Scene {
         this.velocidadCritica = 70;
 
 
+        // =========================================
+        // ⚡ VELOCIDADES POTENCIADAS
+        // =========================================
+
         this.velocidadNormalPotenciada = 300;
 
         this.velocidadMediaPotenciada = 245;
@@ -928,16 +447,21 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // SALTO
+        // 🦘 SALTO NORMAL
         // =========================================
 
         this.fuerzaSalto = -500;
+
+
+        // =========================================
+        // 🦘 SALTO POTENCIADO
+        // =========================================
 
         this.fuerzaSaltoPotenciado = -680;
 
 
         // =========================================
-        // 💎 GEMA DE ENERGÍA
+        // 💎 CREAR GEMA DE ENERGÍA
         // =========================================
 
         this.gemaEnergia = this.add.image(
@@ -953,6 +477,10 @@ export default class WorldScene extends Phaser.Scene {
             .setAlpha(0.92);
 
 
+        // =========================================
+        // 🌫️ AURA VIOLETA
+        // =========================================
+
         this.auraGemaEnergia = this.add.circle(
             this.puntoGemaEnergia,
             500,
@@ -963,6 +491,10 @@ export default class WorldScene extends Phaser.Scene {
 
         this.auraGemaEnergia.setDepth(7);
 
+
+        // =========================================
+        // 💜 BRILLO INTERNO
+        // =========================================
 
         this.brilloGemaEnergia = this.add.circle(
             this.puntoGemaEnergia,
@@ -976,7 +508,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 💎 MOVIMIENTO GEMA
+        // 💎 FLOTACIÓN
         // =========================================
 
         this.tweens.add({
@@ -1000,6 +532,10 @@ export default class WorldScene extends Phaser.Scene {
         });
 
 
+        // =========================================
+        // 💎 VIBRACIÓN SUAVE
+        // =========================================
+
         this.tweens.add({
 
             targets: this.gemaEnergia,
@@ -1017,6 +553,10 @@ export default class WorldScene extends Phaser.Scene {
         });
 
 
+        // =========================================
+        // 💎 BALANCEO
+        // =========================================
+
         this.tweens.add({
 
             targets: this.gemaEnergia,
@@ -1033,6 +573,10 @@ export default class WorldScene extends Phaser.Scene {
 
         });
 
+
+        // =========================================
+        // 💜 RESPIRACIÓN VIOLETA
+        // =========================================
 
         this.tweens.add({
 
@@ -1059,6 +603,10 @@ export default class WorldScene extends Phaser.Scene {
         });
 
 
+        // =========================================
+        // ✨ BRILLO INTERNO
+        // =========================================
+
         this.tweens.add({
 
             targets: this.brilloGemaEnergia,
@@ -1084,6 +632,10 @@ export default class WorldScene extends Phaser.Scene {
         });
 
 
+        // =========================================
+        // ✨ TRANSPARENCIA
+        // =========================================
+
         this.tweens.add({
 
             targets: this.gemaEnergia,
@@ -1105,7 +657,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ⚡ ACTIVAR GEMA
+        // ⚡ ACTIVAR GEMA DE ENERGÍA
         // =========================================
 
         this.activarGemaEnergia = () => {
@@ -1117,7 +669,6 @@ export default class WorldScene extends Phaser.Scene {
             ) {
                 return;
             }
-
 
             this.gemaEnergiaRecogida = true;
 
@@ -1135,14 +686,17 @@ export default class WorldScene extends Phaser.Scene {
             );
 
 
-            const explosion =
-                this.add.circle(
-                    this.gemaEnergia.x,
-                    this.gemaEnergia.y,
-                    12,
-                    0xd95cff,
-                    0.65
-                );
+            // =====================================
+            // 💜 EXPLOSION VIOLETA
+            // =====================================
+
+            const explosion = this.add.circle(
+                this.gemaEnergia.x,
+                this.gemaEnergia.y,
+                12,
+                0xd95cff,
+                0.65
+            );
 
             explosion.setDepth(10);
 
@@ -1168,24 +722,27 @@ export default class WorldScene extends Phaser.Scene {
             });
 
 
+            // =====================================
+            // ⚡ PARTICULAS DE ENERGIA
+            // =====================================
+
             for (let i = 0; i < 18; i++) {
 
-                const particula =
-                    this.add.circle(
-                        this.gemaEnergia.x,
-                        this.gemaEnergia.y,
-                        Phaser.Math.Between(3, 6),
-                        Phaser.Utils.Array.GetRandom([
-                            0xd95cff,
-                            0xb400ff,
-                            0xe98cff,
-                            0xffffff
-                        ]),
-                        Phaser.Math.FloatBetween(
-                            0.65,
-                            1
-                        )
-                    );
+                const particula = this.add.circle(
+                    this.gemaEnergia.x,
+                    this.gemaEnergia.y,
+                    Phaser.Math.Between(3, 6),
+                    Phaser.Utils.Array.GetRandom([
+                        0xd95cff,
+                        0xb400ff,
+                        0xe98cff,
+                        0xffffff
+                    ]),
+                    Phaser.Math.FloatBetween(
+                        0.65,
+                        1
+                    )
+                );
 
                 particula.setDepth(11);
 
@@ -1227,6 +784,10 @@ export default class WorldScene extends Phaser.Scene {
             }
 
 
+            // =====================================
+            // ⚡ ENERGIA PRINCIPAL
+            // =====================================
+
             const energiaPrincipal =
                 this.add.circle(
                     this.gemaEnergia.x,
@@ -1257,15 +818,22 @@ export default class WorldScene extends Phaser.Scene {
 
                     energiaPrincipal.destroy();
 
+
                     this.energiaKael =
                         this.energiaMaxima;
 
                     this.actualizarBarraEnergia();
 
+
                     this.gemaEnergiaActiva = true;
+
 
                     this.brilloKaelEnergia();
 
+
+                    // =================================
+                    // 🌟 HALO DE ENERGIA
+                    // =================================
 
                     const haloEnergia =
                         this.add.circle(
@@ -1314,8 +882,16 @@ export default class WorldScene extends Phaser.Scene {
                     });
 
 
+                    // =================================
+                    // ☁️ DIALOGO
+                    // =================================
+
                     this.mostrarDialogoKael();
 
+
+                    // =================================
+                    // 💎 DESAPARECER GEMA
+                    // =================================
 
                     this.tweens.add({
 
@@ -1359,7 +935,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ☁️ DIALOGO ORIGINAL DE KAEL
+        // ☁️ DIALOGO DE KAEL
         // =========================================
 
         this.mostrarDialogoKael = () => {
@@ -1369,15 +945,12 @@ export default class WorldScene extends Phaser.Scene {
             }
 
 
-            const x =
-                this.kael.x;
+            const x = this.kael.x;
 
-            const y =
-                this.kael.y - 155;
+            const y = this.kael.y - 155;
 
 
-            const nube =
-                this.add.graphics();
+            const nube = this.add.graphics();
 
             nube.setPosition(
                 x,
@@ -1495,9 +1068,11 @@ export default class WorldScene extends Phaser.Scene {
 
 
             nube.setScale(0.7);
+
             nube.setAlpha(0);
 
             textoKael.setScale(0.7);
+
             textoKael.setAlpha(0);
 
 
@@ -1537,6 +1112,7 @@ export default class WorldScene extends Phaser.Scene {
                             this.kael.x,
                             this.kael.y - 155
                         );
+
 
                         textoKael.setPosition(
                             this.kael.x,
@@ -1578,11 +1154,208 @@ export default class WorldScene extends Phaser.Scene {
 
                             textoKael.destroy();
 
+
                             this.mostrarAvisoCuarzo();
 
                         }
 
                     });
+
+                }
+
+            );
+
+        };
+
+
+        // =========================================
+        // 🚨 ALERTA DEL DRON
+        // =========================================
+
+        this.activarAlertaDron = () => {
+
+            if (
+                !this.dron ||
+                !this.dronLed
+            ) {
+                return;
+            }
+
+
+            // =====================================
+            // 🔴 LED PARPADEA
+            // =====================================
+
+            this.tweens.add({
+
+                targets: this.dronLed,
+
+                alpha: {
+                    from: 0.25,
+                    to: 1
+                },
+
+                scale: {
+                    from: 0.8,
+                    to: 1.25
+                },
+
+                duration: 180,
+
+                yoyo: true,
+
+                repeat: 5,
+
+                ease: "Sine.easeInOut"
+
+            });
+
+
+            // =====================================
+            // ✨ HALO SUTIL
+            // =====================================
+
+            this.tweens.add({
+
+                targets: this.dronHalo,
+
+                alpha: {
+                    from: 0.04,
+                    to: 0.14
+                },
+
+                scale: {
+                    from: 0.8,
+                    to: 1.25
+                },
+
+                duration: 180,
+
+                yoyo: true,
+
+                repeat: 5,
+
+                ease: "Sine.easeInOut"
+
+            });
+
+
+            // =====================================
+            // 🤖 MENSAJE DEL DRON
+            // =====================================
+
+            const alerta = this.add.text(
+                this.dron.x,
+                this.dron.y - 80,
+                "¡ALERTA, INTRUSO!",
+                {
+                    fontFamily: "Arial",
+                    fontSize: "18px",
+                    fontStyle: "bold",
+                    color: "#ff3333",
+
+                    stroke: "#050505",
+                    strokeThickness: 4,
+
+                    shadow: {
+                        offsetX: 0,
+                        offsetY: 0,
+                        color: "#ff2222",
+                        blur: 8,
+                        stroke: true,
+                        fill: true
+                    }
+                }
+            );
+
+            alerta
+                .setOrigin(0.5)
+                .setDepth(100);
+
+
+            // =====================================
+            // 🤖 ALERTA SIGUE AL DRON
+            // =====================================
+
+            const seguirAlerta =
+                this.time.addEvent({
+
+                    delay: 16,
+
+                    repeat: 150,
+
+                    callback: () => {
+
+                        if (
+                            this.dron &&
+                            alerta
+                        ) {
+
+                            alerta.x =
+                                this.dron.x;
+
+                            alerta.y =
+                                this.dron.y - 80;
+
+                        }
+
+                    }
+
+                });
+
+
+            // =====================================
+            // 😏 CHISTE DE KAEL
+            // =====================================
+
+            this.time.delayedCall(
+                650,
+                () => {
+
+                    if (this.kael) {
+
+                        this.mostrarDialogoKaelDron();
+
+                    }
+
+                }
+            );
+
+
+            // =====================================
+            // DESAPARECER ALERTA
+            // =====================================
+
+            this.time.delayedCall(
+                2400,
+                () => {
+
+                    if (seguirAlerta) {
+                        seguirAlerta.remove();
+                    }
+
+
+                    if (alerta) {
+
+                        this.tweens.add({
+
+                            targets: alerta,
+
+                            alpha: 0,
+
+                            y: "-=15",
+
+                            duration: 350,
+
+                            onComplete: () => {
+
+                                alerta.destroy();
+
+                            }
+
+                        });
+
+                    }
 
                 }
             );
@@ -1591,7 +1364,236 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ✨ AVISO DEL CUARZO
+        // 😏 CHISTE DE KAEL AL DRON
+        // =========================================
+
+        this.mostrarDialogoKaelDron = () => {
+
+            if (!this.kael) {
+                return;
+            }
+
+
+            const x = this.kael.x;
+
+            const y = this.kael.y - 155;
+
+
+            const nube = this.add.graphics();
+
+            nube.setPosition(
+                x,
+                y
+            );
+
+
+            nube.fillStyle(
+                0xffffff,
+                1
+            );
+
+
+            nube.fillRoundedRect(
+                -155,
+                -58,
+                310,
+                116,
+                32
+            );
+
+
+            nube.lineStyle(
+                6,
+                0x000000,
+                1
+            );
+
+
+            nube.strokeRoundedRect(
+                -155,
+                -58,
+                310,
+                116,
+                32
+            );
+
+
+            nube.fillStyle(
+                0xffffff,
+                1
+            );
+
+
+            nube.fillCircle(
+                -48,
+                76,
+                15
+            );
+
+            nube.fillCircle(
+                -30,
+                103,
+                10
+            );
+
+            nube.fillCircle(
+                -14,
+                123,
+                7
+            );
+
+
+            nube.lineStyle(
+                4,
+                0x000000,
+                1
+            );
+
+
+            nube.strokeCircle(
+                -48,
+                76,
+                15
+            );
+
+            nube.strokeCircle(
+                -30,
+                103,
+                10
+            );
+
+            nube.strokeCircle(
+                -14,
+                123,
+                7
+            );
+
+
+            nube.setDepth(100);
+
+
+            const texto =
+                this.add.text(
+                    x,
+                    y,
+                    "Tranquilo, dron…\nsolo estaba mirando.\nBueno… ¡ahora sí me toca correr!",
+                    {
+                        fontFamily: "Arial",
+                        fontSize: "16px",
+                        fontStyle: "bold",
+                        color: "#000000",
+                        align: "center",
+                        lineSpacing: 4,
+                        resolution: 2
+                    }
+                );
+
+
+            texto
+                .setOrigin(0.5)
+                .setDepth(101);
+
+
+            nube.setScale(0.7);
+
+            nube.setAlpha(0);
+
+            texto.setScale(0.7);
+
+            texto.setAlpha(0);
+
+
+            this.tweens.add({
+
+                targets: [
+                    nube,
+                    texto
+                ],
+
+                scale: 1,
+
+                alpha: 1,
+
+                duration: 400,
+
+                ease: "Back.easeOut"
+
+            });
+
+
+            const seguir =
+                this.time.addEvent({
+
+                    delay: 16,
+
+                    repeat: 170,
+
+                    callback: () => {
+
+                        if (!this.kael) {
+                            return;
+                        }
+
+
+                        nube.setPosition(
+                            this.kael.x,
+                            this.kael.y - 155
+                        );
+
+
+                        texto.setPosition(
+                            this.kael.x,
+                            this.kael.y - 155
+                        );
+
+                    }
+
+                });
+
+
+            this.time.delayedCall(
+                2700,
+                () => {
+
+                    if (seguir) {
+                        seguir.remove();
+                    }
+
+
+                    this.tweens.add({
+
+                        targets: [
+                            nube,
+                            texto
+                        ],
+
+                        alpha: 0,
+
+                        scale: 0.9,
+
+                        duration: 450,
+
+                        ease: "Sine.easeIn",
+
+                        onComplete: () => {
+
+                            nube.destroy();
+
+                            texto.destroy();
+
+                        }
+
+                    });
+
+                }
+
+            );
+
+        };
+
+
+        // =========================================
+        // ✨ DESTELLO + AVISO DEL CUARZO
         // =========================================
 
         this.mostrarAvisoCuarzo = () => {
@@ -1655,6 +1657,7 @@ export default class WorldScene extends Phaser.Scene {
                     }
                 }
             );
+
 
             aviso
                 .setOrigin(0.5)
@@ -1730,7 +1733,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // BARRA ENERGIA
+        // MARCO DE LA BARRA
         // =========================================
 
         this.barraEnergiaMarco =
@@ -1741,6 +1744,10 @@ export default class WorldScene extends Phaser.Scene {
             .setDepth(50);
 
 
+        // =========================================
+        // FONDO DE LA BARRA
+        // =========================================
+
         this.barraEnergiaFondo =
             this.add.graphics();
 
@@ -1749,6 +1756,10 @@ export default class WorldScene extends Phaser.Scene {
             .setDepth(50);
 
 
+        // =========================================
+        // RELLENO
+        // =========================================
+
         this.barraEnergia =
             this.add.graphics();
 
@@ -1756,6 +1767,10 @@ export default class WorldScene extends Phaser.Scene {
             .setScrollFactor(0)
             .setDepth(51);
 
+
+        // =========================================
+        // TEXTO
+        // =========================================
 
         this.textoEnergia =
             this.add.text(
@@ -1784,8 +1799,16 @@ export default class WorldScene extends Phaser.Scene {
             .setDepth(52);
 
 
+        // =========================================
+        // DIBUJAR BARRA
+        // =========================================
+
         this.actualizarBarraEnergia();
 
+
+        // =========================================
+        // ✨ PULSO DE LA BARRA
+        // =========================================
 
         this.tweens.add({
 
@@ -1863,14 +1886,13 @@ export default class WorldScene extends Phaser.Scene {
                     i * 650,
                     () => {
 
-                        const pulso =
-                            this.add.circle(
-                                this.puntoCuarzo,
-                                330,
-                                45,
-                                0x00ffff,
-                                0
-                            );
+                        const pulso = this.add.circle(
+                            this.puntoCuarzo,
+                            330,
+                            45,
+                            0x00ffff,
+                            0
+                        );
 
                         pulso.setStrokeStyle(
                             8,
@@ -1913,14 +1935,13 @@ export default class WorldScene extends Phaser.Scene {
                 7 * 650 + 1000,
                 () => {
 
-                    const cuarzo =
-                        this.add.circle(
-                            this.puntoCuarzo,
-                            330,
-                            50,
-                            0x9b00ff,
-                            1
-                        );
+                    const cuarzo = this.add.circle(
+                        this.puntoCuarzo,
+                        330,
+                        50,
+                        0x9b00ff,
+                        1
+                    );
 
                     cuarzo.setDepth(9);
 
@@ -1964,8 +1985,11 @@ export default class WorldScene extends Phaser.Scene {
     actualizarBarraEnergia() {
 
         const x = 55;
+
         const y = 65;
+
         const ancho = 245;
+
         const alto = 22;
 
         const porcentaje =
@@ -1974,7 +1998,9 @@ export default class WorldScene extends Phaser.Scene {
 
 
         this.barraEnergiaMarco.clear();
+
         this.barraEnergiaFondo.clear();
+
         this.barraEnergia.clear();
 
 
@@ -2088,7 +2114,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
     // =============================================
-    // ✨ BRILLO KAEL
+    // ✨ BRILLO DE KAEL
     // =============================================
 
     brilloKaelEnergia() {
@@ -2190,7 +2216,9 @@ export default class WorldScene extends Phaser.Scene {
             () => {
 
                 if (this.kael) {
+
                     this.kael.clearTint();
+
                 }
 
                 this.brilloEnergiaActivo = false;
@@ -2226,15 +2254,14 @@ export default class WorldScene extends Phaser.Scene {
         }
 
 
-        const destello =
-            this.add.rectangle(
-                640,
-                360,
-                1280,
-                720,
-                0xffffff,
-                0
-            );
+        const destello = this.add.rectangle(
+            640,
+            360,
+            1280,
+            720,
+            0xffffff,
+            0
+        );
 
         destello
             .setScrollFactor(0)
@@ -2278,11 +2305,13 @@ export default class WorldScene extends Phaser.Scene {
                     110
                 );
 
+
             const alto =
                 Phaser.Math.Between(
                     10,
                     75
                 );
+
 
             const x =
                 Phaser.Math.Between(
@@ -2290,11 +2319,13 @@ export default class WorldScene extends Phaser.Scene {
                     1330
                 );
 
+
             const y =
                 Phaser.Math.Between(
                     -40,
                     760
                 );
+
 
             const color =
                 Phaser.Utils.Array.GetRandom(
@@ -2338,6 +2369,7 @@ export default class WorldScene extends Phaser.Scene {
                     -700,
                     700
                 );
+
 
             const destinoY =
                 y +
@@ -2399,8 +2431,7 @@ export default class WorldScene extends Phaser.Scene {
             this.sky,
             this.cables,
             this.floorImage,
-            this.gemaEnergia,
-            this.dron
+            this.gemaEnergia
 
         ].filter(
             elemento => elemento
@@ -2606,6 +2637,88 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
+        // 🤖 ACTUALIZAR PARTES DEL DRON
+        // =========================================
+
+        if (
+            this.dron &&
+            this.dronBody &&
+            this.dronLed &&
+            this.dronHalo
+        ) {
+
+            this.dronBody.x =
+                this.dron.x;
+
+            this.dronBody.y =
+                this.dron.y - 4;
+
+
+            this.dronLed.x =
+                this.dron.x - 25;
+
+            this.dronLed.y =
+                this.dron.y;
+
+
+            this.dronHalo.x =
+                this.dron.x - 25;
+
+            this.dronHalo.y =
+                this.dron.y;
+
+
+            // =====================================
+            // 👀 DETECCIÓN
+            // =====================================
+
+            const distanciaX =
+                Math.abs(
+                    this.kael.x -
+                    this.dron.x
+                );
+
+
+            const diferenciaY =
+                Math.abs(
+                    this.kael.y -
+                    this.dron.y
+                );
+
+
+            // Kael debe estar cerca en X
+            // y aproximadamente a la misma altura.
+
+            const detectado =
+                distanciaX < 260 &&
+                diferenciaY < 95;
+
+
+            if (
+                detectado &&
+                !this.dronDetectando
+            ) {
+
+                this.dronDetectando = true;
+
+                this.activarAlertaDron();
+
+            }
+
+
+            if (
+                !detectado &&
+                this.dronDetectando
+            ) {
+
+                this.dronDetectando = false;
+
+            }
+
+        }
+
+
+        // =========================================
         // 🛼 VELOCIDAD SEGUN ENERGIA
         // =========================================
 
@@ -2712,7 +2825,9 @@ export default class WorldScene extends Phaser.Scene {
 
 
             if (this.energiaKael < 0) {
+
                 this.energiaKael = 0;
+
             }
 
 
@@ -2791,7 +2906,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 💎 GEMA DE ENERGÍA
+        // 💎 LLEGADA A GEMA DE ENERGÍA
         // =========================================
 
         if (
@@ -2807,7 +2922,7 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ⚡ CUARZO
+        // ⚡ LLEGADA AL CUARZO
         // =========================================
 
         if (
@@ -2819,23 +2934,8 @@ export default class WorldScene extends Phaser.Scene {
 
         }
 
-
-        // =========================================
-        // 👁️ VISIÓN DEL DRON
-        // =========================================
-
-        if (
-            this.comprobarVisionDron
-        ) {
-
-            this.comprobarVisionDron();
-
-        }
-
     }
 
 }
-     
-
-     
+       
 

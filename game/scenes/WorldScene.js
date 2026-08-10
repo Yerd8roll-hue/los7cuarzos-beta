@@ -30,7 +30,6 @@ export default class WorldScene extends Phaser.Scene {
 
         this.musicaValle.play();
 
-
         this.musicaValle.once(
             "complete",
             () => {
@@ -302,66 +301,249 @@ export default class WorldScene extends Phaser.Scene {
         // 🤖 DRON VIGILANTE
         // =========================================
 
-        this.dron = this.add.rectangle(
+        this.dron = this.add.container(
             1900,
-            390,
-            70,
-            38,
-            0x20252c,
-            1
+            390
         );
 
         this.dron.setDepth(7);
 
 
         // =========================================
-        // DETALLE DEL DRON
+        // 🛸 CUERPO PRINCIPAL
         // =========================================
 
-        this.dronBody = this.add.rectangle(
-            this.dron.x,
-            this.dron.y - 4,
-            48,
-            10,
-            0x39414b,
+        this.dronBody = this.add.graphics();
+
+        this.dronBody.fillStyle(
+            0x202a32,
             1
         );
 
-        this.dronBody.setDepth(8);
-
-
-        // =========================================
-        // 🔴 LED DEL DRON
-        // =========================================
-
-        this.dronLed = this.add.circle(
-            this.dron.x - 25,
-            this.dron.y,
-            5,
-            0xff3333,
-            0.75
+        this.dronBody.fillRoundedRect(
+            -38,
+            -17,
+            76,
+            34,
+            10
         );
 
-        this.dronLed.setDepth(9);
+        this.dronBody.lineStyle(
+            2,
+            0x607580,
+            0.9
+        );
+
+        this.dronBody.strokeRoundedRect(
+            -38,
+            -17,
+            76,
+            34,
+            10
+        );
+
+        this.dron.add(
+            this.dronBody
+        );
 
 
         // =========================================
-        // ✨ HALO SUTIL
+        // ⚡ PLACA SUPERIOR
+        // =========================================
+
+        this.dronPlaca = this.add.rectangle(
+            0,
+            -19,
+            38,
+            6,
+            0x34434d,
+            1
+        );
+
+        this.dronPlaca.setStrokeStyle(
+            1,
+            0x00ffff,
+            0.8
+        );
+
+        this.dron.add(
+            this.dronPlaca
+        );
+
+
+        // =========================================
+        // 🔵 NUCLEO CENTRAL
+        // =========================================
+
+        this.dronNucleo = this.add.circle(
+            0,
+            0,
+            8,
+            0x00eaff,
+            1
+        );
+
+        this.dron.add(
+            this.dronNucleo
+        );
+
+
+        // =========================================
+        // ✨ BRILLO DEL NUCLEO
+        // =========================================
+
+        this.dronNucleoBrillo = this.add.circle(
+            0,
+            0,
+            17,
+            0x00eaff,
+            0.10
+        );
+
+        this.dron.add(
+            this.dronNucleoBrillo
+        );
+
+
+        // =========================================
+        // 🔴 LED IZQUIERDO
+        // =========================================
+
+        this.dronLedIzq = this.add.circle(
+            -27,
+            0,
+            4,
+            0xff3333,
+            0.85
+        );
+
+        this.dron.add(
+            this.dronLedIzq
+        );
+
+
+        // =========================================
+        // 🔴 LED DERECHO
+        // =========================================
+
+        this.dronLedDer = this.add.circle(
+            27,
+            0,
+            4,
+            0xff3333,
+            0.85
+        );
+
+        this.dron.add(
+            this.dronLedDer
+        );
+
+
+        // =========================================
+        // 📡 ANTENA
+        // =========================================
+
+        this.dronAntena = this.add.rectangle(
+            0,
+            -28,
+            2,
+            10,
+            0x71828b,
+            1
+        );
+
+        this.dron.add(
+            this.dronAntena
+        );
+
+
+        // =========================================
+        // 🔴 LUZ DE ANTENA
+        // =========================================
+
+        this.dronAntenaLed = this.add.circle(
+            0,
+            -35,
+            3,
+            0xff3333,
+            0.9
+        );
+
+        this.dron.add(
+            this.dronAntenaLed
+        );
+
+
+        // =========================================
+        // ⚡ DETALLES LATERALES
+        // =========================================
+
+        this.dronDetalleIzq = this.add.rectangle(
+            -42,
+            0,
+            5,
+            16,
+            0x00bcd4,
+            0.65
+        );
+
+        this.dron.add(
+            this.dronDetalleIzq
+        );
+
+
+        this.dronDetalleDer = this.add.rectangle(
+            42,
+            0,
+            5,
+            16,
+            0x00bcd4,
+            0.65
+        );
+
+        this.dron.add(
+            this.dronDetalleDer
+        );
+
+
+        // =========================================
+        // 🌌 HALO DEL DRON
         // =========================================
 
         this.dronHalo = this.add.circle(
-            this.dron.x - 25,
-            this.dron.y,
-            10,
-            0xff2222,
-            0.07
+            1900,
+            390,
+            45,
+            0x00d9ff,
+            0.045
         );
 
         this.dronHalo.setDepth(6);
 
 
         // =========================================
-        // 🤖 ESTADO DEL DRON
+        // 🔵 ANILLO DE ESCANEO
+        // =========================================
+
+        this.dronAnillo = this.add.circle(
+            1900,
+            390,
+            28,
+            0x00ffff,
+            0
+        );
+
+        this.dronAnillo.setStrokeStyle(
+            1,
+            0x00ffff,
+            0.30
+        );
+
+        this.dronAnillo.setDepth(6);
+
+
+        // =========================================
+        // ESTADOS
         // =========================================
 
         this.dronDetectando = false;
@@ -370,22 +552,27 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // ↔️ PATRULLA DEL DRON
+        // ✨ PULSO DEL NUCLEO
         // =========================================
 
         this.tweens.add({
 
             targets: [
-                this.dron,
-                this.dronBody
+                this.dronNucleo,
+                this.dronNucleoBrillo
             ],
 
-            x: {
-                from: 1700,
-                to: 2200
+            scale: {
+                from: 0.85,
+                to: 1.15
             },
 
-            duration: 4200,
+            alpha: {
+                from: 0.55,
+                to: 1
+            },
+
+            duration: 850,
 
             yoyo: true,
 
@@ -394,6 +581,167 @@ export default class WorldScene extends Phaser.Scene {
             ease: "Sine.easeInOut"
 
         });
+
+
+        // =========================================
+        // 🌌 PULSO DEL HALO
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.dronHalo,
+
+            scale: {
+                from: 0.85,
+                to: 1.15
+            },
+
+            alpha: {
+                from: 0.025,
+                to: 0.09
+            },
+
+            duration: 1200,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 🔵 ANILLO DE ESCANEO
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.dronAnillo,
+
+            scale: {
+                from: 0.7,
+                to: 1.35
+            },
+
+            alpha: {
+                from: 0.5,
+                to: 0
+            },
+
+            duration: 1500,
+
+            repeat: -1,
+
+            ease: "Sine.easeOut"
+
+        });
+
+
+        // =========================================
+        // 🛸 FLOTACION
+        // =========================================
+
+        this.tweens.add({
+
+            targets: this.dron,
+
+            y: {
+                from: 384,
+                to: 396
+            },
+
+            duration: 1300,
+
+            yoyo: true,
+
+            repeat: -1,
+
+            ease: "Sine.easeInOut"
+
+        });
+
+
+        // =========================================
+        // 🛸 RECORRIDO DEL DRON
+        // =========================================
+
+        const moverDron = () => {
+
+            if (
+                !this.dron ||
+                this.finalizando
+            ) {
+                return;
+            }
+
+
+            // =====================================
+            // ➡️ VA HASTA EL FINAL
+            // =====================================
+
+            this.tweens.add({
+
+                targets: this.dron,
+
+                x: 2200,
+
+                duration: 4200,
+
+                ease: "Sine.easeInOut",
+
+                onComplete: () => {
+
+
+                    // =================================
+                    // ⬅️ REGRESA AL CUARZO
+                    // =================================
+
+                    this.tweens.add({
+
+                        targets: this.dron,
+
+                        x: this.puntoCuarzo,
+
+                        duration: 3600,
+
+                        ease: "Sine.easeInOut",
+
+                        onComplete: () => {
+
+
+                            // =============================
+                            // 🛑 PAUSA EN EL CUARZO
+                            // =============================
+
+                            this.time.delayedCall(
+                                2200,
+                                () => {
+
+                                    if (
+                                        this.dron &&
+                                        !this.finalizando
+                                    ) {
+
+                                        moverDron();
+
+                                    }
+
+                                }
+                            );
+
+                        }
+
+                    });
+
+                }
+
+            });
+
+        };
+
+        moverDron();
 
 
         // =========================================
@@ -1176,35 +1524,40 @@ export default class WorldScene extends Phaser.Scene {
 
             if (
                 !this.dron ||
-                !this.dronLed
+                !this.dronLedIzq ||
+                !this.dronLedDer
             ) {
                 return;
             }
 
 
             // =====================================
-            // 🔴 LED PARPADEA
+            // 🔴 LEDS PARPADEAN
             // =====================================
 
             this.tweens.add({
 
-                targets: this.dronLed,
+                targets: [
+                    this.dronLedIzq,
+                    this.dronLedDer,
+                    this.dronAntenaLed
+                ],
 
                 alpha: {
-                    from: 0.25,
+                    from: 0.15,
                     to: 1
                 },
 
                 scale: {
                     from: 0.8,
-                    to: 1.25
+                    to: 1.4
                 },
 
-                duration: 180,
+                duration: 160,
 
                 yoyo: true,
 
-                repeat: 5,
+                repeat: 7,
 
                 ease: "Sine.easeInOut"
 
@@ -1212,32 +1565,18 @@ export default class WorldScene extends Phaser.Scene {
 
 
             // =====================================
-            // ✨ HALO SUTIL
+            // 🔴 NUCLEO EN ALERTA
             // =====================================
 
-            this.tweens.add({
+            this.dronNucleo.setFillStyle(
+                0xff3333,
+                1
+            );
 
-                targets: this.dronHalo,
-
-                alpha: {
-                    from: 0.04,
-                    to: 0.14
-                },
-
-                scale: {
-                    from: 0.8,
-                    to: 1.25
-                },
-
-                duration: 180,
-
-                yoyo: true,
-
-                repeat: 5,
-
-                ease: "Sine.easeInOut"
-
-            });
+            this.dronNucleoBrillo.setFillStyle(
+                0xff2222,
+                0.18
+            );
 
 
             // =====================================
@@ -2431,7 +2770,10 @@ export default class WorldScene extends Phaser.Scene {
             this.sky,
             this.cables,
             this.floorImage,
-            this.gemaEnergia
+            this.gemaEnergia,
+            this.dron,
+            this.dronHalo,
+            this.dronAnillo
 
         ].filter(
             elemento => elemento
@@ -2637,35 +2979,44 @@ export default class WorldScene extends Phaser.Scene {
 
 
         // =========================================
-        // 🤖 ACTUALIZAR PARTES DEL DRON
+        // 🤖 ACTUALIZAR DRON
         // =========================================
 
         if (
             this.dron &&
-            this.dronBody &&
-            this.dronLed &&
-            this.dronHalo
+            this.dronNucleo &&
+            this.dronLedIzq &&
+            this.dronLedDer
         ) {
 
-            this.dronBody.x =
-                this.dron.x;
+            // =====================================
+            // 🌌 HALO SIGUE AL DRON
+            // =====================================
 
-            this.dronBody.y =
-                this.dron.y - 4;
+            if (this.dronHalo) {
+
+                this.dronHalo.x =
+                    this.dron.x;
+
+                this.dronHalo.y =
+                    this.dron.y;
+
+            }
 
 
-            this.dronLed.x =
-                this.dron.x - 25;
+            // =====================================
+            // 🔵 ANILLO SIGUE AL DRON
+            // =====================================
 
-            this.dronLed.y =
-                this.dron.y;
+            if (this.dronAnillo) {
 
+                this.dronAnillo.x =
+                    this.dron.x;
 
-            this.dronHalo.x =
-                this.dron.x - 25;
+                this.dronAnillo.y =
+                    this.dron.y;
 
-            this.dronHalo.y =
-                this.dron.y;
+            }
 
 
             // =====================================
@@ -2685,9 +3036,6 @@ export default class WorldScene extends Phaser.Scene {
                     this.dron.y
                 );
 
-
-            // Kael debe estar cerca en X
-            // y aproximadamente a la misma altura.
 
             const detectado =
                 distanciaX < 260 &&
@@ -2937,6 +3285,5 @@ export default class WorldScene extends Phaser.Scene {
     }
 
 }
-
             
 
